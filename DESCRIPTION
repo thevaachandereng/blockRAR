@@ -1,0 +1,28 @@
+Package: blockRAR
+Version: 1.0.0
+Date: 2018-12-28
+Title: Block Design for Response-Adaptive Randomization
+Authors@R: c(person(given = "Thevaa",
+             family = "Chandereng",
+             role = c("aut", "cre", "cph"),
+             email = "chandereng@wisc.edu",
+             comment = c(ORCID = "0000-0003-4078-9176")),
+      person(given = "Rick",
+             family = "Chapppell",
+             role = c("aut", "cph")))
+Description: Computes power for blocked response-adaptive randomization. The randomization ratio 
+    is altered based on group results rather than per patients. This allows for the analysis of 
+    time trend together with treatment trend. 
+    R (>= 3.0.2)
+Suggests: testthat, rmarkdown, pkgdown
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.0
+VignetteBuilder: knitr 
+URL: https://github.com/thevaachandereng/blockRAR
+BugReports: https://github.com/thevaachandereng/blockRAR/issues
+Imports: ggplot2,
+    knitr,
+    ldbounds
+

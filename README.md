@@ -4,6 +4,7 @@
 [![Download badge](https://cranlogs.r-pkg.org/badges/blockRAR)](https://cran.r-project.org/package=blockRAR)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![codecov](https://codecov.io/gh/thevaachandereng/blockRAR/branch/master/graph/badge.svg)](https://codecov.io/gh/thevaachandereng/blockRAR)
+[![appveyor](https://ci.appveyor.com/api/projects/status/gf202269ohpknxhx?svg=true)](https://ci.appveyor.com/project/thevaachandereng/blockrar)
 
 **Authors**: Thevaa Chandereng and Rick Chappell
 

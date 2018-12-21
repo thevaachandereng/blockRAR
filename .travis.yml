@@ -1,0 +1,22 @@
+# See https://docs.travis-ci.com/user/languages/r/
+language: r
+cache: packages
+
+notifications:
+  email: false
+
+r_packages:
+  - covr
+
+after_success:
+  - Rscript -e 'library(covr); codecov()'
+  - Rscript -e 'pkgdown::build_site()'
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_PAT
+  keep-history: true
+  local-dir: docs
+  on:
+    branch: master

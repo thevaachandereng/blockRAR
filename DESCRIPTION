@@ -10,10 +10,7 @@ Authors@R: c(person(given = "Thevaa",
       person(given = "Rick",
              family = "Chapppell",
              role = c("aut", "cph")))
-Description: Computes power for blocked response-adaptive randomization. The randomization ratio 
-    is altered based on group results rather than per patients. This allows for the analysis of 
-    time trend together with treatment trend. 
-    R (>= 3.0.2)
+Description: Computes power for response-adaptive randomization with a block design that captures both the time and treatment effect. 
 Suggests: testthat, rmarkdown, pkgdown
 License: MIT + file LICENSE
 Encoding: UTF-8

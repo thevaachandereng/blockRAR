@@ -1,0 +1,73 @@
+---
+title: "blockRAR: An R package for Simulation of Block Design for Response-Adaptive Randomization"
+author: "Thevaa Chandereng, Rick Chappell"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{blockRAR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
+---
+  
+  
+```{r setup, echo=FALSE, results="hide"}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+set.seed(43232)
+```
+
+
+# Introduction
+Randomized controlled trials (RCT) are the gold standard of pharmaceutical and medical device clinical studies. In a two-armed RCT, subjects are randomized to an intervention arm, with the standard framework being the comparison of a new treatment/drug to a current treatment/drug (control). The majority of research in the design of RCTs and their application is based on the frequentist paradigm. In recent years, the adaptive Bayesian trial design approach has gained attention.
+
+Adaptive Bayesian trials provide added flexibility compared to conventional frequentist approaches in terms of the design and analysis of a clinical trial. Notably, adaptive Bayesian trials can:
+
+  - Incorporate historical data, helping to reduce the sample size
+- Easily carry out interim analyses to facilitate stopping early for success or futility
+- Work with multiple treatment arms (versus a single control), allowing for dropping of demonstrably unsuccessful treatments
+- Alter the randomization ratio (e.g., treatment to control ratio) to improve trial efficiency or even to increase trial recruitment
+
+A fundamental requirement of an adaptive trial is the *a priori* and interim evaluation of the operating characteristics. In adaptive trials, these operating characteristics generally do not have a closed-form; hence, simulation approaches are required. Simulation of adaptive Bayesian trial designs have historically been substantially more complex compared to frequentist approaches. This package removes this complexity obstacle and allows for simulation of adaptive Bayesian trials under a range of designs and outcome types.
+
+`blockRAR` is an R package for the simulation and analysis of adaptive Bayesian randomzied controlled trials under a range of trial designs and outcome types. Currently, it supports Gaussian and binomial data types, with time-to-event data to follow soon. The package allows the (optional) incorporation of historical data and permits interim analyses of early stopping for futility or success. Please note this package is still under development. 
+
+If you use `blockRAR` in published research, please cite: **TBA**.
+
+If after reading through this vignette you have questions or problems using `blockRAR`, please post them to https://github.com/thevaachandereng/blockRAR/issues. This will notify the package maintainers and we can work to address the issue(s). Please note that comments and questions should **not** be emailed directly to the package authors.
+
+
+# Running bayesCT
+Prior to analyzing your data, the R package needs to be installed. The easiest way to install `blockRAR` is through CRAN:
+
+```{r, eval = FALSE, echo=TRUE}
+install.packages("bayesCT")
+```
+
+There are additional ways to download `blockRAR`. The first option is most useful for downloading a specific version of `blockRAR` (which can be found at https://github.com/thevaachandereng/bayesCT/releases):
+
+```{r, eval = FALSE, echo=TRUE}
+devtools::install_github("thevaachandereng/blockRAR@vx.xx.x")
+
+# or 
+
+devtools::install_version("blockRAR", version = "x.x.x", repos = "http://cran.us.r-project.org")
+```
+
+The second option is to download the most recent stable version through GitHub:
+
+```{r, cache=FALSE, warning=FALSE, comment=FALSE, eval = TRUE, echo=TRUE, results="hide"}
+devtools::install_github("thevaachandereng/blockRAR")
+```
+
+After successful installation, the package must be loaded into the working space:
+
+```{r lib, results="asis", eval=TRUE, echo=TRUE}
+library(blockRAR)
+```
+
+

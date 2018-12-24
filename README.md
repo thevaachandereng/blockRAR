@@ -53,7 +53,7 @@ library(blockRAR)
 
 Usage
 ------------
-See the [vignette](https://gitter-lab.github.io/LPWC/articles/LPWC.html) for usage instructions.
+See the [vignette](https://thevaachandereng.github.io/blockRAR/articles/blockRAR.html) for usage instructions.
 
 
 Reference

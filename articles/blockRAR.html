@@ -82,24 +82,28 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>Randomized controlled trials (RCT) are the gold standard of pharmaceutical and medical device clinical studies. In a two-armed RCT, subjects are randomized to an intervention arm, with the standard framework being the comparison of a new treatment/drug to a current treatment/drug (control). The majority of research in the design of RCTs and their application is based on the frequentist paradigm. In recent years, the adaptive Bayesian trial design approach has gained attention.</p>
-<p>Adaptive Bayesian trials provide added flexibility compared to conventional frequentist approaches in terms of the design and analysis of a clinical trial. Notably, adaptive Bayesian trials can:</p>
+<p>Response-Adaptive Randomization (RAR) design utilizes accrual information to tilt the randomization ratio to the better performing treatment group. Patients enrolled in these trials are not only treated to obtain effectiveness of a treatment but also treated to the best way possible. Altering the randomization ratio drastically can potentially affect the bias in a trial especially if one treatment is very superior to the other treatment. The major drawback to response-adaptive randomization design is that the trial needs to be short to be able to obtain the outcome of the trial for future randomization.</p>
+<p>Opponents of response-adaptive randomization have argued that adaptive randomization challenges the whole notion of equipoise due to high skewness in randomization ratio. Some argue it questions the entire basis for randomization and threatens the most vital tool in clinical research. There are various methods developed to address some of this flaws besides developing a proper design for response-adaptive randomization.</p>
+<p>Time drift can lead to bias by confounding the treatment effect with time effects. Time trends are nearly universally ignored among RAR proponents. Besides skewed randomization ratio, time trend can be a confounding factor as illustrated in the example below.</p>
+<p><img src="blockRAR_files/figure-html/unnamed-chunk-1-1.png" width="576"></p>
+<p>Example of time trend issue in response-adaptive randomization (RAR) design:</p>
 <ul>
-<li>Incorporate historical data, helping to reduce the sample size</li>
-<li>Easily carry out interim analyses to facilitate stopping early for success or futility</li>
-<li>Work with multiple treatment arms (versus a single control), allowing for dropping of demonstrably unsuccessful treatments</li>
-<li>Alter the randomization ratio (e.g., treatment to control ratio) to improve trial efficiency or even to increase trial recruitment</li>
+<li>The disease itself can change, sometimes radically (e.g., AIDS in the early 1990s).</li>
+<li>Our definition of the disease can change due to new scientific discoveries or diagnostic methods (e.g., stage migration in nasopharyngeal carcinoma due to the introduction of CAT scans to Hong Kong ~ 2005).</li>
+<li>Inclusion criteria can change, either formally (in which case we can stratify analysis on before vs. after the change) or informally due to “recruiting zeal” or other issues (in which case we can’t).</li>
+<li>Centers can change, such as when VAs enter the trial earlier or later than academic institutions.</li>
+<li>Patients within centers can change, especially but not only with chronic diseases, due to the phenomenon of “A queue of desperate patients lining up at the door”.</li>
+<li>In addition to these examples, an investigator who wants to game the system could cross his/her fingers that his favored treatment arm is ahead, then progressively enroll better prognosis patients over time</li>
 </ul>
-<p>A fundamental requirement of an adaptive trial is the <em>a priori</em> and interim evaluation of the operating characteristics. In adaptive trials, these operating characteristics generally do not have a closed-form; hence, simulation approaches are required. Simulation of adaptive Bayesian trial designs have historically been substantially more complex compared to frequentist approaches. This package removes this complexity obstacle and allows for simulation of adaptive Bayesian trials under a range of designs and outcome types.</p>
 <p><code>blockRAR</code> is an R package for the simulation and analysis of adaptive Bayesian randomzied controlled trials under a range of trial designs and outcome types. Currently, it supports Gaussian and binomial data types, with time-to-event data to follow soon. The package allows the (optional) incorporation of historical data and permits interim analyses of early stopping for futility or success. Please note this package is still under development.</p>
 <p>If you use <code>blockRAR</code> in published research, please cite: <strong>TBA</strong>.</p>
 <p>If after reading through this vignette you have questions or problems using <code>blockRAR</code>, please post them to <a href="https://github.com/thevaachandereng/blockRAR/issues" class="uri">https://github.com/thevaachandereng/blockRAR/issues</a>. This will notify the package maintainers and we can work to address the issue(s). Please note that comments and questions should <strong>not</strong> be emailed directly to the package authors.</p>
 </div>
-<div id="running-bayesct" class="section level1">
+<div id="running-blockrar" class="section level1">
 <h1 class="hasAnchor">
-<a href="#running-bayesct" class="anchor"></a>Running bayesCT</h1>
+<a href="#running-blockrar" class="anchor"></a>Running blockRAR</h1>
 <p>Prior to analyzing your data, the R package needs to be installed. The easiest way to install <code>blockRAR</code> is through CRAN:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"bayesCT"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"blockRAR"</span>)</a></code></pre></div>
 <p>There are additional ways to download <code>blockRAR</code>. The first option is most useful for downloading a specific version of <code>blockRAR</code> (which can be found at <a href="https://github.com/thevaachandereng/bayesCT/releases" class="uri">https://github.com/thevaachandereng/bayesCT/releases</a>):</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"thevaachandereng/blockRAR@vx.xx.x"</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"></a>
@@ -122,7 +126,7 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction">Introduction</a></li>
-      <li><a href="#running-bayesct">Running bayesCT</a></li>
+      <li><a href="#running-blockrar">Running blockRAR</a></li>
       </ul>
 </div>
       </div>

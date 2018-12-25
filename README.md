@@ -16,7 +16,7 @@ However, most design complete ignores the time trend aspect in this design and t
 ratio are altered based on a patient outcome. 
 blockRAR assigns patient in a block (group) manner and the the block results are analyzed before the randomization ratio is altered.
 Time is divided into factor level in each block (group).
-The treatment and time effect is both obtained in this design. 
+The treatment effect is obtained upon adjusting for the time effect in this design. 
 The blockRAR website is available [here](https://thevaachandereng/blockRAR/). 
 
 
@@ -36,7 +36,7 @@ The first option is most useful if want to download a specific version of blockR
 ``` r 
 devtools::install_github("thevaachandereng/blockRAR@vx.xx.x")
 # OR 
-devtools::install_version("LPWC", version = "x.x.x", repos = "http://cran.us.r-project.org")
+devtools::install_version("blockRAR", version = "x.x.x", repos = "http://cran.us.r-project.org")
 ```
 
 The second option is to download through GitHub. 

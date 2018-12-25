@@ -39,6 +39,20 @@ the sampling is done based on randomization ratio provided with replacement.}
 \value{
 a list with power (prop of trial success), total sample size, sample size
    of patient in control and treatment group.
+\describe{
+  \item{\code{power}}{
+    scalar. The power of the trial, ie. the proportion of success over the
+    number of simulation ran.}
+  \item{\code{N_enrolled}}{
+    vector. The number of patients enrolled in the trial (sum of control
+    and experimental group for each simulation. )}
+  \item{\code{N_control}}{
+    vector. The number of patients enrolled in the control group for
+    each simulation.}
+  \item{\code{N_control}}{
+    vector. The number of patients enrolled in the experimental group for
+    each simulation.}
+}
 }
 \description{
 Simulation for binomial counts for block design for

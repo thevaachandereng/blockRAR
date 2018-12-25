@@ -22,7 +22,20 @@
 #'
 #' @return a list with power (prop of trial success), total sample size, sample size
 #'    of patient in control and treatment group.
-#'
+#' \describe{
+#'   \item{\code{power}}{
+#'     scalar. The power of the trial, ie. the proportion of success over the
+#'     number of simulation ran.}
+#'   \item{\code{N_enrolled}}{
+#'     vector. The number of patients enrolled in the trial (sum of control
+#'     and experimental group for each simulation. )}
+#'   \item{\code{N_control}}{
+#'     vector. The number of patients enrolled in the control group for
+#'     each simulation.}
+#'   \item{\code{N_control}}{
+#'     vector. The number of patients enrolled in the experimental group for
+#'     each simulation.}
+#' }
 #' @importFrom stats rbinom mantelhaen.test chisq.test
 #' @importFrom ldbounds bounds
 #' @importFrom dplyr mutate
@@ -82,13 +95,27 @@ binomialRAR <- function(
       data <- data.frame(
         treatment =
           if(replace == TRUE){
-            sample(0:1, replace = T, group[i], prob = c(1, rr))
+            if(alternative == "less"){
+              sample(0:1, replace = T, group[i], prob = c(1, rr))
+            }
+            else{
+              sample(0:1, replace = T, group[i], prob = c(rr, 1))
+            }
           }
         else{
-          sum_ratio <- rr + 1
-          sampling <- rep(c(0, 1), round(c(group[i] * 1 / sum_ratio - 0.0001,
+          if(alternative == "less"){
+            sum_ratio <- rr + 1
+            sampling <- rep(c(0, 1), round(c(group[i] * 1 / sum_ratio - 0.0001,
                                            group[i] * rr / sum_ratio + 0.0001)))
-          sample(sampling, length(sampling))
+            sample(sampling, length(sampling))
+          }
+          else{
+            sum_ratio <- rr + 1
+            sampling <- rep(c(0, 1), round(c(group[i] * rr / sum_ratio - 0.0001,
+                                             group[i] * 1 / sum_ratio + 0.0001)))
+            sample(sampling, length(sampling))
+          }
+
         },
         outcome = rep(NA, group[i]))
 

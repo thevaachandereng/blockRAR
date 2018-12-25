@@ -177,6 +177,35 @@ the sampling is done based on randomization ratio provided with replacement.</p>
    of patient in control and treatment group.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>binomialRAR</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.7</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.65</span>, <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>200</span>,
+            <span class='kw'>block_number</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; $power
+#&gt; [1] 0.12
+#&gt; 
+#&gt; $N_enrolled
+#&gt;   [1] 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 100
+#&gt;  [19] 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200
+#&gt;  [37] 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200
+#&gt;  [55] 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200
+#&gt;  [73] 100 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200
+#&gt;  [91] 200 200 200 200 200 200 200 200 200 200
+#&gt; 
+#&gt; $N_control
+#&gt;   [1] 100 100 100 100  79 100 100 100 100 100 100 100 100  79  90  79  79  50
+#&gt;  [19] 100 100 100 100 100 100 100 100 100 100  90  90 100 100 100 100 100 100
+#&gt;  [37] 100 100 100  90 100  83 100 100 100 100 100  90 100 100 100 100 100  90
+#&gt;  [55]  90 100 100  90 100  90  90 100 100 100 100  90  90  90  90 100  90 100
+#&gt;  [73]  50 100 100 100 100 100 100 100 100 100  90 100 100 100 100 100 100 100
+#&gt;  [91] 100 100 100 100 100 100 100 100 100 100
+#&gt; 
+#&gt; $N_treatment
+#&gt;   [1] 100 100 100 100 121 100 100 100 100 100 100 100 100 121 110 121 121  50
+#&gt;  [19] 100 100 100 100 100 100 100 100 100 100 110 110 100 100 100 100 100 100
+#&gt;  [37] 100 100 100 110 100 117 100 100 100 100 100 110 100 100 100 100 100 110
+#&gt;  [55] 110 100 100 110 100 110 110 100 100 100 100 110 110 110 110 100 110 100
+#&gt;  [73]  50 100 100 100 100 100 100 100 100 100 110 100 100 100 100 100 100 100
+#&gt;  [91] 100 100 100 100 100 100 100 100 100 100
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -184,7 +213,9 @@ the sampling is done based on randomization ratio provided with replacement.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

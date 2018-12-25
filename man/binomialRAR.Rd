@@ -44,3 +44,7 @@ a list with power (prop of trial success), total sample size, sample size
 Simulation for binomial counts for block design for
    response-adaptive randomization with time as a confounding
 }
+\examples{
+binomialRAR(p_control = 0.7, p_treatment = 0.65, N_total = 200,
+            block_number = 2, simulation = 100)
+}

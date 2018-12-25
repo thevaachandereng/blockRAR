@@ -26,6 +26,12 @@
 #' @importFrom stats rbinom mantelhaen.test chisq.test
 #' @importFrom ldbounds bounds
 #' @importFrom dplyr mutate
+#'
+#' @export binomialRAR
+#'
+#' @examples
+#' binomialRAR(p_control = 0.7, p_treatment = 0.65, N_total = 200,
+#'             block_number = 2, simulation = 100)
 
 binomialRAR <- function(
   p_control,
@@ -66,7 +72,6 @@ binomialRAR <- function(
   sample_size <- NULL
 
   for(k in 1:simulation){
-    print(k)
     data_total <- NULL
     test_stat  <- 0
     index      <- block_number

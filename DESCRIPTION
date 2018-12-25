@@ -11,7 +11,7 @@ Authors@R: c(person(given = "Thevaa",
              family = "Chapppell",
              role = c("aut", "cph")))
 Description: Computes power for response-adaptive randomization with a block design that captures both the time and treatment effect. 
-Suggests: testthat, rmarkdown, pkgdown, devtools
+Suggests: testthat, rmarkdown, pkgdown, devtools, ggplot2
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -19,6 +19,7 @@ RoxygenNote: 6.1.1
 VignetteBuilder: knitr 
 URL: https://github.com/thevaachandereng/blockRAR
 BugReports: https://github.com/thevaachandereng/blockRAR/issues
-Imports: ggplot2,
+Imports: dplyr,
     knitr,
+    magrittr, 
     ldbounds

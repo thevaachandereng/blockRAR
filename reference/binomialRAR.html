@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Hello, World! — hello • blockRAR</title>
+<title>Block Design for Response-Adaptive Randomization — binomialRAR • blockRAR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="Hello, World! — hello" />
+<meta property="og:title" content="Block Design for Response-Adaptive Randomization — binomialRAR" />
 
-<meta property="og:description" content="Prints 'Hello, world!'." />
+<meta property="og:description" content="Simulation for binomial counts for block design for
+   response-adaptive randomization with time as a confounding" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -102,29 +103,88 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Hello, World!</h1>
-    
-    <div class="hidden name"><code>hello.Rd</code></div>
+    <h1>Block Design for Response-Adaptive Randomization</h1>
+    <small class="dont-index">Source: <a href='https://github.com/thevaachandereng/blockRAR/blob/master/R/binomial.R'><code>R/binomial.R</code></a></small>
+    <div class="hidden name"><code>binomialRAR.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Prints 'Hello, world!'.</p>
+    <p>Simulation for binomial counts for block design for
+   response-adaptive randomization with time as a confounding</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>hello</span>()</pre>
-        
+    <pre class="usage"><span class='fu'>binomialRAR</span>(<span class='no'>p_control</span>, <span class='no'>p_treatment</span>, <span class='no'>N_total</span>, <span class='kw'>block_number</span> <span class='kw'>=</span> <span class='fl'>4</span>,
+  <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>zvalue</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rand_ratio</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>conf.int</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"less"</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>p_control</th>
+      <td><p>scalar. Proportion of events under the control arm.</p></td>
+    </tr>
+    <tr>
+      <th>p_treatment</th>
+      <td><p>scalar. Proportion of events under the treatment arm.</p></td>
+    </tr>
+    <tr>
+      <th>N_total</th>
+      <td><p>scalar. Total sample size.</p></td>
+    </tr>
+    <tr>
+      <th>block_number</th>
+      <td><p>scalar. Number of blocks or time levels. The default is set to 4.
+If <code>block_number</code> is set to 1. This is a traditional RCT design.</p></td>
+    </tr>
+    <tr>
+      <th>simulation</th>
+      <td><p>scalar. Number of simulation to be ran. The default is set to 10000.</p></td>
+    </tr>
+    <tr>
+      <th>zvalue</th>
+      <td><p>vector. The z-value cutoff for corrected chi-square test statistics.</p></td>
+    </tr>
+    <tr>
+      <th>rand_ratio</th>
+      <td><p>vector. The randomization ratio is set based on the corrected
+chi-square test statistic. The length of rand_ratio should be the same length of
+zvalue.</p></td>
+    </tr>
+    <tr>
+      <th>conf.int</th>
+      <td><p>scalar. Confidence level of the interval.</p></td>
+    </tr>
+    <tr>
+      <th>alternative</th>
+      <td><p>character. A string specifying the alternative hypothesis,
+must be one of "less" (default) or "greater".</p></td>
+    </tr>
+    <tr>
+      <th>replace</th>
+      <td><p>character. should sampling be with replacement? If replace is set to
+FALSE (default), the 0 for control, 1 for treatment is replicated to the closest
+integer and this vector is sampled with no replacement. If replace is set to TRUE,
+the sampling is done based on randomization ratio provided with replacement.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>hello</span>()</div><div class='output co'>#&gt; <span class='error'>Error in hello(): could not find function "hello"</span></div></pre>
+    <p>a list with power (prop of trial success), total sample size, sample size
+   of patient in control and treatment group.</p>
+    
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-            
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
 
   </div>
 </div>

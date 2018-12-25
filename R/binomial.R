@@ -20,8 +20,7 @@
 #'    integer and this vector is sampled with no replacement. If replace is set to TRUE,
 #'    the sampling is done based on randomization ratio provided with replacement.
 #'
-#' @return a list with power (prop of trial success), total sample size, sample size
-#'    of patient in control and treatment group.
+#' @return a list with details on the simulation.
 #' \describe{
 #'   \item{\code{power}}{
 #'     scalar. The power of the trial, ie. the proportion of success over the

@@ -2,9 +2,13 @@
 
 export("%>%")
 export(binomialRAR)
+export(normalRAR)
 import(magrittr)
 importFrom(dplyr,mutate)
 importFrom(ldbounds,bounds)
+importFrom(stats,anova)
 importFrom(stats,chisq.test)
+importFrom(stats,lm)
 importFrom(stats,mantelhaen.test)
 importFrom(stats,rbinom)
+importFrom(stats,rnorm)

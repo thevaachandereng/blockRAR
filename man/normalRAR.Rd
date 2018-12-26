@@ -17,6 +17,29 @@ normalRAR(mu_control, mu_treatment, sd_control, sd_treatment, N_total,
 \item{sd_control}{scalar. Standard deviation of outcome in the control arm.}
 
 \item{sd_treatment}{scalar. Standard deviation of outcome in the treatment}
+
+\item{N_total}{scalar. Total sample size.}
+
+\item{block_number}{scalar. Number of blocks or time levels. The default is set to 4.
+If \code{block_number} is set to 1. This is a traditional RCT design.}
+
+\item{simulation}{scalar. Number of simulation to be ran. The default is set to 10000.}
+
+\item{zvalue}{vector. The z-value cutoff for corrected chi-square test statistics.}
+
+\item{rand_ratio}{vector. The randomization ratio is set based on the corrected
+chi-square test statistic. The length of rand_ratio should be the same length of
+zvalue.}
+
+\item{conf.int}{scalar. Confidence level of the interval.}
+
+\item{alternative}{character. A string specifying the alternative hypothesis,
+must be one of "less" (default) or "greater".}
+
+\item{replace}{character. should sampling be with replacement? If replace is set to
+FALSE (default), the 0 for control, 1 for treatment is replicated to the closest
+integer and this vector is sampled with no replacement. If replace is set to TRUE,
+the sampling is done based on randomization ratio provided with replacement.}
 }
 \value{
 a list with details on the simulation.

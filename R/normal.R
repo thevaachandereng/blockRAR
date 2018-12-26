@@ -6,7 +6,7 @@
 #' @param mu_treatment scalar. Mean outcome in the treatment arm.
 #' @param sd_control scalar. Standard deviation of outcome in the control arm.
 #' @param sd_treatment scalar. Standard deviation of outcome in the treatment
-#' @inheritParams
+#' @inheritParams binomialRAR
 #'
 #' @return a list with details on the simulation.
 #' \describe{
@@ -74,6 +74,8 @@ normalRAR <- function(
   N_control   <- NULL
   N_treatment <- NULL
   sample_size <- NULL
+
+
 
 
 

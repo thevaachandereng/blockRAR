@@ -11,6 +11,8 @@ test_that("the binomial RAR output is", {
   expect_equal(binomialRAR(p_control = 0.1, p_treatment = 0.6, N_total = 200,
                            block_number = 3, simulation = 10,
                            alternative = "greater", replace = TRUE)$power, 1)
+  expect_equal(binomialRAR(p_control = 0.99, p_treatment = 0.01, 120,
+                           simulation = 20)$power, 1)
   expect_equal(binomialRAR(p_control = 0.1, p_treatment = 0.1, N_total = 200,
                            block_number = 3, simulation = 10,
                            alternative = "less", replace = TRUE)$power, 0)

@@ -198,8 +198,18 @@ binomialRAR <- function(
     data_total <- data_total %>%
       mutate(time = factor(rep(1:index, group[1:index])))
 
+    summary_data <-  data_total %>%
+      group_by(treatment) %>%
+      summarize(prop = mean(as.numeric(outcome)))
+
     if(all(data_total$time == 1)){
-      p.val <- chisq.test(data_total$treatment, data_total$outcome)$p.value
+      if(((summary_data$prop[1] - summary_data$prop[2] > 0) & alternative == "less") |
+         ((summary_data$prop[2] - summary_data$prop[1] > 0) & alternative == "greater")){
+        p.val <- chisq.test(data_total$treatment, data_total$outcome)$p.value
+      }
+      else{
+        p.val <- 1
+      }
     }
     else{
       p.val <- mantelhaen.test(table(data_total), alternative = alternative)$p.val
@@ -227,7 +237,8 @@ binomialRAR <- function(
 
 }
 
-
+## quiets concerns of R CMD check re: the .'s that appear in pipelines
+if(getRversion() >= "2.15.1")  utils::globalVariables(c("treatment", "outcome"))
 
 
 

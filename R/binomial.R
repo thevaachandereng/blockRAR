@@ -66,6 +66,25 @@ binomialRAR <- function(
     rand_ratio <- c(1, 1.5, 2, 2.5)
   }
 
+  if((p_control <= 0 | p_control >= 1)){
+    stop("The proportion of event for the control group needs to between 0 and 1!")
+  }
+
+  if((p_treatment <= 0 | p_treatment >= 1)){
+    stop("The proportion of event for the treatment group needs to between 0 and 1!")
+  }
+
+  if((N_total < 0 | N_total %% 1 != 0)){
+    stop("The sample size needs to be a positive integer!")
+  }
+
+  if((block_number < 0 | block_number %% 1 != 0)){
+    stop("The number of blocks needs to be a positve integer!")
+  }
+
+  if((simulation < 0 | simulation %% 1 != 0)){
+    stop("The number of simulation needs to be a positve integer!")
+  }
 
   group <- rep(floor(N_total / block_number), block_number)
   if((N_total - sum(group)) > 0){

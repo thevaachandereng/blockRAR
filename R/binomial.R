@@ -38,6 +38,7 @@
 #' @importFrom stats rbinom mantelhaen.test chisq.test
 #' @importFrom ldbounds bounds
 #' @importFrom dplyr mutate
+#' @importFrom tibble as.tibble
 #'
 #' @export binomialRAR
 #'
@@ -127,10 +128,22 @@ binomialRAR <- function(
 
       rr <- rand_ratio[which.max(rand_ratio >= test_stat)]
 
+      if(!is.null(data_total)){
+        data_summary <- data_total %>%
+          group_by(treatment) %>%
+          summarize(prop = mean(as.numeric(outcome)))
+      }
+      else{
+        data_summary <- as.tibble(data.frame(treatment = c(0, 1), prop = c(0, 0)))
+      }
+
       data <- data.frame(
         treatment =
           if(replace == TRUE){
-            if(alternative == "less"){
+            if((alternative == "less" &
+               (data_summary$prop[1] >= data_summary$prop[2])) |
+               (alternative == "greater" &
+                (data_summary$prop[2] > data_summary$prop[1]))){
               sample(0:1, replace = T, group[i], prob = c(1, rr))
             }
             else{
@@ -138,7 +151,10 @@ binomialRAR <- function(
             }
           }
         else{
-          if(alternative == "less"){
+          if((alternative == "less" &
+              (data_summary$prop[1] >= data_summary$prop[2])) |
+             (alternative == "greater" &
+              (data_summary$prop[2] > data_summary$prop[1]))){
             sum_ratio <- rr + 1
             sampling <- rep(c(0, 1), round(c(group[i] * 1 / sum_ratio - 0.0001,
                                            group[i] * rr / sum_ratio + 0.0001)))
@@ -150,7 +166,6 @@ binomialRAR <- function(
                                              group[i] * 1 / sum_ratio + 0.0001)))
             sample(sampling, length(sampling))
           }
-
         },
         outcome = rep(NA, group[i]))
 

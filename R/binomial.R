@@ -194,11 +194,13 @@ binomialRAR <- function(
       data_total$outcome <- as.factor(data_total$outcome)
 
       if(is.na(match("1", levels(data_total$outcome)))){
-        return(factor(data_total$outcome, levels=c(levels(data_total$outcome), "1")))
+        data_total$outcome <- factor(data_total$outcome,
+                                     levels=c(levels(data_total$outcome), "1"))
       }
 
       if(is.na(match("0", levels(data_total$outcome)))){
-        return(factor(data_total$outcome, levels=c(levels(data_total$outcome), "0")))
+        data_total$outcome <- factor(data_total$outcome,
+                                     levels=c(levels(data_total$outcome), "0"))
       }
 
       test_stat <- sqrt(as.numeric(chisq.test(data_total$treatment,

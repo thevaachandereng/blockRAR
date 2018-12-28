@@ -45,7 +45,7 @@ normalRAR <- function(
   simulation      = 10000,
   zvalue          = NULL,
   rand_ratio      = NULL,
-  conf.int        = 0.95,
+  conf_int        = 0.95,
   alternative     = "less",
   replace         = FALSE
 ){
@@ -67,7 +67,7 @@ normalRAR <- function(
 
 
   time <- seq(1 / block_number, 1, 1 / block_number)
-  bounds <- bounds(time, iuse = c(1, 1), alpha = c(1 - conf.int, 1 - conf.int))$upper.bounds
+  bounds <- bounds(time, iuse = c(1, 1), alpha = c(1 - conf_int, 1 - conf_int))$upper.bounds
 
   power <- 0
 
@@ -78,6 +78,13 @@ normalRAR <- function(
 
 
 
+  output <- list(
+    power        = power / simulation,
+    N_enrolled   = sample_size,
+    N_control    = N_control,
+    N_treatment  = N_treatment
+  )
 
+  return(output)
 
 }

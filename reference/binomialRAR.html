@@ -176,6 +176,8 @@ the sampling is done based on randomization ratio provided with replacement.</p>
     <p>a list with details on the simulation.</p><dl class='dl-horizontal'>
   <dt><code>power</code></dt><dd><p>scalar. The power of the trial, ie. the proportion of success over the
     number of simulation ran.</p></dd>
+  <dt><code>p_control_estimate</code></dt><dd><p>scalar. The estimated proportion of events under the control group.</p></dd>
+  <dt><code>p_treatment_estimate</code></dt><dd><p>scalar. The estimated proportion of events under the treatment group.</p></dd>
   <dt><code>N_enrolled</code></dt><dd><p>vector. The number of patients enrolled in the trial (sum of control
     and experimental group for each simulation. )</p></dd>
   <dt><code>N_control</code></dt><dd><p>vector. The number of patients enrolled in the control group for
@@ -190,6 +192,40 @@ the sampling is done based on randomization ratio provided with replacement.</p>
     <pre class="examples"><div class='input'><span class='fu'>binomialRAR</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.7</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.65</span>, <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>200</span>,
             <span class='kw'>block_number</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; $power
 #&gt; [1] 0.12
+#&gt; 
+#&gt; $p_control_estimate
+#&gt;   [1] 0.6000000 0.7600000 0.7000000 0.6900000 0.7974684 0.6600000 0.7600000
+#&gt;   [8] 0.7200000 0.7200000 0.6700000 0.6000000 0.7000000 0.7700000 0.7341772
+#&gt;  [15] 0.7333333 0.7215190 0.7721519 0.8400000 0.6900000 0.6400000 0.6700000
+#&gt;  [22] 0.6500000 0.7600000 0.6600000 0.7200000 0.7500000 0.6700000 0.7000000
+#&gt;  [29] 0.6636364 0.7222222 0.6600000 0.6500000 0.6500000 0.7100000 0.6700000
+#&gt;  [36] 0.7900000 0.6600000 0.7300000 0.7400000 0.7111111 0.6900000 0.8072289
+#&gt;  [43] 0.7000000 0.6300000 0.7100000 0.7000000 0.7200000 0.6818182 0.6300000
+#&gt;  [50] 0.6500000 0.7000000 0.6300000 0.6300000 0.7555556 0.7777778 0.7800000
+#&gt;  [57] 0.6800000 0.6545455 0.7100000 0.7555556 0.6909091 0.6800000 0.7500000
+#&gt;  [64] 0.6900000 0.7200000 0.7888889 0.7444444 0.7444444 0.6818182 0.8000000
+#&gt;  [71] 0.7222222 0.7300000 0.8200000 0.6600000 0.6600000 0.6700000 0.7400000
+#&gt;  [78] 0.6700000 0.6800000 0.6300000 0.6900000 0.6500000 0.7333333 0.6700000
+#&gt;  [85] 0.7600000 0.7100000 0.7600000 0.7000000 0.7100000 0.5900000 0.7700000
+#&gt;  [92] 0.7600000 0.6700000 0.7500000 0.6700000 0.7500000 0.6900000 0.7000000
+#&gt;  [99] 0.6900000 0.6500000
+#&gt; 
+#&gt; $p_treatment_estimate
+#&gt;   [1] 0.5600000 0.6500000 0.6500000 0.6200000 0.6198347 0.7000000 0.6600000
+#&gt;   [8] 0.6500000 0.7000000 0.6500000 0.5900000 0.5800000 0.6000000 0.6363636
+#&gt;  [15] 0.5727273 0.6280992 0.6611570 0.5200000 0.6700000 0.6200000 0.6200000
+#&gt;  [22] 0.6900000 0.7300000 0.5700000 0.6700000 0.6800000 0.6000000 0.6600000
+#&gt;  [29] 0.7333333 0.6272727 0.6500000 0.6300000 0.6500000 0.6600000 0.6800000
+#&gt;  [36] 0.6800000 0.6800000 0.6500000 0.6400000 0.6454545 0.6400000 0.5982906
+#&gt;  [43] 0.6700000 0.6400000 0.6600000 0.6400000 0.6900000 0.7333333 0.6300000
+#&gt;  [50] 0.6300000 0.6600000 0.6200000 0.6400000 0.6909091 0.6909091 0.5200000
+#&gt;  [57] 0.6300000 0.6777778 0.6200000 0.6636364 0.6666667 0.6500000 0.6900000
+#&gt;  [64] 0.7200000 0.7000000 0.6272727 0.6727273 0.6363636 0.7777778 0.7000000
+#&gt;  [71] 0.5636364 0.6900000 0.5400000 0.6700000 0.6300000 0.6600000 0.6500000
+#&gt;  [78] 0.7000000 0.6300000 0.6800000 0.6100000 0.6700000 0.7000000 0.7200000
+#&gt;  [85] 0.7000000 0.6700000 0.6600000 0.6100000 0.6000000 0.5800000 0.6800000
+#&gt;  [92] 0.6200000 0.6600000 0.6400000 0.6200000 0.7000000 0.6800000 0.6500000
+#&gt;  [99] 0.6800000 0.6000000
 #&gt; 
 #&gt; $N_enrolled
 #&gt;   [1] 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 100

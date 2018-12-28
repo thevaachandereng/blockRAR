@@ -2,7 +2,7 @@
 % Please edit documentation in R/normal.R
 \name{normalRAR}
 \alias{normalRAR}
-\title{Block Design for Response-Adaptive Randomization}
+\title{Block Design for Response-Adaptive Randomization for Normal Data}
 \usage{
 normalRAR(mu_control, mu_treatment, sd_control, sd_treatment, N_total,
   block_number = 4, simulation = 10000, zvalue = NULL,

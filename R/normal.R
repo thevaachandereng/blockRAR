@@ -1,4 +1,4 @@
-#' @title Block Design for Response-Adaptive Randomization
+#' @title Block Design for Response-Adaptive Randomization for Normal Data
 #'
 #' @description Simulation for normal mean for block design for
 #'    response-adaptive randomization with time as a confounding

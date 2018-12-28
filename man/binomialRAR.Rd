@@ -2,7 +2,7 @@
 % Please edit documentation in R/binomial.R
 \name{binomialRAR}
 \alias{binomialRAR}
-\title{Block Design for Response-Adaptive Randomization}
+\title{Block Design for Response-Adaptive Randomization for Binomial Data}
 \usage{
 binomialRAR(p_control, p_treatment, N_total, block_number = 4,
   simulation = 10000, zvalue = NULL, rand_ratio = NULL,

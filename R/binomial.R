@@ -111,7 +111,7 @@ binomialRAR <- function(
 
 
   time <- seq(1 / block_number, 1, 1 / block_number)
-  bounds <- bounds(time, iuse = c(1, 1), alpha = c(1 - conf.int, 1 - conf.int))$upper.bounds
+  bounds <- bounds(time, iuse = c(1, 1), alpha = c(1 - conf_int, 1 - conf_int))$upper.bounds
 
   power <- 0
 
@@ -194,7 +194,7 @@ binomialRAR <- function(
     N_treatment <- c(N_treatment, sum(data_total$treatment == 1))
     sample_size <- c(sample_size, dim(data_total)[1])
 
-    if(p.val < (1 - conf.int)){
+    if(p.val < (1 - conf_int)){
       power <- power + 1
     }
 

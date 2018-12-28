@@ -203,8 +203,13 @@ binomialRAR <- function(
                                      levels=c(levels(data_total$outcome), "0"))
       }
 
-      test_stat <- sqrt(as.numeric(chisq.test(data_total$treatment,
+      if(all(data_total$outcome == 1) | all(data_total$outcome == 0)){
+        test_stat <- 0
+      }
+      else{
+        test_stat <- sqrt(as.numeric(chisq.test(data_total$treatment,
                                               data_total$outcome)$statistic))
+      }
 
       if(test_stat > bounds[i]){
         index <- i

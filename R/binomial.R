@@ -37,7 +37,7 @@
 #' }
 #' @importFrom stats rbinom mantelhaen.test chisq.test
 #' @importFrom ldbounds bounds
-#' @importFrom dplyr mutate
+#' @importFrom dplyr mutate group_by summarize
 #' @importFrom tibble as.tibble
 #'
 #' @export binomialRAR

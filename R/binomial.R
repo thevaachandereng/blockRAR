@@ -83,6 +83,11 @@ binomialRAR <- function(
     stop("The number of blocks needs to be a positve integer!")
   }
 
+  if(N_total / block_number < 2){
+    stop("The number of blocks needs smaller so that each block can have two patients
+         minimum!")
+  }
+
   if((simulation <= 0 | simulation %% 1 != 0)){
     stop("The number of simulation needs to be a positve integer!")
   }
@@ -99,7 +104,11 @@ binomialRAR <- function(
     stop("The replacement for sampling is either TRUE or FALSE!")
   }
 
-  if(any(rand_ratio < 1) & length(rand_ratio) != length(zvalue)){
+  if(any(zvalue <= 0)){
+    stop("The zvalue can only be greater than 0!")
+  }
+
+  if(any(rand_ratio < 1) | length(rand_ratio) != length(zvalue)){
     stop("The randomization ratio needs to be greater than or equal to 1 and the length of
          randomization ratio needs to be same as the length of zvalue!")
   }

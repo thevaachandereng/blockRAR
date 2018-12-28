@@ -42,6 +42,10 @@ a list with details on the simulation.
   \item{\code{power}}{
     scalar. The power of the trial, ie. the proportion of success over the
     number of simulation ran.}
+  \item{\code{p_control_estimate}}{
+    scalar. The estimated proportion of events under the control group.}
+  \item{\code{p_treatment_estimate}}{
+    scalar. The estimated proportion of events under the treatment group.}
   \item{\code{N_enrolled}}{
     vector. The number of patients enrolled in the trial (sum of control
     and experimental group for each simulation. )}

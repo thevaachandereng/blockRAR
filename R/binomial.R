@@ -25,6 +25,10 @@
 #'   \item{\code{power}}{
 #'     scalar. The power of the trial, ie. the proportion of success over the
 #'     number of simulation ran.}
+#'   \item{\code{p_control_estimate}}{
+#'     scalar. The estimated proportion of events under the control group.}
+#'   \item{\code{p_treatment_estimate}}{
+#'     scalar. The estimated proportion of events under the treatment group.}
 #'   \item{\code{N_enrolled}}{
 #'     vector. The number of patients enrolled in the trial (sum of control
 #'     and experimental group for each simulation. )}
@@ -128,11 +132,14 @@ binomialRAR <- function(
   N_control   <- NULL
   N_treatment <- NULL
   sample_size <- NULL
+  p_control_estimate    <- NULL
+  p_treatment_estimate  <- NULL
 
   for(k in 1:simulation){
-    data_total <- NULL
-    test_stat  <- 0
-    index      <- block_number
+    data_total            <- NULL
+    test_stat             <- 0
+    index                 <- block_number
+
     for(i in 1:block_number){
 
       rr <- rand_ratio[which.max(rand_ratio >= test_stat)]
@@ -140,7 +147,7 @@ binomialRAR <- function(
       if(!is.null(data_total)){
         data_summary <- data_total %>%
           group_by(treatment) %>%
-          summarize(prop = mean(as.numeric(outcome)))
+          summarize(prop = mean(as.numeric(outcome) - 1))
       }
       else{
         data_summary <- as.tibble(data.frame(treatment = c(0, 1), prop = c(0, 0)))
@@ -209,7 +216,7 @@ binomialRAR <- function(
 
     summary_data <-  data_total %>%
       group_by(treatment) %>%
-      summarize(prop = mean(as.numeric(outcome)))
+      summarize(prop = mean(as.numeric(outcome) - 1))
 
     if(all(data_total$time == 1)){
       if(((summary_data$prop[1] - summary_data$prop[2] > 0) & alternative == "less") |
@@ -227,6 +234,8 @@ binomialRAR <- function(
     N_control <- c(N_control, sum(data_total$treatment == 0))
     N_treatment <- c(N_treatment, sum(data_total$treatment == 1))
     sample_size <- c(sample_size, dim(data_total)[1])
+    p_control_estimate <- c(p_control_estimate, summary_data$prop[1])
+    p_treatment_estimate <- c(p_treatment_estimate, summary_data$prop[2])
 
     if(p.val < (1 - conf_int)){
       power <- power + 1
@@ -236,10 +245,12 @@ binomialRAR <- function(
   }
 
   output <- list(
-    power        = power / simulation,
-    N_enrolled   = sample_size,
-    N_control    = N_control,
-    N_treatment  = N_treatment
+    power                 = power / simulation,
+    p_control_estimate    = p_control_estimate ,
+    p_treatment_estimate  = p_treatment_estimate,
+    N_enrolled            = sample_size,
+    N_control             = N_control,
+    N_treatment           = N_treatment
     )
 
   return(output)

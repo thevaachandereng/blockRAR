@@ -90,11 +90,11 @@ binomialRAR <- function(
     stop("The confidence interval needs to between 0 and 1!")
   }
 
-  if((alternative != "less" | alternative != "greater")){
+  if((alternative != "less" & alternative != "greater")){
     stop("The alternative can only be less or greater!")
   }
 
-  if((replace != "TRUE" | replace != "FALSE")){
+  if((replace != "TRUE" & replace != "FALSE")){
     stop("The replacement for sampling is either TRUE or FALSE!")
   }
 

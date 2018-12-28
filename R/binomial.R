@@ -12,7 +12,7 @@
 #' @param rand_ratio vector. The randomization ratio is set based on the corrected
 #'   chi-square test statistic. The length of rand_ratio should be the same length of
 #'   zvalue.
-#' @param conf.int scalar. Confidence level of the interval.
+#' @param conf_int scalar. Confidence level of the interval.
 #' @param alternative character. A string specifying the alternative hypothesis,
 #'    must be one of "less" (default) or "greater".
 #' @param replace character. should sampling be with replacement? If replace is set to
@@ -53,7 +53,7 @@ binomialRAR <- function(
   simulation      = 10000,
   zvalue          = NULL,
   rand_ratio      = NULL,
-  conf.int        = 0.95,
+  conf_int        = 0.95,
   alternative     = "less",
   replace         = FALSE
 ){
@@ -74,16 +74,33 @@ binomialRAR <- function(
     stop("The proportion of event for the treatment group needs to between 0 and 1!")
   }
 
-  if((N_total < 0 | N_total %% 1 != 0)){
+  if((N_total <= 0 | N_total %% 1 != 0)){
     stop("The sample size needs to be a positive integer!")
   }
 
-  if((block_number < 0 | block_number %% 1 != 0)){
+  if((block_number <= 0 | block_number %% 1 != 0)){
     stop("The number of blocks needs to be a positve integer!")
   }
 
-  if((simulation < 0 | simulation %% 1 != 0)){
+  if((simulation <= 0 | simulation %% 1 != 0)){
     stop("The number of simulation needs to be a positve integer!")
+  }
+
+  if((conf_int <= 0 | conf_int >= 1)){
+    stop("The confidence interval needs to between 0 and 1!")
+  }
+
+  if((alternative != "less" | alternative != "greater")){
+    stop("The alternative can only be less or greater!")
+  }
+
+  if((replace != "TRUE" | replace != "FALSE")){
+    stop("The replacement for sampling is either TRUE or FALSE!")
+  }
+
+  if(any(rand_ratio < 1) & length(rand_ratio) != length(zvalue)){
+    stop("The randomization ratio needs to be greater than or equal to 1 and the length of
+         randomization ratio needs to be same as the length of zvalue!")
   }
 
   group <- rep(floor(N_total / block_number), block_number)

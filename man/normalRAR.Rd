@@ -6,7 +6,7 @@
 \usage{
 normalRAR(mu_control, mu_treatment, sd_control, sd_treatment, N_total,
   block_number = 4, simulation = 10000, zvalue = NULL,
-  rand_ratio = NULL, conf.int = 0.95, alternative = "less",
+  rand_ratio = NULL, conf_int = 0.95, alternative = "less",
   replace = FALSE)
 }
 \arguments{
@@ -31,7 +31,7 @@ If \code{block_number} is set to 1. This is a traditional RCT design.}
 chi-square test statistic. The length of rand_ratio should be the same length of
 zvalue.}
 
-\item{conf.int}{scalar. Confidence level of the interval.}
+\item{conf_int}{scalar. Confidence level of the interval.}
 
 \item{alternative}{character. A string specifying the alternative hypothesis,
 must be one of "less" (default) or "greater".}

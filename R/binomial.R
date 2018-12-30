@@ -56,20 +56,12 @@ binomialRAR <- function(
   N_total,
   block_number    = 4,
   simulation      = 10000,
-  zvalue          = NULL,
-  rand_ratio      = NULL,
+  zvalue          = c(1, 1.5, 2, 2.5),
+  rand_ratio      = c(1, 1.5, 2, 2.5),
   conf_int        = 0.95,
   alternative     = "less",
   replace         = FALSE
 ){
-
-  if(is.null(zvalue)){
-    zvalue <- c(1, 1.5, 2, 2.5)
-  }
-
-  if(is.null(rand_ratio)){
-    rand_ratio <- c(1, 1.5, 2, 2.5)
-  }
 
   if((p_control <= 0 | p_control >= 1)){
     stop("The proportion of event for the control group needs to between 0 and 1!")
@@ -142,7 +134,13 @@ binomialRAR <- function(
 
     for(i in 1:block_number){
 
-      rr <- rand_ratio[which.max(rand_ratio >= test_stat)]
+      if(length(rand_ratio)[1]){
+        rr <- rand_ratio
+      }
+      else{
+        ratios <- c(-0.1, rand_ratio[-length(rand_ratio)])
+        rr <- rand_ratio[max(which(test_stat >= ratios))]
+      }
 
       if(!is.null(data_total)){
         data_summary <- data_total %>%

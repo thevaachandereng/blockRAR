@@ -32,6 +32,8 @@ test_that("the binomial RAR output is", {
   expect_error(binomialRAR(p_control = 0.1, p_treatment = 0.2, N_total = 100,
                            block_number = 3, simulation = 10.2))
   expect_error(binomialRAR(p_control = 0.1, p_treatment = 0.2, N_total = 100,
+                           block_number = 3, drift = -0.15, simulation = 10))
+  expect_error(binomialRAR(p_control = 0.1, p_treatment = 0.2, N_total = 100,
                            block_number = 3, replace = "YES"))
   expect_error(binomialRAR(p_control = 0.1, p_treatment = 0.2, N_total = 120,
                            conf_int = 1.2))

@@ -53,6 +53,8 @@
 #' @examples
 #' binomialRAR(p_control = 0.7, p_treatment = 0.65, N_total = 200,
 #'             block_number = 2, simulation = 100)
+#' binomialRAR(p_control = 0.5, p_treatment = 0.40, N_total = 200,
+#'             block_number = 2, simulation = 100, drift = -0.15)
 
 binomialRAR <- function(
   p_control,
@@ -114,8 +116,8 @@ binomialRAR <- function(
          randomization ratio needs to be same as the length of zvalue!")
   }
 
-  if(drift + p_control > 1 | drift + p_control < 1 |
-     drift + p_treatment > 1 | drift + p_treatment < 1){
+  if(drift + p_control > 1 | drift + p_control < 0 |
+     drift + p_treatment > 1 | drift + p_treatment < 0){
     stop("The drift value is too high causing the proportion of event to exceed 1
          in either the control or treatment group, pick a lower value for drift!")
   }

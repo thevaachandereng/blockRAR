@@ -70,4 +70,6 @@ Simulation for binomial counts for block design for
 \examples{
 binomialRAR(p_control = 0.7, p_treatment = 0.65, N_total = 200,
             block_number = 2, simulation = 100)
+binomialRAR(p_control = 0.5, p_treatment = 0.40, N_total = 200,
+            block_number = 2, simulation = 100, drift = -0.15)
 }

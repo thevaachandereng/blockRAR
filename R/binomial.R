@@ -134,7 +134,7 @@ binomialRAR <- function(
 
     for(i in 1:block_number){
 
-      if(length(rand_ratio)[1]){
+      if(length(rand_ratio) == 1){
         rr <- rand_ratio
       }
       else{

@@ -5,8 +5,9 @@
 \title{Block Design for Response-Adaptive Randomization for Binomial Data}
 \usage{
 binomialRAR(p_control, p_treatment, N_total, block_number = 4,
-  simulation = 10000, zvalue = NULL, rand_ratio = NULL,
-  conf_int = 0.95, alternative = "less", replace = FALSE)
+  simulation = 10000, zvalue = c(1, 1.5, 2, 2.5), rand_ratio = c(1,
+  1.5, 2, 2.5), conf_int = 0.95, alternative = "less",
+  replace = FALSE)
 }
 \arguments{
 \item{p_control}{scalar. Proportion of events under the control arm.}

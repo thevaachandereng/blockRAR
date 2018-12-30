@@ -116,9 +116,9 @@
     </div>
 
     <pre class="usage"><span class='fu'>binomialRAR</span>(<span class='no'>p_control</span>, <span class='no'>p_treatment</span>, <span class='no'>N_total</span>, <span class='kw'>block_number</span> <span class='kw'>=</span> <span class='fl'>4</span>,
-  <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>zvalue</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1.5</span>, <span class='fl'>2</span>, <span class='fl'>2.5</span>), <span class='kw'>rand_ratio</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,
-  <span class='fl'>1.5</span>, <span class='fl'>2</span>, <span class='fl'>2.5</span>), <span class='kw'>conf_int</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"less"</span>,
-  <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>drift</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>zvalue</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1.5</span>, <span class='fl'>2</span>, <span class='fl'>2.5</span>),
+  <span class='kw'>rand_ratio</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1.5</span>, <span class='fl'>2</span>, <span class='fl'>2.5</span>), <span class='kw'>conf_int</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+  <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"less"</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,6 +139,13 @@
       <th>block_number</th>
       <td><p>scalar. Number of blocks or time levels. The default is set to 4.
 If <code>block_number</code> is set to 1. This is a traditional RCT design.</p></td>
+    </tr>
+    <tr>
+      <th>drift</th>
+      <td><p>scalar. The increase or decrease in proportion of event over time.
+In this case, the proportion of failure changes in each block by the number of
+patient accured over the totoal sample size. The full drift effect is seen in the
+final block.</p></td>
     </tr>
     <tr>
       <th>simulation</th>

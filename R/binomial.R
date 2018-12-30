@@ -114,6 +114,12 @@ binomialRAR <- function(
          randomization ratio needs to be same as the length of zvalue!")
   }
 
+  if(drift + p_control > 1 | drift + p_control < 1 |
+     drift + p_treatment > 1 | drift + p_treatment < 1){
+    stop("The drift value is too high causing the proportion of event to exceed 1
+         in either the control or treatment group, pick a lower value for drift!")
+  }
+
   group <- rep(floor(N_total / block_number), block_number)
   if((N_total - sum(group)) > 0){
     index <- sample(1:block_number, N_total - sum(group))

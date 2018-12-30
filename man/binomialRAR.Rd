@@ -5,9 +5,9 @@
 \title{Block Design for Response-Adaptive Randomization for Binomial Data}
 \usage{
 binomialRAR(p_control, p_treatment, N_total, block_number = 4,
-  simulation = 10000, zvalue = c(1, 1.5, 2, 2.5), rand_ratio = c(1,
-  1.5, 2, 2.5), conf_int = 0.95, alternative = "less",
-  replace = FALSE)
+  drift = 0, simulation = 10000, zvalue = c(1, 1.5, 2, 2.5),
+  rand_ratio = c(1, 1.5, 2, 2.5), conf_int = 0.95,
+  alternative = "less", replace = FALSE)
 }
 \arguments{
 \item{p_control}{scalar. Proportion of events under the control arm.}
@@ -18,6 +18,11 @@ binomialRAR(p_control, p_treatment, N_total, block_number = 4,
 
 \item{block_number}{scalar. Number of blocks or time levels. The default is set to 4.
 If \code{block_number} is set to 1. This is a traditional RCT design.}
+
+\item{drift}{scalar. The increase or decrease in proportion of event over time.
+In this case, the proportion of failure changes in each block by the number of
+patient accured over the totoal sample size. The full drift effect is seen in the
+final block.}
 
 \item{simulation}{scalar. Number of simulation to be ran. The default is set to 10000.}
 

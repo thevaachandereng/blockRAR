@@ -7,6 +7,10 @@
 #' @param N_total scalar. Total sample size.
 #' @param block_number scalar. Number of blocks or time levels. The default is set to 4.
 #'   If \code{block_number} is set to 1. This is a traditional RCT design.
+#' @param drift scalar. The increase or decrease in proportion of event over time.
+#'   In this case, the proportion of failure changes in each block by the number of
+#'   patient accured over the totoal sample size. The full drift effect is seen in the
+#'   final block.
 #' @param simulation scalar. Number of simulation to be ran. The default is set to 10000.
 #' @param zvalue vector. The z-value cutoff for corrected chi-square test statistics.
 #' @param rand_ratio vector. The randomization ratio is set based on the corrected
@@ -55,6 +59,7 @@ binomialRAR <- function(
   p_treatment,
   N_total,
   block_number    = 4,
+  drift           = 0,
   simulation      = 10000,
   zvalue          = c(1, 1.5, 2, 2.5),
   rand_ratio      = c(1, 1.5, 2, 2.5),
@@ -184,7 +189,8 @@ binomialRAR <- function(
         outcome = rep(NA, group[i]))
 
       data$outcome <- rbinom(dim(data)[1], 1, prob = data$treatment * p_treatment +
-                               (1 - data$treatment) * p_control)
+                               (1 - data$treatment) * p_control +
+                               drift * sum(group[1:i]) / N_total)
 
       data_total <- rbind(data_total, data)
 

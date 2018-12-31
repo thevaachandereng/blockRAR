@@ -118,7 +118,7 @@
     <pre class="usage"><span class='fu'>binomialRAR</span>(<span class='no'>p_control</span>, <span class='no'>p_treatment</span>, <span class='no'>N_total</span>, <span class='kw'>block_number</span> <span class='kw'>=</span> <span class='fl'>4</span>,
   <span class='kw'>drift</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>zvalue</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1.5</span>, <span class='fl'>2</span>),
   <span class='kw'>rand_ratio</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1.5</span>, <span class='fl'>2</span>, <span class='fl'>2.5</span>), <span class='kw'>conf_int</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"less"</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"less"</span>, <span class='kw'>correct</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -171,8 +171,14 @@ zvalue.</p></td>
 must be one of "less" (default) or "greater".</p></td>
     </tr>
     <tr>
+      <th>correct</th>
+      <td><p>logical. a logical indicating whether to apply continuity correction
+when computing the test statistic: one half is subtracted from all |O - E|
+differences; however, the correction will not be bigger than the differences themselves.</p></td>
+    </tr>
+    <tr>
       <th>replace</th>
-      <td><p>character. should sampling be with replacement? If replace is set to
+      <td><p>logical. should sampling be with replacement? If replace is set to
 FALSE (default), the 0 for control, 1 for treatment is replicated to the closest
 integer and this vector is sampled with no replacement. If replace is set to TRUE,
 the sampling is done based on randomization ratio provided with replacement.</p></td>

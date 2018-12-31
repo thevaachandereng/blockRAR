@@ -5,7 +5,7 @@
 \title{Block Design for Response-Adaptive Randomization for Binomial Data}
 \usage{
 binomialRAR(p_control, p_treatment, N_total, block_number = 4,
-  drift = 0, simulation = 10000, zvalue = c(1, 1.5, 2, 2.5),
+  drift = 0, simulation = 10000, zvalue = c(1, 1.5, 2),
   rand_ratio = c(1, 1.5, 2, 2.5), conf_int = 0.95,
   alternative = "less", replace = FALSE)
 }

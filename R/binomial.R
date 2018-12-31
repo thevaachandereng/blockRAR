@@ -43,6 +43,7 @@
 #'     vector. The number of patients enrolled in the experimental group for
 #'     each simulation.}
 #' }
+#'
 #' @importFrom stats rbinom mantelhaen.test chisq.test
 #' @importFrom ldbounds bounds
 #' @importFrom dplyr mutate group_by summarize
@@ -63,7 +64,7 @@ binomialRAR <- function(
   block_number    = 4,
   drift           = 0,
   simulation      = 10000,
-  zvalue          = c(1, 1.5, 2, 2.5),
+  zvalue          = c(1, 1.5, 2),
   rand_ratio      = c(1, 1.5, 2, 2.5),
   conf_int        = 0.95,
   alternative     = "less",
@@ -111,9 +112,9 @@ binomialRAR <- function(
     stop("The zvalue can only be greater than 0!")
   }
 
-  if(any(rand_ratio < 1) | length(rand_ratio) != length(zvalue)){
+  if(any(rand_ratio < 1) | (length(rand_ratio) - 1) != length(zvalue)){
     stop("The randomization ratio needs to be greater than or equal to 1 and the length of
-         randomization ratio needs to be same as the length of zvalue!")
+         randomization ratio needs to be greater than the length of zvalue by one!")
   }
 
   if(drift + p_control >= 1 | drift + p_control <= 0 |
@@ -151,8 +152,8 @@ binomialRAR <- function(
         rr <- rand_ratio
       }
       else{
-        ratios <- c(-0.1, rand_ratio[-length(rand_ratio)])
-        rr <- rand_ratio[max(which(test_stat >= ratios))]
+        zval <- c(-0.1, zvalue)
+        rr <- rand_ratio[max(which(test_stat >= zval))]
       }
 
       if(!is.null(data_total)){

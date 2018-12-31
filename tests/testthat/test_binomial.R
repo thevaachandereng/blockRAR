@@ -44,7 +44,7 @@ test_that("the binomial RAR output is", {
   expect_error(binomialRAR(p_control = 0.1, p_treatment = 0.2, N_total = 100,
                            alternative = "two-sided"))
   expect_error(binomialRAR(p_control = 0.1, p_treatment = 0.2, N_total = 100,
-                           zvalue = c(-1, 1, 2)))
+                           zvalue = c(-1, 1)))
   expect_error(binomialRAR(p_control = 0.1, p_treatment = 0.2, N_total = 100,
                            rand_ratio = c(-1, 1, 2)))
   expect_error(binomialRAR(p_control = 0.1, p_treatment = 0.2, N_total = 100,

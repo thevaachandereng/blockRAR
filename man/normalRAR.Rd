@@ -36,7 +36,7 @@ zvalue.}
 \item{alternative}{character. A string specifying the alternative hypothesis,
 must be one of "less" (default) or "greater".}
 
-\item{replace}{character. should sampling be with replacement? If replace is set to
+\item{replace}{logical. should sampling be with replacement? If replace is set to
 FALSE (default), the 0 for control, 1 for treatment is replicated to the closest
 integer and this vector is sampled with no replacement. If replace is set to TRUE,
 the sampling is done based on randomization ratio provided with replacement.}

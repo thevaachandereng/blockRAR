@@ -19,7 +19,10 @@
 #' @param conf_int scalar. Confidence level of the interval.
 #' @param alternative character. A string specifying the alternative hypothesis,
 #'    must be one of "less" (default) or "greater".
-#' @param replace character. should sampling be with replacement? If replace is set to
+#' @param correct logical. a logical indicating whether to apply continuity correction
+#'    when computing the test statistic: one half is subtracted from all |O - E|
+#'    differences; however, the correction will not be bigger than the differences themselves.
+#' @param replace logical. should sampling be with replacement? If replace is set to
 #'    FALSE (default), the 0 for control, 1 for treatment is replicated to the closest
 #'    integer and this vector is sampled with no replacement. If replace is set to TRUE,
 #'    the sampling is done based on randomization ratio provided with replacement.
@@ -68,6 +71,7 @@ binomialRAR <- function(
   rand_ratio      = c(1, 1.5, 2, 2.5),
   conf_int        = 0.95,
   alternative     = "less",
+  correct         = TRUE,
   replace         = FALSE
 ){
 
@@ -221,7 +225,8 @@ binomialRAR <- function(
       }
       else{
         test_stat <- sqrt(as.numeric(chisq.test(data_total$treatment,
-                                              data_total$outcome)$statistic))
+                                              data_total$outcome,
+                                              correct = correct)$statistic))
       }
 
       if(test_stat > bounds[i]){
@@ -241,14 +246,16 @@ binomialRAR <- function(
     if(all(data_total$time == 1)){
       if(((summary_data$prop[1] - summary_data$prop[2] > 0) & alternative == "less") |
          ((summary_data$prop[2] - summary_data$prop[1] > 0) & alternative == "greater")){
-        p.val <- chisq.test(data_total$treatment, data_total$outcome)$p.value
+        p.val <- chisq.test(data_total$treatment, data_total$outcome,
+                            correct = TRUE)$p.value
       }
       else{
         p.val <- 1
       }
     }
     else{
-      p.val <- mantelhaen.test(table(data_total), alternative = alternative)$p.val
+      p.val <- mantelhaen.test(table(data_total), alternative = alternative,
+                               correct = correct)$p.val
     }
 
     N_control <- c(N_control, sum(data_total$treatment == 0))

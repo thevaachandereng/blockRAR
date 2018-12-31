@@ -7,7 +7,7 @@
 binomialRAR(p_control, p_treatment, N_total, block_number = 4,
   drift = 0, simulation = 10000, zvalue = c(1, 1.5, 2),
   rand_ratio = c(1, 1.5, 2, 2.5), conf_int = 0.95,
-  alternative = "less", replace = FALSE)
+  alternative = "less", correct = TRUE, replace = FALSE)
 }
 \arguments{
 \item{p_control}{scalar. Proportion of events under the control arm.}
@@ -37,7 +37,11 @@ zvalue.}
 \item{alternative}{character. A string specifying the alternative hypothesis,
 must be one of "less" (default) or "greater".}
 
-\item{replace}{character. should sampling be with replacement? If replace is set to
+\item{correct}{logical. a logical indicating whether to apply continuity correction
+when computing the test statistic: one half is subtracted from all |O - E|
+differences; however, the correction will not be bigger than the differences themselves.}
+
+\item{replace}{logical. should sampling be with replacement? If replace is set to
 FALSE (default), the 0 for control, 1 for treatment is replicated to the closest
 integer and this vector is sampled with no replacement. If replace is set to TRUE,
 the sampling is done based on randomization ratio provided with replacement.}

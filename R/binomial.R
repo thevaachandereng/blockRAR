@@ -220,7 +220,8 @@ binomialRAR <- function(
                                      levels=c(levels(data_total$outcome), "0"))
       }
 
-      if(all(data_total$outcome == 1) | all(data_total$outcome == 0)){
+      if(all(data_total$outcome == 1) | all(data_total$outcome == 0) |
+         all(data_total$treatment == 1) | all(data_total$treatment == 0)){
         test_stat <- 0
       }
       else{

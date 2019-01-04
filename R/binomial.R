@@ -220,6 +220,10 @@ binomialRAR <- function(
                                      levels=c(levels(data_total$outcome), "0"))
       }
 
+      summ_data <-  data_total %>%
+        group_by(treatment) %>%
+        summarize(prop = mean(as.numeric(outcome) - 1))
+
       if(all(data_total$outcome == 1) | all(data_total$outcome == 0) |
          all(data_total$treatment == 1) | all(data_total$treatment == 0)){
         test_stat <- 0

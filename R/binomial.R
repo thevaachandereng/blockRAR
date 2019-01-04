@@ -224,6 +224,11 @@ binomialRAR <- function(
          all(data_total$treatment == 1) | all(data_total$treatment == 0)){
         test_stat <- 0
       }
+      else if(((summ_data$prop[2] - summ_data$prop[1] > 0) & alternative == "less") |
+              ((summ_data$prop[1] - summ_data$prop[2] > 0) & alternative == "greater")){
+        test_stat <- 0
+
+      }
       else{
         test_stat <- sqrt(as.numeric(chisq.test(data_total$treatment,
                                               data_total$outcome,

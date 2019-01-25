@@ -91,11 +91,9 @@ binomialRAR <- function(
     stop("The number of blocks needs to be a positve integer!")
   }
 
-  if(N_total / block_number < 2){
-    stop("The number of blocks needs smaller so that each block can have two patients
-         minimum!")
+  if((N_total / block_number <= 2) & replace == FALSE){
+    warning("The sampling is done with replacement and replace input is ignored!")
   }
-
   if((simulation <= 0 | simulation %% 1 != 0)){
     stop("The number of simulation needs to be a positve integer!")
   }
@@ -171,7 +169,7 @@ binomialRAR <- function(
 
       data <- data.frame(
         treatment =
-          if(replace == TRUE){
+          if(replace == TRUE | N_total / block_number < 2){
             if((alternative == "less" &
                (data_summary$prop[1] >= data_summary$prop[2])) |
                (alternative == "greater" &

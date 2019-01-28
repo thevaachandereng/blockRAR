@@ -256,7 +256,7 @@ binomialRAR <- function(
         }
         else{
           temp_data <- data_total %>%
-                          mutate(time = factor(rep(1:index, group[1:i])))
+                          mutate(time = factor(rep(1:i, group[1:i])))
           test_stat <- sqrt(as.numeric(mantelhaen.test(table(temp_data),
                                        alternative = alternative,
                                        correct = correct)$statistic))

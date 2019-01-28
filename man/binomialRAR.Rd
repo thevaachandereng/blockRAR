@@ -21,7 +21,7 @@ If \code{block_number} is set to 1. This is a traditional RCT design.}
 
 \item{drift}{scalar. The increase or decrease in proportion of event over time.
 In this case, the proportion of failure changes in each block by the number of
-patient accured over the totoal sample size. The full drift effect is seen in the
+patient accured over the total sample size. The full drift effect is seen in the
 final block.}
 
 \item{simulation}{scalar. Number of simulation to be ran. The default is set to 10000.}

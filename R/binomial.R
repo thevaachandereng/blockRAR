@@ -9,7 +9,7 @@
 #'   If \code{block_number} is set to 1. This is a traditional RCT design.
 #' @param drift scalar. The increase or decrease in proportion of event over time.
 #'   In this case, the proportion of failure changes in each block by the number of
-#'   patient accured over the totoal sample size. The full drift effect is seen in the
+#'   patient accured over the total sample size. The full drift effect is seen in the
 #'   final block.
 #' @param simulation scalar. Number of simulation to be ran. The default is set to 10000.
 #' @param zvalue vector. The z-value cutoff for corrected chi-square test statistics.
@@ -74,19 +74,22 @@ binomialRAR <- function(
   correct         = TRUE,
   replace         = FALSE
 ){
-
+   # stop if proportion of control is not between 0 and 1
   if((p_control <= 0 | p_control >= 1)){
     stop("The proportion of event for the control group needs to between 0 and 1!")
   }
 
+  # stop if proportion of treatment is not between 0 and 1
   if((p_treatment <= 0 | p_treatment >= 1)){
     stop("The proportion of event for the treatment group needs to between 0 and 1!")
   }
 
+  ## make sure sample size is an integer!
   if((N_total <= 0 | N_total %% 1 != 0)){
     stop("The sample size needs to be a positive integer!")
   }
 
+  #
   if((block_number <= 0 | block_number %% 1 != 0)){
     stop("The number of blocks needs to be a positve integer!")
   }
@@ -94,6 +97,7 @@ binomialRAR <- function(
   if((N_total / block_number <= 2) & replace == FALSE){
     warning("The sampling is done with replacement and replace input is ignored!")
   }
+
   if((simulation <= 0 | simulation %% 1 != 0)){
     stop("The number of simulation needs to be a positve integer!")
   }
@@ -125,6 +129,10 @@ binomialRAR <- function(
          in either the control or treatment group, pick a lower value for drift!")
   }
 
+  if(replace == FALSE & N_total / block_number <= 2){
+    replace <- TRUE
+  }
+
   group <- rep(floor(N_total / block_number), block_number)
   if((N_total - sum(group)) > 0){
     index <- sample(1:block_number, N_total - sum(group))
@@ -149,7 +157,6 @@ binomialRAR <- function(
     index                 <- block_number
 
     for(i in 1:block_number){
-
       if(length(rand_ratio) == 1){
         rr <- rand_ratio
       }
@@ -158,7 +165,7 @@ binomialRAR <- function(
         rr <- rand_ratio[max(which(test_stat >= zval))]
       }
 
-      if(!is.null(data_total)){
+      if(!is.null(data_total) & length(levels(factor(data_total$treatment))) == 2){
         data_summary <- data_total %>%
           group_by(treatment) %>%
           summarize(prop = mean(as.numeric(outcome) - 1))
@@ -169,7 +176,7 @@ binomialRAR <- function(
 
       data <- data.frame(
         treatment =
-          if(replace == TRUE | N_total / block_number < 2){
+          if(replace == TRUE){
             if((alternative == "less" &
                (data_summary$prop[1] >= data_summary$prop[2])) |
                (alternative == "greater" &
@@ -251,7 +258,7 @@ binomialRAR <- function(
       group_by(treatment) %>%
       summarize(prop = mean(as.numeric(outcome) - 1))
 
-    if(all(data_total$time == 1)){
+    if(all(data_total$time == 1) | data_total$time == N_total){
       if(((summary_data$prop[1] - summary_data$prop[2] > 0) & alternative == "less") |
          ((summary_data$prop[2] - summary_data$prop[1] > 0) & alternative == "greater")){
         p.val <- chisq.test(data_total$treatment, data_total$outcome,

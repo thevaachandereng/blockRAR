@@ -7,7 +7,7 @@
 binomialRAR(p_control, p_treatment, N_total, block_number = 4,
   drift = 0, simulation = 10000, zvalue = c(1, 1.5, 2),
   rand_ratio = c(1, 1.5, 2, 2.5), conf_int = 0.95,
-  alternative = "less", correct = TRUE, replace = FALSE)
+  alternative = "less", correct = FALSE, replace = TRUE)
 }
 \arguments{
 \item{p_control}{scalar. Proportion of events under the control arm.}

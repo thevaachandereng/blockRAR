@@ -71,8 +71,8 @@ binomialRAR <- function(
   rand_ratio      = c(1, 1.5, 2, 2.5),
   conf_int        = 0.95,
   alternative     = "less",
-  correct         = TRUE,
-  replace         = FALSE
+  correct         = FALSE,
+  replace         = TRUE
 ){
    # stop if proportion of control is not between 0 and 1
   if((p_control <= 0 | p_control >= 1)){
@@ -249,9 +249,19 @@ binomialRAR <- function(
 
       }
       else{
-        test_stat <- sqrt(as.numeric(chisq.test(data_total$treatment,
-                                              data_total$outcome,
-                                              correct = correct)$statistic))
+        if(i == 1){
+          test_stat <- sqrt(as.numeric(chisq.test(data_total$treatment,
+                                                  data_total$outcome,
+                                                  correct = correct)$statistic))
+        }
+        else{
+          temp_data <- data_total %>%
+                          mutate(time = factor(rep(1:index, group[1:i])))
+          test_stat <- sqrt(as.numeric(mantelhaen.test(table(temp_data),
+                                       alternative = alternative,
+                                       correct = correct)$statistic))
+
+        }
       }
 
       if(test_stat > bounds[i]){
@@ -272,7 +282,7 @@ binomialRAR <- function(
       if(((summary_data$prop[1] - summary_data$prop[2] > 0) & alternative == "less") |
          ((summary_data$prop[2] - summary_data$prop[1] > 0) & alternative == "greater")){
         p.val <- chisq.test(data_total$treatment, data_total$outcome,
-                            correct = TRUE)$p.value
+                            correct = correct)$p.value
       }
       else{
         p.val <- 1

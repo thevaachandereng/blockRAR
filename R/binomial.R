@@ -249,7 +249,7 @@ binomialRAR <- function(
 
       }
       else{
-        if(i == 1){
+        if(i == 1 | N_total / block_number <= 2){
           test_stat <- sqrt(as.numeric(chisq.test(data_total$treatment,
                                                   data_total$outcome,
                                                   correct = correct)$statistic))

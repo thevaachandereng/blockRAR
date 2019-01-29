@@ -155,8 +155,9 @@ binomialRAR <- function(
     data_total            <- NULL
     test_stat             <- 0
     index                 <- block_number
-
+    print(k)
     for(i in 1:block_number){
+      print(i)
       if(length(rand_ratio) == 1){
         rr <- rand_ratio
       }
@@ -249,7 +250,11 @@ binomialRAR <- function(
 
       }
       else{
-        if(i == 1 | N_total / block_number <= 2){
+        if(i == 1 | N_total / block_number <= 2 |
+           all(data_total[data_total$outcome == 1, 1] == 1) |
+           all(data_total[data_total$outcome == 0, 1] == 1) |
+           all(data_total[data_total$outcome == 1, 1] == 0) |
+           all(data_total[data_total$outcome == 0, 1] == 0)){
           test_stat <- sqrt(as.numeric(chisq.test(data_total$treatment,
                                                   data_total$outcome,
                                                   correct = correct)$statistic))

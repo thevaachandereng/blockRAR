@@ -95,7 +95,7 @@ binomialRAR <- function(
   }
 
   if(N_total/ block_number < 1){
-    ("The number of blocks is greater than sample size!")
+    stop("The number of blocks is greater than sample size!")
   }
 
   if((N_total / block_number <= 2) & replace == FALSE){

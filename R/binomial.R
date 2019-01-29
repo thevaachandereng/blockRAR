@@ -94,6 +94,10 @@ binomialRAR <- function(
     stop("The number of blocks needs to be a positve integer!")
   }
 
+  if(N_total/ block_number < 1){
+    ("The number of blocks is greater than sample size!")
+  }
+
   if((N_total / block_number <= 2) & replace == FALSE){
     warning("The sampling is done with replacement and replace input is ignored!")
   }

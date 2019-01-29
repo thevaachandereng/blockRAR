@@ -48,6 +48,5 @@ test_that("the binomial RAR output is", {
   expect_error(binomialRAR(p_control = 0.1, p_treatment = 0.2, N_total = 100,
                            rand_ratio = c(-1, 1, 2)))
   expect_error(binomialRAR(p_control = 0.1, p_treatment = 0.2, N_total = 100,
-                           block_number = 51))
-
+                           block_number = 120))
 })

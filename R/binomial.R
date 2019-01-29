@@ -155,9 +155,7 @@ binomialRAR <- function(
     data_total            <- NULL
     test_stat             <- 0
     index                 <- block_number
-    print(k)
     for(i in 1:block_number){
-      print(i)
       if(length(rand_ratio) == 1){
         rr <- rand_ratio
       }

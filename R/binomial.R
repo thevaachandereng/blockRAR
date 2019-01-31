@@ -252,23 +252,9 @@ binomialRAR <- function(
 
       }
       else{
-        if(i == 1 | N_total / block_number <= 2 |
-           all(data_total[data_total$outcome == 1, 1] == 1) |
-           all(data_total[data_total$outcome == 0, 1] == 1) |
-           all(data_total[data_total$outcome == 1, 1] == 0) |
-           all(data_total[data_total$outcome == 0, 1] == 0)){
-          test_stat <- sqrt(as.numeric(chisq.test(data_total$treatment,
-                                                  data_total$outcome,
-                                                  correct = correct)$statistic))
-        }
-        else{
-          temp_data <- data_total %>%
-                          mutate(time = factor(rep(1:i, group[1:i])))
-          test_stat <- sqrt(as.numeric(mantelhaen.test(table(temp_data),
-                                       alternative = alternative,
-                                       correct = correct)$statistic))
-
-        }
+        test_stat <- sqrt(as.numeric(chisq.test(data_total$treatment,
+                                                data_total$outcome,
+                                                correct = correct)$statistic))
       }
 
       if(test_stat > bounds[i]){

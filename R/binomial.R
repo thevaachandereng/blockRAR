@@ -238,18 +238,10 @@ binomialRAR <- function(
                                      levels=c(levels(data_total$treatment), "0"))
       }
 
-      summ_data <-  data_total %>%
-        group_by(treatment) %>%
-        summarize(prop = mean(as.numeric(outcome) - 1))
 
       if(all(data_total$outcome == 1) | all(data_total$outcome == 0) |
          all(data_total$treatment == 1) | all(data_total$treatment == 0)){
         test_stat <- 0
-      }
-      else if(((summ_data$prop[2] - summ_data$prop[1] > 0) & alternative == "less") |
-              ((summ_data$prop[1] - summ_data$prop[2] > 0) & alternative == "greater")){
-        test_stat <- 0
-
       }
       else{
         test_stat <- sqrt(as.numeric(chisq.test(data_total$treatment,
@@ -271,7 +263,7 @@ binomialRAR <- function(
       group_by(treatment) %>%
       summarize(prop = mean(as.numeric(outcome) - 1))
 
-    if(all(data_total$time == 1) | N_total / block_number < 2){
+    if(all(data_total$time == 1) | N_total / block_number <  2){
       if(((summary_data$prop[1] - summary_data$prop[2] > 0) & alternative == "less") |
          ((summary_data$prop[2] - summary_data$prop[1] > 0) & alternative == "greater")){
         p.val <- chisq.test(data_total$treatment, data_total$outcome,
@@ -295,7 +287,6 @@ binomialRAR <- function(
     if(p.val < (1 - conf_int)){
       power <- power + 1
     }
-
 
   }
 

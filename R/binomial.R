@@ -52,15 +52,15 @@
 #' @importFrom dplyr mutate group_by summarize
 #' @importFrom tibble as.tibble
 #'
-#' @export binomialRAR
+#' @export binomialfreq
 #'
 #' @examples
-#' binomialRAR(p_control = 0.7, p_treatment = 0.65, N_total = 200,
+#' binomialfreq(p_control = 0.7, p_treatment = 0.65, N_total = 200,
 #'             block_number = 2, simulation = 100)
-#' binomialRAR(p_control = 0.5, p_treatment = 0.40, N_total = 200,
+#' binomialfreq(p_control = 0.5, p_treatment = 0.40, N_total = 200,
 #'             block_number = 2, simulation = 100, drift = -0.15)
 
-binomialRAR <- function(
+binomialfreq <- function(
   p_control,
   p_treatment,
   N_total,

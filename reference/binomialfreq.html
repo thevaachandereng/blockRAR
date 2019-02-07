@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Block Design for Response-Adaptive Randomization for Binomial Data — binomialRAR • blockRAR</title>
+<title>Block Design for Response-Adaptive Randomization for Binomial Data — binomialfreq • blockRAR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
 
 
 
-<meta property="og:title" content="Block Design for Response-Adaptive Randomization for Binomial Data — binomialRAR" />
+<meta property="og:title" content="Block Design for Response-Adaptive Randomization for Binomial Data — binomialfreq" />
 
 <meta property="og:description" content="Simulation for binomial counts for block design for
    response-adaptive randomization with time as a confounding" />
@@ -105,7 +105,7 @@
     <div class="page-header">
     <h1>Block Design for Response-Adaptive Randomization for Binomial Data</h1>
     <small class="dont-index">Source: <a href='https://github.com/thevaachandereng/blockRAR/blob/master/R/binomial.R'><code>R/binomial.R</code></a></small>
-    <div class="hidden name"><code>binomialRAR.Rd</code></div>
+    <div class="hidden name"><code>binomialfreq.Rd</code></div>
     </div>
 
     <div class="ref-description">
@@ -115,7 +115,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>binomialRAR</span>(<span class='no'>p_control</span>, <span class='no'>p_treatment</span>, <span class='no'>N_total</span>, <span class='kw'>block_number</span> <span class='kw'>=</span> <span class='fl'>4</span>,
+    <pre class="usage"><span class='fu'>binomialfreq</span>(<span class='no'>p_control</span>, <span class='no'>p_treatment</span>, <span class='no'>N_total</span>, <span class='kw'>block_number</span> <span class='kw'>=</span> <span class='fl'>4</span>,
   <span class='kw'>drift</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>zvalue</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1.5</span>, <span class='fl'>2</span>),
   <span class='kw'>rand_ratio</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1.5</span>, <span class='fl'>2</span>, <span class='fl'>2.5</span>), <span class='kw'>conf_int</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
   <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"less"</span>, <span class='kw'>correct</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
@@ -203,7 +203,7 @@ the sampling is done based on randomization ratio provided with replacement.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>binomialRAR</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.7</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.65</span>, <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>200</span>,
+    <pre class="examples"><div class='input'><span class='fu'>binomialfreq</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.7</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.65</span>, <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>200</span>,
             <span class='kw'>block_number</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; $power
 #&gt; [1] 0.24
 #&gt; 
@@ -264,7 +264,7 @@ the sampling is done based on randomization ratio provided with replacement.</p>
 #&gt;  [55] 109  95 118 100 102 115 106 106  99 116  92 106 109  88  99 109 103  43
 #&gt;  [73] 107 111  85 113 109 101 105 113  55 105 107  98  95 106 119  90  98 110
 #&gt;  [91] 111  89 113  85 104  86  50 111 112 118
-#&gt; </div><div class='input'><span class='fu'>binomialRAR</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.40</span>, <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>200</span>,
+#&gt; </div><div class='input'><span class='fu'>binomialfreq</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.40</span>, <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>200</span>,
             <span class='kw'>block_number</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>drift</span> <span class='kw'>=</span> -<span class='fl'>0.15</span>)</div><div class='output co'>#&gt; $power
 #&gt; [1] 0.44
 #&gt; 

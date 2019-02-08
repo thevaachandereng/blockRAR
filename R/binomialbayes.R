@@ -4,6 +4,12 @@
 #'    response-adaptive randomization with time as a confounding
 #'
 #' @inheritParams binomialfreq
+#' @param number_mcmc scalar. Number of Monte Carlo Markov Chain draws in
+#'   sampling posterior.
+#' @param futility_prob scalar. Probability of stopping early for futility.
+#' @param early_success_prob scalar. Probability of stopping early for success.
+#' @param prob_accept_ha scalar. Probability of accepting
+#'   alternative hypothesis.
 #'
 #' @return a list with details on the simulation.
 #' \describe{
@@ -25,8 +31,8 @@
 #'     each simulation.}
 #' }
 #'
-#' @importFrom stats rbinom
-#' @importFrom arm bayesglm
+#' @importFrom stats rbinom binomial
+#' @importFrom arm bayesglm coef sim
 #' @importFrom bayesDP bdpbinomial
 #' @importFrom dplyr mutate group_by summarize
 #' @importFrom tibble as.tibble

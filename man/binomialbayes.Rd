@@ -27,6 +27,16 @@ final block.}
 
 \item{simulation}{scalar. Number of simulation to be ran. The default is set to 10000.}
 
+\item{number_mcmc}{scalar. Number of Monte Carlo Markov Chain draws in
+sampling posterior.}
+
+\item{prob_accept_ha}{scalar. Probability of accepting
+alternative hypothesis.}
+
+\item{early_success_prob}{scalar. Probability of stopping early for success.}
+
+\item{futility_prob}{scalar. Probability of stopping early for futility.}
+
 \item{alternative}{character. A string specifying the alternative hypothesis,
 must be one of "less" (default) or "greater".}
 }

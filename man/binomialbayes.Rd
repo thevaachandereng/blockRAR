@@ -5,9 +5,9 @@
 \title{Block Design for Response-Adaptive Randomization for Binomial Data}
 \usage{
 binomialbayes(p_control, p_treatment, N_total, block_number = 4,
-  drift = 0, simulation = 10000, a0 = 0.5, b0 = 0.5,
+  drift = 0, simulation = 10000, a0 = 0.5, b0 = 0.5, p = 0.5,
   number_mcmc = 10000, prob_accept_ha = 0.95,
-  early_success_prob = 0.95, futility_prob = 0.1,
+  early_success_prob = 0.99, futility_prob = 0.01,
   alternative = "greater")
 }
 \arguments{
@@ -32,6 +32,8 @@ Default is 0.5.}
 
 \item{b0}{scalar. Prior value for the beta rate \code{Beta(a0, b0)}.
 Default is 0.5.}
+
+\item{p}{sclar. Power for randomization ratio.}
 
 \item{number_mcmc}{scalar. Number of Monte Carlo Markov Chain draws in
 sampling posterior.}

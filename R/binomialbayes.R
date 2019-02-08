@@ -8,6 +8,7 @@
 #'  Default is 0.5.
 #' @param b0 scalar. Prior value for the beta rate \code{Beta(a0, b0)}.
 #'  Default is 0.5.
+#' @param p sclar. Power for randomization ratio.
 #' @param number_mcmc scalar. Number of Monte Carlo Markov Chain draws in
 #'   sampling posterior.
 #' @param prob_accept_ha scalar. Probability of accepting
@@ -56,10 +57,11 @@ binomialbayes <- function(
   simulation         = 10000,
   a0                 = 0.5,
   b0                 = 0.5,
+  p                  = 0.5,
   number_mcmc        = 10000,
   prob_accept_ha     = 0.95,
-  early_success_prob = 0.95,
-  futility_prob      = 0.10,
+  early_success_prob = 0.99,
+  futility_prob      = 0.01,
   alternative        = "greater"
   ){
   # stop if proportion of control is not between 0 and 1
@@ -112,6 +114,8 @@ binomialbayes <- function(
   N_treatment        <- NULL
   sample_size        <- NULL
   prop_diff_estimate <- NULL
+  early_success      <- NULL
+  early_futility     <- NULL
 
   for(k in 1:simulation){
     data_total            <- NULL
@@ -126,25 +130,27 @@ binomialbayes <- function(
         Nt <- 0
         yc <- 0
         Nc <- 0
+      }
 
-        est_interim <- bdpbinomial(y_t         = yt,
-                                   N_t         = Nt,
-                                   y_c         = yc,
-                                   N_c         = Nc,
-                                   a0          = a0,
-                                   b0          = b0,
-                                   number_mcmc = number_mcmc)
+      est_interim <- bdpbinomial(y_t         = yt,
+                                 N_t         = Nt,
+                                 y_c         = yc,
+                                 N_c         = Nc,
+                                 a0          = a0,
+                                 b0          = b0,
+                                 number_mcmc = number_mcmc)
 
         if(alternative == "greater"){
-          rr <- mean(est_interim$posterior_treatment$posterior -
-                       est_interim$posterior_control$posterior > 0)
+          diff <- est_interim$posterior_treatment$posterior -
+                  est_interim$posterior_control$posterior
+
+          rr <- mean(diff > 0)^p / (mean(diff > 0)^p + mean(diff < 0)^p)
         }
         else{
-          rr <- mean(est_interim$posterior_treatment$posterior -
-                       est_interim$posterior_control$posterior < 0)
+          diff <- est_interim$posterior_treatment$posterior -
+                  est_interim$posterior_control$posterior
+          rr <- mean(diff < 0)^p / (mean(diff > 0)^p + mean(diff < 0)^p)
         }
-
-      }
 
       data <- data.frame(
         treatment = sample(0:1, replace = T, group[i], prob = c(1 - rr, rr)),
@@ -197,22 +203,7 @@ binomialbayes <- function(
     data_total <- data_total %>%
       mutate(time = factor(rep(1:index, group[1:index])))
 
-    if(N_total / block_number > 2 | block_number < 2){
-      fit0 <- bayesglm(formula = outcome ~ as.factor(treatment) + as.factor(time),
-                       family  = binomial(link="logit"),
-                       data    = data_total)
-      post_trt <- coef(sim(fit0, n.sims = number_mcmc))[, 2]
-
-      diff_est <- mean(post_trt)
-
-      if(alternative == "greater"){
-        prob_ha <- mean(post_trt > 0)
-      }
-      else{
-        prob_ha <- mean(post_trt < 0)
-      }
-    }
-    else{
+    if(N_total / block_number < 2 | index < 2 | block_number < 2){
       yt <- sum(data_total$outcome[data_total$treatment == 1])
       Nt <- length(data_total$outcome[data_total$treatment == 1])
       yc <- sum(data_total$outcome[data_total$treatment == 0])
@@ -226,22 +217,41 @@ binomialbayes <- function(
                                b0          = b0,
                                number_mcmc = number_mcmc)
       diff_est <- mean(est_final$posterior_treatment$posterior -
-                       est_final$posterior_control$posterior)
+                         est_final$posterior_control$posterior)
 
       if(alternative == "greater"){
         prob_ha <- mean(est_final$posterior_treatment$posterior -
-                        est_final$posterior_control$posterior > 0)
+                          est_final$posterior_control$posterior > 0)
       }
       else{
         prob_ha <- mean(est_final$posterior_treatment$posterior -
-                        est_final$posterior_control$posterior < 0)
+                          est_final$posterior_control$posterior < 0)
       }
+    }
+
+    else{
+      fit0 <- bayesglm(formula = outcome ~ as.factor(treatment) + as.factor(time),
+                       family  = binomial(link="logit"),
+                       data    = data_total)
+      post_trt <- coef(sim(fit0, n.sims = number_mcmc))[, 2]
+
+      diff_est <- mean(post_trt)
+
+      if(alternative == "greater"){
+        prob_ha <- mean(post_trt > 0)
+      }
+      else{
+        prob_ha <- mean(post_trt < 0)
+      }
+
     }
 
     N_control          <- c(N_control, sum(data_total$treatment == 0))
     N_treatment        <- c(N_treatment, sum(data_total$treatment == 1))
     sample_size        <- c(sample_size, dim(data_total)[1])
     prop_diff_estimate <- c(prop_diff_estimate, diff_est)
+    early_success      <- c(early_success, stop_success)
+    early_futility     <- c(early_futility, stop_futility)
 
     if(prob_ha > (prob_accept_ha)){
       power <- power + 1
@@ -255,7 +265,9 @@ binomialbayes <- function(
     prop_diff_estimate    = prop_diff_estimate,
     N_enrolled            = sample_size,
     N_control             = N_control,
-    N_treatment           = N_treatment
+    N_treatment           = N_treatment,
+    early_success          = early_success,
+    early_futilty          = early_futility
   )
 
   return(output)

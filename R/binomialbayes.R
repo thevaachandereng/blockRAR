@@ -266,8 +266,8 @@ binomialbayes <- function(
     N_enrolled            = sample_size,
     N_control             = N_control,
     N_treatment           = N_treatment,
-    early_success          = early_success,
-    early_futilty          = early_futility
+    early_success         = early_success,
+    early_futilty         = early_futility
   )
 
   return(output)

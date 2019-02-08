@@ -23,4 +23,6 @@ Imports: dplyr,
     knitr,
     magrittr, 
     ldbounds,
-    tibble
+    tibble,
+    bayesDP,
+    arm

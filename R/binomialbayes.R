@@ -43,6 +43,9 @@
 #'
 #' @export binomialbayes
 #'
+#' @examples
+#' binomialbayes(p_control = 0.20, p_treatment = 0.30, N_total = 100)
+#'
 
 binomialbayes <- function(
   p_control,
@@ -79,15 +82,11 @@ binomialbayes <- function(
     stop("The number of blocks needs to be a positve integer!")
   }
 
-  if((N_total / block_number <= 2) & replace == FALSE){
-    warning("The sampling is done with replacement and replace input is ignored!")
-  }
-
   if((simulation <= 0 | simulation %% 1 != 0)){
     stop("The number of simulation needs to be a positve integer!")
   }
 
-  if((prob_accept_ha <= 0 |prob_accept_ha >= 1)){
+  if((prob_accept_ha <= 0 | prob_accept_ha >= 1)){
     stop("The confidence interval needs to between 0 and 1!")
   }
 

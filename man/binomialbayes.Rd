@@ -7,7 +7,7 @@
 binomialbayes(p_control, p_treatment, N_total, block_number = 4,
   drift = 0, simulation = 10000, a0 = 0.5, b0 = 0.5,
   number_mcmc = 10000, prob_accept_ha = 0.95,
-  early_success_prob = 0.99, futility_prob = 0.1,
+  early_success_prob = 0.95, futility_prob = 0.1,
   alternative = "greater")
 }
 \arguments{
@@ -26,6 +26,12 @@ patient accured over the total sample size. The full drift effect is seen in the
 final block.}
 
 \item{simulation}{scalar. Number of simulation to be ran. The default is set to 10000.}
+
+\item{a0}{scalar. Prior value for the beta rate \code{Beta(a0, b0)}.
+Default is 0.5.}
+
+\item{b0}{scalar. Prior value for the beta rate \code{Beta(a0, b0)}.
+Default is 0.5.}
 
 \item{number_mcmc}{scalar. Number of Monte Carlo Markov Chain draws in
 sampling posterior.}
@@ -64,4 +70,8 @@ a list with details on the simulation.
 \description{
 Simulation for binomial counts for block design for
    response-adaptive randomization with time as a confounding
+}
+\examples{
+binomialbayes(p_control = 0.20, p_treatment = 0.30, N_total = 100)
+
 }

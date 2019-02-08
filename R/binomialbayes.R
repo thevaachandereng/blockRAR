@@ -4,12 +4,16 @@
 #'    response-adaptive randomization with time as a confounding
 #'
 #' @inheritParams binomialfreq
+#' @param a0 scalar. Prior value for the beta rate \code{Beta(a0, b0)}.
+#'  Default is 0.5.
+#' @param b0 scalar. Prior value for the beta rate \code{Beta(a0, b0)}.
+#'  Default is 0.5.
 #' @param number_mcmc scalar. Number of Monte Carlo Markov Chain draws in
 #'   sampling posterior.
-#' @param futility_prob scalar. Probability of stopping early for futility.
-#' @param early_success_prob scalar. Probability of stopping early for success.
 #' @param prob_accept_ha scalar. Probability of accepting
 #'   alternative hypothesis.
+#' @param early_success_prob scalar. Probability of stopping early for success.
+#' @param futility_prob scalar. Probability of stopping early for futility.
 #'
 #' @return a list with details on the simulation.
 #' \describe{
@@ -51,7 +55,7 @@ binomialbayes <- function(
   b0                 = 0.5,
   number_mcmc        = 10000,
   prob_accept_ha     = 0.95,
-  early_success_prob = 0.99,
+  early_success_prob = 0.95,
   futility_prob      = 0.10,
   alternative        = "greater"
   ){

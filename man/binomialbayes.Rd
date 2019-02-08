@@ -74,6 +74,6 @@ Simulation for binomial counts for block design for
    response-adaptive randomization with time as a confounding
 }
 \examples{
-binomialbayes(p_control = 0.20, p_treatment = 0.30, N_total = 100)
+binomialbayes(p_control = 0.20, p_treatment = 0.30, N_total = 100, simulation = 10)
 
 }

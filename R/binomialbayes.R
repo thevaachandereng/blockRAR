@@ -45,7 +45,7 @@
 #' @export binomialbayes
 #'
 #' @examples
-#' binomialbayes(p_control = 0.20, p_treatment = 0.30, N_total = 100)
+#' binomialbayes(p_control = 0.20, p_treatment = 0.30, N_total = 100, simulation = 10)
 #'
 
 binomialbayes <- function(

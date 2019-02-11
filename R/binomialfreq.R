@@ -74,12 +74,12 @@ binomialfreq <- function(
   correct         = FALSE,
   replace         = TRUE
 ){
-   # stop if proportion of control is not between 0 and 1
+   # stop if proportion of control is not between 0 and 1.
   if((p_control <= 0 | p_control >= 1)){
     stop("The proportion of event for the control group needs to between 0 and 1!")
   }
 
-  # stop if proportion of treatment is not between 0 and 1
+  # stop if proportion of treatment is not between 0 and 1.
   if((p_treatment <= 0 | p_treatment >= 1)){
     stop("The proportion of event for the treatment group needs to between 0 and 1!")
   }
@@ -89,85 +89,108 @@ binomialfreq <- function(
     stop("The sample size needs to be a positive integer!")
   }
 
-  #
+  # the number of blocks need to be an integer.
   if((block_number <= 0 | block_number %% 1 != 0)){
     stop("The number of blocks needs to be a positve integer!")
   }
 
+  # the number of blocks is bigger than the sample size.
   if(N_total/ block_number < 1){
     stop("The number of blocks is greater than sample size!")
   }
 
-  if((N_total / block_number <= 2) & replace == FALSE){
-    warning("The sampling is done with replacement and replace input is ignored!")
-  }
-
+  # number of simulation needs to be a positive integer.
   if((simulation <= 0 | simulation %% 1 != 0)){
     stop("The number of simulation needs to be a positve integer!")
   }
 
+  # the confidence interval needs to be between 0 and 1.
   if((conf_int <= 0 | conf_int >= 1)){
     stop("The confidence interval needs to between 0 and 1!")
   }
 
+  # the alternative is either less or greater, two-sided not acceptable.
   if((alternative != "less" & alternative != "greater")){
     stop("The alternative can only be less or greater!")
   }
 
+  # sampling accept either true or false
   if((replace != "TRUE" & replace != "FALSE")){
     stop("The replacement for sampling is either TRUE or FALSE!")
   }
 
+  # the z-values need to be greater than 0
   if(any(zvalue <= 0)){
     stop("The zvalue can only be greater than 0!")
   }
 
+  # the randomization ratio needs to be greater than or equal to 1.
   if(any(rand_ratio < 1) | (length(rand_ratio) - 1) != length(zvalue)){
     stop("The randomization ratio needs to be greater than or equal to 1 and the length of
          randomization ratio needs to be greater than the length of zvalue by one!")
   }
 
+  # the drift value cant make the prop of control/treatment exceed 1 or below 0.
   if(drift + p_control >= 1 | drift + p_control <= 0 |
      drift + p_treatment >= 1 | drift + p_treatment <= 0){
     stop("The drift value is too high causing the proportion of event to exceed 1
          in either the control or treatment group, pick a lower value for drift!")
   }
 
+  # if number of patient in each block is 2 or smaller, sampling is done with replacement
   if(replace == FALSE & N_total / block_number <= 2){
     replace <- TRUE
   }
 
+  # total sample size is divided equally into blocks
   group <- rep(floor(N_total / block_number), block_number)
+
+  # if the remainder of total sample size divided by block number is not 0,
+  # randomly add patients to each block
   if((N_total - sum(group)) > 0){
     index <- sample(1:block_number, N_total - sum(group))
     group[index] <- group[index] + 1
   }
 
-
+  # divided time equally between 0 and 1 with the number of blocks
   time <- seq(1 / block_number, 1, 1 / block_number)
+  #using lan-demets bound, computing the early stopping criteria for the number of blocks
   bounds <- bounds(time, iuse = c(1, 1), alpha = c(1 - conf_int, 1 - conf_int))$upper.bounds
 
+  #assigning power to 0
   power <- 0
 
+  # assigning overall variables as NULL
   N_control   <- NULL
   N_treatment <- NULL
   sample_size <- NULL
   p_control_estimate    <- NULL
   p_treatment_estimate  <- NULL
 
+  # looping overall all simulation
   for(k in 1:simulation){
+
+    # assigning variables as NULL for each simulation
     data_total            <- NULL
     test_stat             <- 0
     index                 <- block_number
+
+    #looping over all blocks
     for(i in 1:block_number){
+
+      #if rand_ratio is length of 1, use the rand_ratio throughout the simulation
       if(length(rand_ratio) == 1){
         rr <- rand_ratio
       }
+      #else get the test statistics and match the corresponding z-value to
+      # obtain the correct rand_ratio
       else{
         zval <- c(-0.1, zvalue)
         rr <- rand_ratio[max(which(test_stat >= zval))]
       }
 
+      # create a data summary from previos block or if its null, create an empty
+      # summary
       if(!is.null(data_total) & length(levels(factor(data_total$treatment))) == 2){
         data_summary <- data_total %>%
           group_by(treatment) %>%
@@ -177,6 +200,8 @@ binomialfreq <- function(
         data_summary <- as.tibble(data.frame(treatment = c(0, 1), prop = c(0, 0)))
       }
 
+      # generate data frame treatment assignment based on sampling and
+      # alternative hypothesis. leave the outcome variable empty.
       data <- data.frame(
         treatment =
           if(replace == TRUE){
@@ -209,12 +234,16 @@ binomialfreq <- function(
         },
         outcome = rep(NA, group[i]))
 
+      # fill in the outcome variable based on the treatment assignement and proportion
+      # of event in respective arm
       data$outcome <- rbinom(dim(data)[1], 1, prob = data$treatment * p_treatment +
                                (1 - data$treatment) * p_control +
                                drift * sum(group[1:i]) / N_total)
 
+      # bind the data with previous block if available
       data_total <- rbind(data_total, data)
 
+      # convert the data_total to factor for outcome and treatment
       data_total$treatment <- as.factor(data_total$treatment)
       data_total$outcome <- as.factor(data_total$outcome)
 

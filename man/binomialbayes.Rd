@@ -46,7 +46,7 @@ alternative hypothesis.}
 \item{futility_prob}{scalar. Probability of stopping early for futility.}
 
 \item{alternative}{character. A string specifying the alternative hypothesis,
-must be one of "less" (default) or "greater".}
+must be one of "less" or "greater" (default).}
 }
 \value{
 a list with details on the simulation.

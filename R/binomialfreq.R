@@ -18,7 +18,7 @@
 #'   zvalue.
 #' @param conf_int scalar. Confidence level of the interval.
 #' @param alternative character. A string specifying the alternative hypothesis,
-#'    must be one of "less" (default) or "greater".
+#'    must be one of "less" or "greater" (default).
 #' @param correct logical. A logical indicating whether to apply continuity correction
 #'    when computing the test statistic: one half is subtracted from all |O - E|
 #'    differences; however, the correction will not be bigger than the differences themselves.
@@ -72,7 +72,7 @@ binomialfreq <- function(
   zvalue          = c(1, 1.5, 2),
   rand_ratio      = c(1, 1.5, 2, 2.5),
   conf_int        = 0.95,
-  alternative     = "less",
+  alternative     = "greater",
   correct         = FALSE,
   replace         = TRUE,
   early_stop      = FALSE
@@ -282,23 +282,22 @@ binomialfreq <- function(
                                      levels=c(levels(data_total$treatment), "0"))
       }
 
-      # if we allow early stopping, compute the test_statistics for
-      # using chi-square
-      if(early_stop){
-        # if one treatment is not present or one type of outcome is not present,
-        # set the test_statistics to 0.
-        if(all(data_total$outcome == 1) | all(data_total$outcome == 0) |
-           all(data_total$treatment == 1) | all(data_total$treatment == 0)){
-          test_stat <- 0
-        }
-        # else compute the test statistics
-        else{
-          test_stat <- sqrt(as.numeric(chisq.test(data_total$treatment,
-                                                  data_total$outcome,
-                                                  correct = correct)$statistic))
-        }
+      # if one treatment is not present or one type of outcome is not present,
+      # set the test_statistics to 0.
+      if(all(data_total$outcome == 1) | all(data_total$outcome == 0) |
+         all(data_total$treatment == 1) | all(data_total$treatment == 0)){
+        test_stat <- 0
+      }
+      # else compute the test statistics
+      else{
+        test_stat <- sqrt(as.numeric(chisq.test(data_total$treatment,
+                                                data_total$outcome,
+                                                correct = correct)$statistic))
+      }
 
-        # if the test_statistics exceed the lan-demets bound, quit the loop
+      # if we allow early stopping and the
+      # the test_statistics exceed the lan-demets bound, quit the loop
+      if(early_stop){
         if(test_stat > bounds[i]){
           index <- i
           break

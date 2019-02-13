@@ -7,7 +7,7 @@
 binomialfreq(p_control, p_treatment, N_total, block_number = 4,
   drift = 0, simulation = 10000, zvalue = c(1, 1.5, 2),
   rand_ratio = c(1, 1.5, 2, 2.5), conf_int = 0.95,
-  alternative = "less", correct = FALSE, replace = TRUE,
+  alternative = "greater", correct = FALSE, replace = TRUE,
   early_stop = FALSE)
 }
 \arguments{
@@ -36,7 +36,7 @@ zvalue.}
 \item{conf_int}{scalar. Confidence level of the interval.}
 
 \item{alternative}{character. A string specifying the alternative hypothesis,
-must be one of "less" (default) or "greater".}
+must be one of "less" or "greater" (default).}
 
 \item{correct}{logical. A logical indicating whether to apply continuity correction
 when computing the test statistic: one half is subtracted from all |O - E|

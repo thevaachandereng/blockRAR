@@ -172,11 +172,11 @@ binomialfreq <- function(
   power <- 0
 
   # assigning overall variables as NULL
-  N_control   <- NULL
-  N_treatment <- NULL
-  sample_size <- NULL
-  p_control_estimate    <- NULL
-  p_treatment_estimate  <- NULL
+  N_control            <- NULL
+  N_treatment          <- NULL
+  sample_size          <- NULL
+  p_control_estimate   <- NULL
+  p_treatment_estimate <- NULL
 
   # looping overall all simulation
   for(k in 1:simulation){

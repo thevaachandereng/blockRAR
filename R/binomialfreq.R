@@ -19,13 +19,15 @@
 #' @param conf_int scalar. Confidence level of the interval.
 #' @param alternative character. A string specifying the alternative hypothesis,
 #'    must be one of "less" (default) or "greater".
-#' @param correct logical. a logical indicating whether to apply continuity correction
+#' @param correct logical. A logical indicating whether to apply continuity correction
 #'    when computing the test statistic: one half is subtracted from all |O - E|
 #'    differences; however, the correction will not be bigger than the differences themselves.
 #' @param replace logical. should sampling be with replacement? If replace is set to
 #'    FALSE (default), the 0 for control, 1 for treatment is replicated to the closest
 #'    integer and this vector is sampled with no replacement. If replace is set to TRUE,
 #'    the sampling is done based on randomization ratio provided with replacement.
+#' @param early_stop logical. A logical indicating whether the trials are stopped early
+#'    for success or futility.
 #'
 #' @return a list with details on the simulation.
 #' \describe{
@@ -72,7 +74,8 @@ binomialfreq <- function(
   conf_int        = 0.95,
   alternative     = "less",
   correct         = FALSE,
-  replace         = TRUE
+  replace         = TRUE,
+  early_stop      = FALSE
 ){
    # stop if proportion of control is not between 0 and 1.
   if((p_control <= 0 | p_control >= 1)){
@@ -152,10 +155,13 @@ binomialfreq <- function(
     group[index] <- group[index] + 1
   }
 
-  # divided time equally between 0 and 1 with the number of blocks
-  time <- seq(1 / block_number, 1, 1 / block_number)
-  #using lan-demets bound, computing the early stopping criteria for the number of blocks
-  bounds <- bounds(time, iuse = c(1, 1), alpha = c(1 - conf_int, 1 - conf_int))$upper.bounds
+  # if we allow early stopping, compute the lan-demets bound
+  if(early_stop){
+    # divided time equally between 0 and 1 with the number of blocks
+    time <- seq(1 / block_number, 1, 1 / block_number)
+    #using lan-demets bound, computing the early stopping criteria for the number of blocks
+    bounds <- bounds(time, iuse = c(1, 1), alpha = c(1 - conf_int, 1 - conf_int))$upper.bounds
+  }
 
   #assigning power to 0
   power <- 0
@@ -247,50 +253,64 @@ binomialfreq <- function(
       data_total$treatment <- as.factor(data_total$treatment)
       data_total$outcome <- as.factor(data_total$outcome)
 
+      # making sure outcome level of 1 is present, even if its not present in the data
       if(is.na(match("1", levels(data_total$outcome)))){
         data_total$outcome <- factor(data_total$outcome,
                                      levels=c(levels(data_total$outcome), "1"))
       }
 
+      # making sure outcome level of 0 is present, even if its not present in the data
       if(is.na(match("0", levels(data_total$outcome)))){
         data_total$outcome <- factor(data_total$outcome,
                                      levels=c(levels(data_total$outcome), "0"))
       }
 
+      # making sure the treatment group is present, even if its not present in the data
       if(is.na(match("1", levels(data_total$treatment)))){
         data_total$treatment <- factor(data_total$treatment,
                                      levels=c(levels(data_total$treatment), "1"))
       }
 
+      # making sure the control group is present, even if its not present in the data
       if(is.na(match("0", levels(data_total$treatment)))){
         data_total$treatment <- factor(data_total$treatment,
                                      levels=c(levels(data_total$treatment), "0"))
       }
 
+      # if we allow early stopping, compute the test_statistics for
+      # using chi-square
+      if(early_stop){
+        # if one treatment is not present or one type of outcome is not present,
+        # set the test_statistics to 0.
+        if(all(data_total$outcome == 1) | all(data_total$outcome == 0) |
+           all(data_total$treatment == 1) | all(data_total$treatment == 0)){
+          test_stat <- 0
+        }
+        # else compute the test statistics
+        else{
+          test_stat <- sqrt(as.numeric(chisq.test(data_total$treatment,
+                                                  data_total$outcome,
+                                                  correct = correct)$statistic))
+        }
 
-      if(all(data_total$outcome == 1) | all(data_total$outcome == 0) |
-         all(data_total$treatment == 1) | all(data_total$treatment == 0)){
-        test_stat <- 0
-      }
-      else{
-        test_stat <- sqrt(as.numeric(chisq.test(data_total$treatment,
-                                                data_total$outcome,
-                                                correct = correct)$statistic))
-      }
-
-      if(test_stat > bounds[i]){
-        index <- i
-        break
+        # if the test_statistics exceed the lan-demets bound, quit the loop
+        if(test_stat > bounds[i]){
+          index <- i
+          break
+        }
       }
 
     }
 
+    # adding the time factor to the data using group function
     data_total <- data_total %>%
       mutate(time = factor(rep(1:index, group[1:index])))
 
+    # summarizing the data by treatment group
     summary_data <-  data_total %>%
       group_by(treatment) %>%
       summarize(prop = mean(as.numeric(outcome) - 1))
+
 
     if(all(data_total$time == 1) | N_total / block_number <  2){
       if(((summary_data$prop[1] - summary_data$prop[2] > 0) & alternative == "less") |

@@ -140,6 +140,11 @@ binomialfreq <- function(
          in either the control or treatment group, pick a lower value for drift!")
   }
 
+  # if
+  if(!(early_stop == FALSE | early_stop == TRUE)){
+    stop("Early stopping can be only TRUE or FALSE!")
+  }
+
   # if number of patient in each block is 2 or smaller, sampling is done with replacement
   if(replace == FALSE & N_total / block_number <= 2){
     replace <- TRUE
@@ -311,8 +316,9 @@ binomialfreq <- function(
       group_by(treatment) %>%
       summarize(prop = mean(as.numeric(outcome) - 1))
 
-
+    # if number of block is 1 or if any block has only one patients, then use chisq.test
     if(all(data_total$time == 1) | N_total / block_number <  2){
+      # if the prop is in the right direction, compute p-value
       if(((summary_data$prop[1] - summary_data$prop[2] > 0) & alternative == "less") |
          ((summary_data$prop[2] - summary_data$prop[1] > 0) & alternative == "greater")){
         p.val <- chisq.test(data_total$treatment, data_total$outcome,
@@ -322,23 +328,28 @@ binomialfreq <- function(
         p.val <- 1
       }
     }
+    # compute mantelhaen.test for number of block > 1.
     else{
       p.val <- mantelhaen.test(table(data_total), alternative = alternative,
                                correct = correct)$p.val
     }
 
+    # compute the sample size for control, treatment and proportion for
+    # control and treatment estimate
     N_control <- c(N_control, sum(data_total$treatment == 0))
     N_treatment <- c(N_treatment, sum(data_total$treatment == 1))
     sample_size <- c(sample_size, dim(data_total)[1])
     p_control_estimate <- c(p_control_estimate, summary_data$prop[1])
     p_treatment_estimate <- c(p_treatment_estimate, summary_data$prop[2])
 
+    # compute the power if p-value is smaller than 0.05
     if(p.val < (1 - conf_int)){
       power <- power + 1
     }
 
   }
 
+  #return all the output in a list
   output <- list(
     power                 = power / simulation,
     p_control_estimate    = p_control_estimate ,

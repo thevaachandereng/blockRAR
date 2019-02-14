@@ -177,6 +177,7 @@ binomialfreq <- function(
   sample_size          <- NULL
   p_control_estimate   <- NULL
   p_treatment_estimate <- NULL
+  prop_diff_estimate   <- NULL
 
   # looping overall all simulation
   for(k in 1:simulation){
@@ -205,7 +206,7 @@ binomialfreq <- function(
       if(!is.null(data_total) & length(levels(factor(data_total$treatment))) == 2){
         data_summary <- data_total %>%
           group_by(treatment) %>%
-          summarize(prop = mean(as.numeric(outcome) - 1))
+          summarize(prop = mean(as.numeric(as.character(outcome))))
       }
       else{
         data_summary <- as.tibble(data.frame(treatment = c(0, 1), prop = c(0, 0)))
@@ -312,8 +313,13 @@ binomialfreq <- function(
 
     # summarizing the data by treatment group
     summary_data <-  data_total %>%
-      group_by(treatment) %>%
-      summarize(prop = mean(as.numeric(outcome) - 1))
+      group_by(treatment, time) %>%
+      summarize(prop = mean(as.numeric(as.character(outcome))))
+
+    # estimating prop_difference
+    prop_diff <- prop_strata(treatment = data_total$treatment,
+                             outcome   = data_total$outcome,
+                             block     = data_total$time)
 
     # if number of block is 1 or if any block has only one patients, then use chisq.test
     if(all(data_total$time == 1) | N_total / block_number <  2){
@@ -335,11 +341,12 @@ binomialfreq <- function(
 
     # compute the sample size for control, treatment and proportion for
     # control and treatment estimate
-    N_control <- c(N_control, sum(data_total$treatment == 0))
-    N_treatment <- c(N_treatment, sum(data_total$treatment == 1))
-    sample_size <- c(sample_size, dim(data_total)[1])
-    p_control_estimate <- c(p_control_estimate, summary_data$prop[1])
+    N_control            <- c(N_control, sum(data_total$treatment == 0))
+    N_treatment          <- c(N_treatment, sum(data_total$treatment == 1))
+    sample_size          <- c(sample_size, dim(data_total)[1])
+    p_control_estimate   <- c(p_control_estimate, summary_data$prop[1])
     p_treatment_estimate <- c(p_treatment_estimate, summary_data$prop[2])
+    prop_diff_estimate   <- c(prop_diff_estimate, prop_diff)
 
     # compute the power if p-value is smaller than 0.05
     if(p.val < (1 - conf_int)){
@@ -353,6 +360,7 @@ binomialfreq <- function(
     power                 = power / simulation,
     p_control_estimate    = p_control_estimate ,
     p_treatment_estimate  = p_treatment_estimate,
+    prop_diff_estimate    = prop_diff_estimate,
     N_enrolled            = sample_size,
     N_control             = N_control,
     N_treatment           = N_treatment

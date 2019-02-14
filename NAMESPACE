@@ -3,6 +3,7 @@
 export("%>%")
 export(binomialbayes)
 export(binomialfreq)
+export(prop_strata)
 import(magrittr)
 importFrom(arm,bayesglm)
 importFrom(arm,sim)

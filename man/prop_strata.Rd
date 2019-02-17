@@ -23,3 +23,9 @@ the weighted mean of proportion difference (treatment - control).
 Computing the proportion of treatment difference for
   stratified data. The stratification is done over time.
 }
+\examples{
+set.seed(20999)
+prop_strata(sample(c(0, 1), 20, replace = T),
+            sample(c(0, 1), 20, replace = T),
+            factor(rep(1:2, each = 10)))
+}

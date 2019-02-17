@@ -12,10 +12,6 @@
 #'   patient accured over the total sample size. The full drift effect is seen in the
 #'   final block.
 #' @param simulation scalar. Number of simulation to be ran. The default is set to 10000.
-#' @param zvalue vector. The z-value cutoff for corrected chi-square test statistics.
-#' @param rand_ratio vector. The randomization ratio is set based on the corrected
-#'   chi-square test statistic. The length of rand_ratio should be the same length of
-#'   zvalue.
 #' @param conf_int scalar. Confidence level of the interval.
 #' @param alternative character. A string specifying the alternative hypothesis,
 #'    must be one of "less" or "greater" (default).
@@ -28,6 +24,13 @@
 #'    the sampling is done based on randomization ratio provided with replacement.
 #' @param early_stop logical. A logical indicating whether the trials are stopped early
 #'    for success or futility.
+#' @param method character. The method used to alter randomization ratio. The function
+#'    supports both rosenberg method and stepwise method.
+#' @param zvalue vector. The z-value cutoff for corrected chi-square test statistics. This
+#'   parameter is ignored if the stepwise method is not used.
+#' @param rand_ratio vector. The randomization ratio is set based on the corrected
+#'   chi-square test statistic. The length of rand_ratio should be the same length of
+#'   zvalue. This parameter is ignored if the stepwise method is not used.
 #'
 #' @return a list with details on the simulation.
 #' \describe{
@@ -69,13 +72,14 @@ binomialfreq <- function(
   block_number    = 4,
   drift           = 0,
   simulation      = 10000,
-  zvalue          = c(1, 1.5, 2),
-  rand_ratio      = c(1, 1.5, 2, 2.5),
   conf_int        = 0.95,
   alternative     = "greater",
   correct         = FALSE,
   replace         = TRUE,
-  early_stop      = FALSE
+  early_stop      = FALSE,
+  method          = "rosenberger",
+  zvalue          = c(1, 1.5, 2),
+  rand_ratio      = c(1, 1.5, 2, 2.5)
 ){
    # stop if proportion of control is not between 0 and 1.
   if((p_control <= 0 | p_control >= 1)){
@@ -145,6 +149,11 @@ binomialfreq <- function(
     stop("Early stopping can be only TRUE or FALSE!")
   }
 
+  # only two methods allowed (rosenberg and stepwise)
+  if(method != "rosenberger" & method != "stepwise" ){
+    stop("Method needs to be either rosenberger or stepwise!")
+  }
+
   # if number of patient in each block is 2 or smaller, sampling is done with replacement
   if(replace == FALSE & N_total / block_number <= 2){
     replace <- TRUE
@@ -190,17 +199,6 @@ binomialfreq <- function(
     #looping over all blocks
     for(i in 1:block_number){
 
-      #if rand_ratio is length of 1, use the rand_ratio throughout the simulation
-      if(length(rand_ratio) == 1){
-        rr <- rand_ratio
-      }
-      #else get the test statistics and match the corresponding z-value to
-      # obtain the correct rand_ratio
-      else{
-        zval <- c(-0.1, zvalue)
-        rr <- rand_ratio[max(which(test_stat >= zval))]
-      }
-
       # create a data summary from previos block or if its null, create an empty
       # summary
       if(!is.null(data_total) & length(levels(factor(data_total$treatment))) == 2){
@@ -210,6 +208,37 @@ binomialfreq <- function(
       }
       else{
         data_summary <- as.tibble(data.frame(treatment = c(0, 1), prop = c(0, 0)))
+      }
+
+      if(method == "stepwise"){
+        #if rand_ratio is length of 1, use the rand_ratio throughout the simulation
+        if(length(rand_ratio) == 1){
+          rr <- rand_ratio
+        }
+        #else get the test statistics and match the corresponding z-value to
+        # obtain the correct rand_ratio
+        else{
+          zval <- c(-0.1, zvalue)
+          rr <- rand_ratio[max(which(test_stat >= zval))]
+        }
+      }
+      ## using the rosenberger method
+      else{
+        ## if both event dont occur, dont change randomization ratio
+        if(data_summary[2, 2] == 0 | data_summary[2, 2] == 1 |
+           data_summary[1, 2] == 0 | data_summary[1, 2] == 1 |
+           is.null(data_total)){
+          rr <- 1
+        }
+        # if the alternative is greater, use proportion to set randomization ratio
+        else if(alternative == "greater"){
+          rr <- as.numeric(sqrt(data_summary[2, 2] / data_summary[1, 2]))
+        }
+        # if the alternative is greater, use 1 - proportion to set randomization ratio
+        else{
+          rr <- as.numeric(sqrt((1 - data_summary[2, 2]) / (1 - data_summary[1, 2])))
+        }
+
       }
 
       # generate data frame treatment assignment based on sampling and

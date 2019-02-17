@@ -5,10 +5,10 @@
 \title{Block Design for Response-Adaptive Randomization for Binomial Data}
 \usage{
 binomialfreq(p_control, p_treatment, N_total, block_number = 4,
-  drift = 0, simulation = 10000, zvalue = c(1, 1.5, 2),
-  rand_ratio = c(1, 1.5, 2, 2.5), conf_int = 0.95,
+  drift = 0, simulation = 10000, conf_int = 0.95,
   alternative = "greater", correct = FALSE, replace = TRUE,
-  early_stop = FALSE)
+  early_stop = FALSE, method = "rosenberger", zvalue = c(1, 1.5, 2),
+  rand_ratio = c(1, 1.5, 2, 2.5))
 }
 \arguments{
 \item{p_control}{scalar. Proportion of events under the control arm.}
@@ -27,12 +27,6 @@ final block.}
 
 \item{simulation}{scalar. Number of simulation to be ran. The default is set to 10000.}
 
-\item{zvalue}{vector. The z-value cutoff for corrected chi-square test statistics.}
-
-\item{rand_ratio}{vector. The randomization ratio is set based on the corrected
-chi-square test statistic. The length of rand_ratio should be the same length of
-zvalue.}
-
 \item{conf_int}{scalar. Confidence level of the interval.}
 
 \item{alternative}{character. A string specifying the alternative hypothesis,
@@ -49,6 +43,16 @@ the sampling is done based on randomization ratio provided with replacement.}
 
 \item{early_stop}{logical. A logical indicating whether the trials are stopped early
 for success or futility.}
+
+\item{method}{character. The method used to alter randomization ratio. The function
+supports both rosenberg method and stepwise method.}
+
+\item{zvalue}{vector. The z-value cutoff for corrected chi-square test statistics. This
+parameter is ignored if the stepwise method is not used.}
+
+\item{rand_ratio}{vector. The randomization ratio is set based on the corrected
+chi-square test statistic. The length of rand_ratio should be the same length of
+zvalue. This parameter is ignored if the stepwise method is not used.}
 }
 \value{
 a list with details on the simulation.

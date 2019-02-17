@@ -13,7 +13,7 @@
 #'
 #' @export prop_strata
 #'
-#' @example
+#' @examples
 #' set.seed(20999)
 #' prop_strata(sample(c(0, 1), 20, replace = T),
 #'             sample(c(0, 1), 20, replace = T),

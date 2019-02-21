@@ -195,7 +195,6 @@ binomialfreq <- function(
     data_total            <- NULL
     test_stat             <- 0
     index                 <- block_number
-    rand_r                <- NULL
 
     #looping over all blocks
     for(i in 1:block_number){
@@ -261,7 +260,7 @@ binomialfreq <- function(
           if((alternative == "less" &
               (ctrl_prop >= trt_prop)) |
              (alternative == "greater" &
-              (trt_prop > ctrl_prop))){
+              (trt_prop >= ctrl_prop))){
             sum_ratio <- rr + 1
             sampling <- rep(c(0, 1), round(c(group[i] * 1 / sum_ratio - 0.0001,
                                            group[i] * rr / sum_ratio + 0.0001)))
@@ -353,8 +352,8 @@ binomialfreq <- function(
     # if number of block is 1 or if any block has only one patients, then use chisq.test
     if(all(data_total$time == 1) | N_total / block_number <  2){
       # if the prop is in the right direction, compute p-value
-      if(((ctrl_prop - trt_prop > 0) & alternative == "less") |
-         ((trt_prop - ctrl_prop > 0) & alternative == "greater")){
+      if(((ctrl_prop - trt_prop >= 0) & alternative == "less") |
+         ((trt_prop - ctrl_prop >= 0) & alternative == "greater")){
         p.val <- chisq.test(data_total$treatment, data_total$outcome,
                             correct = correct)$p.value
       }
@@ -396,7 +395,6 @@ binomialfreq <- function(
     )
 
   return(output)
-
 }
 
 ## quiets concerns of R CMD check re: the .'s that appear in pipelines

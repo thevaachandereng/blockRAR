@@ -25,7 +25,7 @@ Computing the proportion of treatment difference for
 }
 \examples{
 set.seed(20999)
-prop_strata(sample(c(0, 1), 20, replace = T),
-            sample(c(0, 1), 20, replace = T),
-            factor(rep(1:2, each = 10)))
+prop_strata(c(0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0),
+            c(0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1),
+            as.factor(rep(1:3, each = 5)))
 }

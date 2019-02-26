@@ -80,36 +80,41 @@ binomialbayes <- function(
     stop("The sample size needs to be a positive integer!")
   }
 
-  #
+  # make sure the block size is a positive integer!
   if((block_number <= 0 | block_number %% 1 != 0)){
     stop("The number of blocks needs to be a positve integer!")
   }
 
+  # make sure the simulation is a positive integer
   if((simulation <= 0 | simulation %% 1 != 0)){
     stop("The number of simulation needs to be a positve integer!")
   }
 
+  # confidence interval between 0 and 1
   if((prob_accept_ha <= 0 | prob_accept_ha >= 1)){
     stop("The confidence interval needs to between 0 and 1!")
   }
 
+  # the alternative is either less or greater than
   if((alternative != "less" & alternative != "greater")){
     stop("The alternative can only be less or greater!")
   }
 
-
+  # making sure the drift didnt make the prop of control/treatment > 1 / < 0
   if(drift + p_control >= 1 | drift + p_control <= 0 |
      drift + p_treatment >= 1 | drift + p_treatment <= 0){
     stop("The drift value is too high causing the proportion of event to exceed 1
          in either the control or treatment group, pick a lower value for drift!")
   }
 
+  # computing the group size if its symmetric or not
   group <- rep(floor(N_total / block_number), block_number)
   if((N_total - sum(group)) > 0){
     index <- sample(1:block_number, N_total - sum(group))
     group[index] <- group[index] + 1
   }
 
+  #
   power              <- 0
   N_control          <- NULL
   N_treatment        <- NULL
@@ -231,10 +236,10 @@ binomialbayes <- function(
     }
 
     else{
-      fit0 <- bayesglm(formula = outcome ~ as.factor(treatment) + as.factor(time),
-                       family  = binomial(link="logit"),
-                       data    = data_total)
-      post_trt <- coef(sim(fit0, n.sims = number_mcmc))[, 2]
+      #fit0 <- bayesglm(formula = outcome ~ as.factor(treatment) + as.factor(time),
+      #                 family  = binomial(link="logit"),
+      #                 data    = data_total)
+      #post_trt <- coef(sim(fit0, n.sims = number_mcmc))[, 2]
 
       diff_est <- prop_stratabayes(treatment   = data_total$treatment,
                                    outcome     = data_total$outcome,

@@ -209,8 +209,17 @@ must be one of "less" or "greater" (default).</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>binomialbayes</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.20</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.30</span>, <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; $power
-#&gt; [1] 0.1
+    <pre class="examples"><div class='input'><span class='fu'>binomialbayes</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.20</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.30</span>, <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 0.04946254
+#&gt; [1] 0.2463703
+#&gt; [1] 0.07767411
+#&gt; [1] 0.04524599
+#&gt; [1] 0.06722717
+#&gt; [1] 0.1142734
+#&gt; [1] -0.008047261
+#&gt; [1] 0.06843644
+#&gt; [1] -0.05538901
+#&gt; [1] 0.1880594</div><div class='output co'>#&gt; $power
+#&gt; [1] 0.8
 #&gt; 
 #&gt; $prop_diff_estimate
 #&gt;  [1]  0.049462540  0.246370332  0.077674108  0.045245987  0.067227174
@@ -230,7 +239,11 @@ must be one of "less" or "greater" (default).</p></td>
 #&gt; 
 #&gt; $early_futilty
 #&gt;  [1] 0 0 0 0 0 0 0 0 0 0
-#&gt; </div><div class='input'><span class='fu'>binomialbayes</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.50</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.30</span>, <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; $power
+#&gt; </div><div class='input'><span class='fu'>binomialbayes</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.50</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.30</span>, <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; [1] -0.2517758
+#&gt; [1] -0.08583177
+#&gt; [1] -0.180304
+#&gt; [1] -0.2141361
+#&gt; [1] -0.1994095</div><div class='output co'>#&gt; $power
 #&gt; [1] 0
 #&gt; 
 #&gt; $prop_diff_estimate

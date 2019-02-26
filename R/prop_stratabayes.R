@@ -71,20 +71,20 @@ prop_stratabayes <- function(treatment,
                                  N_t         = Nt,
                                  y_c         = yc,
                                  N_c         = Nc,
-                                 a0          = a0 / length(levels(block)) ,
+                                 a0          = a0 / length(levels(block)),
                                  b0          = b0 / length(levels(block)),
                                  number_mcmc = number_mcmc)
 
 
         # computing the weighted prop difference and the weight
         prop_diff <- prop_diff + 1 / (1 / length(ctr_grp) + 1 / length(trt_grp)) *
-                    (mean(est_final$posterior_treatment$posterior -
-                          est_final$posterior_control$posterior))
+                     (est_final$posterior_treatment$posterior -
+                          est_final$posterior_control$posterior)
         weight    <- weight + 1 / (1 / length(ctr_grp) + 1 / length(trt_grp))
       }
     }
     # dividing it by the overall weight
-    prop_diff <- prop_diff / weight
+    prop_diff <- mean(prop_diff / weight)
   }
   # return the stratified prop difference
   return(prop_diff)

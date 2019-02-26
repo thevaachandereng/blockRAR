@@ -242,12 +242,13 @@ binomialbayes <- function(
                                    a0          = a0,
                                    b0          = b0,
                                    number_mcmc = number_mcmc)
+      print(diff_est)
 
       if(alternative == "greater"){
-        prob_ha <- mean(post_trt > 0)
+        prob_ha <- mean(diff_est > 0, na.rm = T)
       }
       else{
-        prob_ha <- mean(post_trt < 0)
+        prob_ha <- mean(diff_est < 0, na.rm = T)
       }
 
     }

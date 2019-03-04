@@ -114,7 +114,7 @@ binomialbayes <- function(
     group[index] <- group[index] + 1
   }
 
-  #
+  # storing all the important variables
   power              <- 0
   N_control          <- NULL
   N_treatment        <- NULL
@@ -123,7 +123,9 @@ binomialbayes <- function(
   early_success      <- NULL
   early_futility     <- NULL
 
+  # going through all the simulations
   for(k in 1:simulation){
+    # storing values for each simulation
     data_total            <- NULL
     test_stat             <- 0
     index                 <- block_number
@@ -131,6 +133,7 @@ binomialbayes <- function(
     stop_futility         <- 0
     for(i in 1:block_number){
 
+      # if data_total is null, set all the outcome to 0
       if(is.null(data_total)){
         yt <- 0
         Nt <- 0
@@ -138,6 +141,7 @@ binomialbayes <- function(
         Nc <- 0
       }
 
+      # estimating the interim value estimates
       est_interim <- bdpbinomial(y_t         = yt,
                                  N_t         = Nt,
                                  y_c         = yc,
@@ -145,6 +149,7 @@ binomialbayes <- function(
                                  a0          = a0,
                                  b0          = b0,
                                  number_mcmc = number_mcmc)
+
 
         if(alternative == "greater"){
           diff <- est_interim$posterior_treatment$posterior -

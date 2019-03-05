@@ -241,10 +241,10 @@ binomialbayes <- function(
     }
 
     else{
-      #fit0 <- bayesglm(formula = outcome ~ as.factor(treatment) + as.factor(time),
-      #                 family  = binomial(link="logit"),
-      #                 data    = data_total)
-      #post_trt <- coef(sim(fit0, n.sims = number_mcmc))[, 2]
+      fit0 <- bayesglm(formula = outcome ~ as.factor(treatment) + as.factor(time),
+                       family  = binomial(link="logit"),
+                       data    = data_total)
+      post_trt <- coef(sim(fit0, n.sims = number_mcmc))[, 2]
 
       diff_est <- prop_stratabayes(treatment   = data_total$treatment,
                                    outcome     = data_total$outcome,
@@ -255,10 +255,10 @@ binomialbayes <- function(
       print(diff_est)
 
       if(alternative == "greater"){
-        prob_ha <- mean(diff_est > 0, na.rm = T)
+        prob_ha <- mean(post_trt > 0)
       }
       else{
-        prob_ha <- mean(diff_est < 0, na.rm = T)
+        prob_ha <- mean(post_trt < 0)
       }
 
     }

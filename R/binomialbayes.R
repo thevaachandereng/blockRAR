@@ -36,7 +36,7 @@
 #'     each simulation.}
 #' }
 #'
-#' @importFrom stats rbinom binomial coef
+#' @importFrom stats rbinom binomial coef quasi
 #' @importFrom arm bayesglm sim
 #' @importFrom bayesDP bdpbinomial
 #' @importFrom dplyr mutate group_by summarize

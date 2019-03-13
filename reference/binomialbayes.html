@@ -209,60 +209,47 @@ must be one of "less" or "greater" (default).</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>binomialbayes</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.20</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.30</span>, <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 0.04946254
-#&gt; [1] 0.2463703
-#&gt; [1] 0.07767411
-#&gt; [1] 0.04524599
-#&gt; [1] 0.06722717
-#&gt; [1] 0.1142734
-#&gt; [1] -0.008047261
-#&gt; [1] 0.06843644
-#&gt; [1] -0.05538901
-#&gt; [1] 0.1880594</div><div class='output co'>#&gt; $power
-#&gt; [1] 0.1
+    <pre class="examples"><div class='input'><span class='fu'>binomialbayes</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.20</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.30</span>, <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; $power
+#&gt; [1] 0.5
 #&gt; 
 #&gt; $prop_diff_estimate
-#&gt;  [1]  0.049462540  0.246370332  0.077674108  0.045245987  0.067227174
-#&gt;  [6]  0.114273412 -0.008047261  0.068436437 -0.055389006  0.188059394
+#&gt;  [1]  0.05174973 -0.03820063  0.08641154  0.23570896  0.08972070  0.23012826
+#&gt;  [7] -0.01416401  0.17117942  0.26028206  0.12845934
 #&gt; 
 #&gt; $N_enrolled
-#&gt;  [1] 100 100 100 100 100 100 100 100 100 100
+#&gt;  [1] 100 100 100  50 100 100 100 100  75 100
 #&gt; 
 #&gt; $N_control
-#&gt;  [1] 37 31 42 49 35 58 46 47 50 26
+#&gt;  [1] 37 52 48 25 36 33 65 34 46 17
 #&gt; 
 #&gt; $N_treatment
-#&gt;  [1] 63 69 58 51 65 42 54 53 50 74
+#&gt;  [1] 63 48 52 25 64 67 35 66 29 83
 #&gt; 
 #&gt; $early_success
-#&gt;  [1] 0 1 0 0 0 0 0 0 0 0
+#&gt;  [1] 0 0 0 1 0 0 0 0 0 0
 #&gt; 
 #&gt; $early_futilty
 #&gt;  [1] 0 0 0 0 0 0 0 0 0 0
-#&gt; </div><div class='input'><span class='fu'>binomialbayes</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.50</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.30</span>, <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; [1] -0.2517758
-#&gt; [1] -0.08583177
-#&gt; [1] -0.180304
-#&gt; [1] -0.2141361
-#&gt; [1] -0.1994095</div><div class='output co'>#&gt; $power
+#&gt; </div><div class='input'><span class='fu'>binomialbayes</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.50</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.30</span>, <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: algorithm stopped at boundary value</span></div><div class='output co'>#&gt; $power
 #&gt; [1] 0
 #&gt; 
 #&gt; $prop_diff_estimate
-#&gt; [1] -0.25177584 -0.08583177 -0.18030402 -0.21413613 -0.19940954
+#&gt; [1] -0.1977062 -0.2764503 -0.4409175 -0.3771927 -0.2817458
 #&gt; 
 #&gt; $N_enrolled
-#&gt; [1] 100 100 100 100 100
+#&gt; [1] 100 100  50  50  75
 #&gt; 
 #&gt; $N_control
-#&gt; [1] 68 68 66 71 58
+#&gt; [1] 54 71 40 30 47
 #&gt; 
 #&gt; $N_treatment
-#&gt; [1] 32 32 34 29 42
+#&gt; [1] 46 29 10 20 28
 #&gt; 
 #&gt; $early_success
 #&gt; [1] 0 0 0 0 0
 #&gt; 
 #&gt; $early_futilty
-#&gt; [1] 0 0 0 0 0
+#&gt; [1] 0 0 1 1 1
 #&gt; </div><div class='input'>
 </div></pre>
   </div>

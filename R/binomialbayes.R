@@ -241,18 +241,30 @@ binomialbayes <- function(
     }
 
     else{
+
+      for(i in levels(data_total$time)){
+        # selecting the
+        trt_grp <- data_total$outcome[data_total$treatment == 1 & data_total$time == i]
+        ctr_grp <- data_total$outcome[data_total$treatment == 0 & data_total$time == i]
+
+        # only if there is at least one treatment group and one control group, perform the analysis
+        if(length(trt_grp) == 0 | length(ctr_grp) == 0){
+          data_total <- data_total[-which(data_total$time == i), ]
+        }
+
+      }
+
+
+      data_total <- droplevels.data.frame(data_total)
+
       fit0 <- bayesglm(formula = outcome ~ as.factor(treatment) + as.factor(time),
-                       family  = binomial(link="logit"),
-                       data    = data_total)
+                       data    = data_total,
+                       family  = quasi(link = "identity", variance = "mu(1-mu)"),
+                       start   = rep(0.1, 1 + length(levels(data_total$time))))
+
       post_trt <- coef(sim(fit0, n.sims = number_mcmc))[, 2]
 
-      diff_est <- prop_stratabayes(treatment   = data_total$treatment,
-                                   outcome     = data_total$outcome,
-                                   block       = data_total$time,
-                                   a0          = a0,
-                                   b0          = b0,
-                                   number_mcmc = number_mcmc)
-      print(diff_est)
+      diff_est <- mean(post_trt)
 
       if(alternative == "greater"){
         prob_ha <- mean(post_trt > 0)

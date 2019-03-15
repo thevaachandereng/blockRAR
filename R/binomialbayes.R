@@ -65,6 +65,7 @@ binomialbayes <- function(
   futility_prob      = 0.01,
   alternative        = "greater"
   ){
+
   # stop if proportion of control is not between 0 and 1
   if((p_control <= 0 | p_control >= 1)){
     stop("The proportion of event for the control group needs to between 0 and 1!")
@@ -150,7 +151,7 @@ binomialbayes <- function(
                                  b0          = b0,
                                  number_mcmc = number_mcmc)
 
-
+        # altering the randomization ratio based on Thall and Wathen's paper
         if(alternative == "greater"){
           diff <- est_interim$posterior_treatment$posterior -
                   est_interim$posterior_control$posterior
@@ -163,14 +164,17 @@ binomialbayes <- function(
           rr <- mean(diff < 0)^p / (mean(diff > 0)^p + mean(diff < 0)^p)
         }
 
+      # creating the dataset for each block
       data <- data.frame(
         treatment = sample(0:1, replace = T, group[i], prob = c(1 - rr, rr)),
         outcome   = rep(NA, group[i]))
 
+      # adding the outcome with time trends (linear time trend)
       data$outcome <- rbinom(dim(data)[1], 1, prob = data$treatment * p_treatment +
                                (1 - data$treatment) * p_control +
                                drift * sum(group[1:i]) / N_total)
 
+      # joining the dataset using rbind
       data_total <- rbind(data_total, data)
 
       yt <- sum(data_total$outcome[data_total$treatment == 1])

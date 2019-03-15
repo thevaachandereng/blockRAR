@@ -177,11 +177,13 @@ binomialbayes <- function(
       # joining the dataset using rbind
       data_total <- rbind(data_total, data)
 
+      # accumulating information on the events
       yt <- sum(data_total$outcome[data_total$treatment == 1])
       Nt <- length(data_total$outcome[data_total$treatment == 1])
       yc <- sum(data_total$outcome[data_total$treatment == 0])
       Nc <- length(data_total$outcome[data_total$treatment == 0])
 
+      # performing interim analysis to allow for stopping early
       est_interim <- bdpbinomial(y_t         = yt,
                                  N_t         = Nt,
                                  y_c         = yc,
@@ -190,7 +192,7 @@ binomialbayes <- function(
                                  b0          = b0,
                                  number_mcmc = number_mcmc)
 
-
+      # calculating the mean posterior difference for treatment estimate
       if(alternative == "greater"){
         rr <- mean(est_interim$posterior_treatment$posterior -
                      est_interim$posterior_control$posterior > 0)
@@ -200,13 +202,14 @@ binomialbayes <- function(
                      est_interim$posterior_control$posterior < 0)
       }
 
-
+      # check for early stopping for success
       if(rr > early_success_prob){
         index        <- i
         stop_success <- 1
         break
       }
 
+      # check for early stopping for futility
       if(rr < futility_prob){
         index         <- i
         stop_futility <- 1
@@ -215,8 +218,10 @@ binomialbayes <- function(
 
     }
 
+    # mutate time factor for time column
     data_total <- data_total %>%
       mutate(time = factor(rep(1:index, group[1:index])))
+
 
     if(N_total / block_number < 2 | index < 2 | block_number < 2){
       yt <- sum(data_total$outcome[data_total$treatment == 1])

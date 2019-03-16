@@ -222,13 +222,17 @@ binomialbayes <- function(
     data_total <- data_total %>%
       mutate(time = factor(rep(1:index, group[1:index])))
 
-
+    # if block size is less than 2 or number of time block is less than 2
+    # or the number o patient in each block is less than 2, do not do stratified
+    # analysis
     if(N_total / block_number < 2 | index < 2 | block_number < 2){
+      # accumulating details for analysis
       yt <- sum(data_total$outcome[data_total$treatment == 1])
       Nt <- length(data_total$outcome[data_total$treatment == 1])
       yc <- sum(data_total$outcome[data_total$treatment == 0])
       Nc <- length(data_total$outcome[data_total$treatment == 0])
 
+      ## non-stratified analysis
       est_final <- bdpbinomial(y_t         = yt,
                                N_t         = Nt,
                                y_c         = yc,
@@ -236,9 +240,13 @@ binomialbayes <- function(
                                a0          = a0,
                                b0          = b0,
                                number_mcmc = number_mcmc)
+
+      # estimating posterior treatment difference
       diff_est <- mean(est_final$posterior_treatment$posterior -
                          est_final$posterior_control$posterior)
 
+      # for different condition, computing the probability of accepting
+      # alternative hypothesis
       if(alternative == "greater"){
         prob_ha <- mean(est_final$posterior_treatment$posterior -
                           est_final$posterior_control$posterior > 0)
@@ -249,32 +257,38 @@ binomialbayes <- function(
       }
     }
 
+    # stratified analysis for factor time
     else{
 
       for(i in levels(data_total$time)){
-        # selecting the
+
+        # selecting the treatment and control group
         trt_grp <- data_total$outcome[data_total$treatment == 1 & data_total$time == i]
         ctr_grp <- data_total$outcome[data_total$treatment == 0 & data_total$time == i]
 
-        # only if there is at least one treatment group and one control group, perform the analysis
+        # only if there is at least one person in the
+        # treatment group and one control group,  perform the analysis
         if(length(trt_grp) == 0 | length(ctr_grp) == 0){
           data_total <- data_total[-which(data_total$time == i), ]
         }
-
       }
 
-
+      # drop levels for all the timepoints dropped due to missing data
       data_total <- droplevels.data.frame(data_total)
 
+      # perform bayes generalized linear models with quasi family and identity link
       fit0 <- bayesglm(formula = outcome ~ as.factor(treatment) + as.factor(time),
                        data    = data_total,
                        family  = quasi(link = "identity", variance = "mu(1-mu)"),
                        start   = rep(0.1, 1 + length(levels(data_total$time))))
 
+      # estimating the treatment effect
       post_trt <- coef(sim(fit0, n.sims = number_mcmc))[, 2]
 
+      # computing mean posterior treatment effect
       diff_est <- mean(post_trt)
 
+      # computing the probability of accepting alternative hypothesis
       if(alternative == "greater"){
         prob_ha <- mean(post_trt > 0)
       }
@@ -284,6 +298,7 @@ binomialbayes <- function(
 
     }
 
+    # storing all the control, treatment information for each trial simulation
     N_control          <- c(N_control, sum(data_total$treatment == 0))
     N_treatment        <- c(N_treatment, sum(data_total$treatment == 1))
     sample_size        <- c(sample_size, dim(data_total)[1])
@@ -291,6 +306,7 @@ binomialbayes <- function(
     early_success      <- c(early_success, stop_success)
     early_futility     <- c(early_futility, stop_futility)
 
+    # computing the power for all the trial simulation
     if(prob_ha > (prob_accept_ha)){
       power <- power + 1
     }
@@ -298,6 +314,7 @@ binomialbayes <- function(
 
   }
 
+  # storing the information for outputs
   output <- list(
     power                 = power / simulation,
     prop_diff_estimate    = prop_diff_estimate,
@@ -308,6 +325,7 @@ binomialbayes <- function(
     early_futilty         = early_futility
   )
 
+  # return output
   return(output)
 
 }

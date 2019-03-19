@@ -312,17 +312,31 @@ binomialfreq <- function(
                                      levels=c(levels(data_total$treatment), "0"))
       }
 
+      # interim data for considering early stopping
+      data_interim <- data_total %>%
+        mutate(time = factor(rep(1:i, group[1:i])))
+
+
+
       # if one treatment is not present or one type of outcome is not present,
       # set the test_statistics to 0.
-      if(all(data_total$outcome == 1) | all(data_total$outcome == 0) |
-         all(data_total$treatment == 1) | all(data_total$treatment == 0)){
+      if(all(data_interim$outcome == 1) | all(data_interim$outcome == 0) |
+         all(data_interim$treatment == 1) | all(data_interim$treatment == 0)){
         test_stat <- 0
       }
-      # else compute the test statistics
-      else{
-        test_stat <- sqrt(as.numeric(chisq.test(data_total$treatment,
-                                                data_total$outcome,
+
+      # else compute the test statistics for block of size 1 or 1 block
+      else if(all(data_interim$time == 1) | N_total / block_number <  2){
+        test_stat <- sqrt(as.numeric(chisq.test(data_interim$treatment,
+                                                data_interim$outcome,
                                                 correct = correct)$statistic))
+      }
+
+      # compute mantelhaen.test for number of block > 1.
+      else{
+        test_stat <- sqrt(as.numeric(mantelhaen.test(table(data_interim),
+                                                     alternative = alternative,
+                                                     correct = correct)$statistic))
       }
 
       # if we allow early stopping and the

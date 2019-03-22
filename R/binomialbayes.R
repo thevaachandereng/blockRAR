@@ -225,7 +225,7 @@ binomialbayes <- function(
     # if block size is less than 2 or number of time block is less than 2
     # or the number o patient in each block is less than 2, do not do stratified
     # analysis
-    if(N_total / block_number < 2 | index < 2 | block_number < 2){
+    if(N_total / block_number < 2 | all(data_total$time == 1) | block_number < 2){
       # accumulating details for analysis
       yt <- sum(data_total$outcome[data_total$treatment == 1])
       Nt <- length(data_total$outcome[data_total$treatment == 1])
@@ -276,11 +276,23 @@ binomialbayes <- function(
       # drop levels for all the timepoints dropped due to missing data
       data_total <- droplevels.data.frame(data_total)
 
-      # perform bayes generalized linear models with quasi family and identity link
-      fit0 <- bayesglm(formula = outcome ~ as.factor(treatment) + as.factor(time),
-                       data    = data_total,
-                       family  = quasi(link = "identity", variance = "mu(1-mu)"),
-                       start   = rep(0.1, 1 + length(levels(data_total$time))))
+      ## if there is more than 1 factor level, fit time as a factor level
+      if(length(levels(data_total$time)) > 1){
+        # perform bayes generalized linear models with quasi family and identity link
+        fit0 <- bayesglm(formula = outcome ~ as.factor(treatment) + as.factor(time),
+                         data    = data_total,
+                         family  = quasi(link = "identity", variance = "mu(1-mu)"),
+                        start   = rep(0.1, 1 + length(levels(data_total$time))))
+      }
+
+      # else fit just the treatment effect model
+      else{
+        # perform bayes generalized linear models with quasi family and identity link
+        fit0 <- bayesglm(formula = outcome ~ as.factor(treatment),
+                         data    = data_total,
+                         family  = quasi(link = "identity", variance = "mu(1-mu)"),
+                         start   = rep(0.1, 1 + length(levels(data_total$time))))
+      }
 
       # estimating the treatment effect
       post_trt <- coef(sim(fit0, n.sims = number_mcmc))[, 2]

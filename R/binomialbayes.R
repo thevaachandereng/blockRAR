@@ -222,6 +222,9 @@ binomialbayes <- function(
     data_total <- data_total %>%
       mutate(time = factor(rep(1:index, group[1:index])))
 
+    # setting data final same as data_total
+    data_final <- data_total
+
     # if block size is less than 2 or number of time block is less than 2
     # or the number o patient in each block is less than 2, do not do stratified
     # analysis
@@ -282,20 +285,27 @@ binomialbayes <- function(
         fit0 <- bayesglm(formula = outcome ~ as.factor(treatment) + as.factor(time),
                          data    = data_total,
                          family  = quasi(link = "identity", variance = "mu(1-mu)"),
-                        start   = rep(0.1, 1 + length(levels(data_total$time))))
+                         start   = rep(0.1, 1 + length(levels(data_total$time))))
+        # estimating the treatment effect
+        post_trt <- coef(sim(fit0, n.sims = number_mcmc))[, 2]
       }
 
       # else fit just the treatment effect model
-      else{
+      else if (length(levels(data_total$time)) == 1){
         # perform bayes generalized linear models with quasi family and identity link
         fit0 <- bayesglm(formula = outcome ~ as.factor(treatment),
                          data    = data_total,
                          family  = quasi(link = "identity", variance = "mu(1-mu)"),
                          start   = rep(0.1, 1 + length(levels(data_total$time))))
+        # estimating the treatment effect
+        post_trt <- coef(sim(fit0, n.sims = number_mcmc))[, 2]
       }
 
-      # estimating the treatment effect
-      post_trt <- coef(sim(fit0, n.sims = number_mcmc))[, 2]
+      # if all the columns are dropped, fit equal to 0
+      else{
+        fit0 <- 0
+        post_trt <- 0
+      }
 
       # computing mean posterior treatment effect
       diff_est <- mean(post_trt)
@@ -311,9 +321,9 @@ binomialbayes <- function(
     }
 
     # storing all the control, treatment information for each trial simulation
-    N_control          <- c(N_control, sum(data_total$treatment == 0))
-    N_treatment        <- c(N_treatment, sum(data_total$treatment == 1))
-    sample_size        <- c(sample_size, dim(data_total)[1])
+    N_control          <- c(N_control, sum(data_final$treatment == 0))
+    N_treatment        <- c(N_treatment, sum(data_final$treatment == 1))
+    sample_size        <- c(sample_size, dim(data_final)[1])
     prop_diff_estimate <- c(prop_diff_estimate, diff_est)
     early_success      <- c(early_success, stop_success)
     early_futility     <- c(early_futility, stop_futility)

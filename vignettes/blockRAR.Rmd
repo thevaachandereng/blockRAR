@@ -27,10 +27,6 @@ set.seed(43232)
 Response-Adaptive Randomization (RAR) design utilizes accrual information to tilt the randomization ratio to the better performing treatment group.
 Patients enrolled in these trials are not only treated to obtain effectiveness of a treatment but also treated to the best way possible. 
 Altering the randomization ratio drastically can potentially affect the bias in a trial especially if one treatment is very superior to the other treatment. The major drawback to response-adaptive randomization design is that the trial needs to be short to be able to obtain the outcome of the trial for future randomization.
-
-
-Opponents of response-adaptive randomization have argued that adaptive randomization challenges the whole notion of equipoise due to high skewness in randomization ratio.
-Some argue it questions the entire basis for randomization and threatens the most vital tool in clinical research. 
 There are various methods developed to address some of this flaws besides developing a proper design for response-adaptive randomization.
 
 Time drift can lead to bias by confounding the treatment effect with time effects.
@@ -72,7 +68,7 @@ Example of time trend issue in response-adaptive randomization (RAR) design:
 
 
 
-`blockRAR` is an R package for the simulation and analysis of adaptive Bayesian randomzied controlled trials under a range of trial designs and outcome types. Currently, it supports Gaussian and binomial data types, with time-to-event data to follow soon. The package allows the (optional) incorporation of historical data and permits interim analyses of early stopping for futility or success. Please note this package is still under development. 
+`blockRAR` is an R package for the simulation and analysis of adaptive Bayesian randomzied controlled trials under a range of trial designs and outcome types. Currently, it supports binomial data types, with time-to-event data and Gaussian data type to follow soon. The package allows the (optional) incorporation of historical data and permits interim analyses of early stopping for futility or success. Please note this package is still under development. 
 
 If you use `blockRAR` in published research, please cite: **TBA**.
 
@@ -99,7 +95,7 @@ devtools::install_version("blockRAR", version = "x.x.x", repos = "http://cran.us
 
 The second option is to download the most recent stable version through GitHub:
 
-```{r, cache=FALSE, warning=FALSE, comment=FALSE, eval = TRUE, echo=TRUE, results="hide"}
+```{r, cache=FALSE, warning=FALSE, comment=FALSE, eval = FALSE, echo=TRUE, results="hide"}
 devtools::install_github("thevaachandereng/blockRAR")
 ```
 

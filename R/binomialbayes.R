@@ -282,12 +282,25 @@ binomialbayes <- function(
       ## if there is more than 1 factor level, fit time as a factor level
       if(length(levels(data_total$time)) > 1){
         # perform bayes generalized linear models with quasi family and identity link
-        fit0 <- bayesglm(formula = outcome ~ as.factor(treatment) + as.factor(time),
+        fit0 <- tryCatch(expr = bayesglm(formula = outcome ~ as.factor(treatment) + as.factor(time),
                          data    = data_total,
                          family  = quasi(link = "identity", variance = "mu(1-mu)"),
-                         start   = rep(0.1, 1 + length(levels(data_total$time))))
+                         start   = rep(0.1, 1 + length(levels(data_total$time)))),
+                         error   = function(data = data_total){
+                             rbeta(number_mcmc,
+                                   sum(data$outcome[data$time == data$time[1] & data$treatment == 1]) + a0,
+                                   length(data$outcome[data$time == data$time[1] & data$treatment == 1]) + b0) -
+                             rbeta(number_mcmc,
+                                   sum(data$outcome[data$time == data$time[1] & data$treatment == 0]) + a0,
+                                   length(data$outcome[data$time == data$time[1] & data$treatment == 0])) + b0})
+
         # estimating the treatment effect
-        post_trt <- coef(sim(fit0, n.sims = number_mcmc))[, 2]
+        if(length(fit0) == number_mcmc){
+          post_trt <- fit0
+        }
+        else{
+          post_trt <- coef(sim(fit0, n.sims = number_mcmc))[, 2]
+        }
       }
 
       # else fit just the treatment effect model

@@ -1,0 +1,17 @@
+citHeader("To cite blockRAR in publications use:")
+
+citEntry(entry = "Article",
+  title        = "Robust Response-Adaptive Randomization Design",
+  author       = personList(as.person("Thevaa Chandereng"),
+                   as.person("Rick Chappell")),
+  journal      = "arXiv preprint arXiv:1904.07758",
+  year         = "2019",
+  url          = "https://arxiv.org/abs/1904.07758",
+
+  textVersion  =
+  paste("Thevaa Chandereng, Rick Chappell (2019).",
+        "Robust Response-Adaptive Randomization Design.",
+        "arXiv:1904.07758.",
+        "URL https://arxiv.org/abs/1904.07758.")
+)
+

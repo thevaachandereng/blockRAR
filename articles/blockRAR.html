@@ -94,7 +94,8 @@
 <li>Patients within centers can change, especially but not only with chronic diseases, due to the phenomenon of “A queue of desperate patients lining up at the door”.</li>
 <li>In addition to these examples, an investigator who wants to game the system could cross his/her fingers that his favored treatment arm is ahead, then progressively enroll better prognosis patients over time</li>
 </ul>
-<p><code>blockRAR</code> is an R package for the simulation and analysis of adaptive Bayesian randomzied controlled trials under a range of trial designs and outcome types. Currently, it supports binomial data types, with time-to-event data and Gaussian data type to follow soon. The package allows the (optional) incorporation of historical data and permits interim analyses of early stopping for futility or success. Please note this package is still under development.</p>
+<p>Therefore, we designed a stratified group-sequential method on altering the randomization ratio in a block/group level to address this issue instead of altering the randomization ratio by patient basis. In each block/group, the randomization ratio is kept constant. However, the ideal number of block/group is still vague.</p>
+<p><code>blockRAR</code> is an R package for the simulation and analysis of adaptive Bayesian randomzied controlled trials under a range of trial designs and outcome types. Currently, it supports binomial data types, with time-to-event data and Gaussian data type to follow soon. The package allows the (optional) incorporation of historical data and permits interim analyses of early stopping for futility or success.</p>
 <p>If you use <code>blockRAR</code> in published research, please cite: <strong>TBA</strong>.</p>
 <p>If after reading through this vignette you have questions or problems using <code>blockRAR</code>, please post them to <a href="https://github.com/thevaachandereng/blockRAR/issues" class="uri">https://github.com/thevaachandereng/blockRAR/issues</a>. This will notify the package maintainers and we can work to address the issue(s). Please note that comments and questions should <strong>not</strong> be emailed directly to the package authors.</p>
 </div>
@@ -114,6 +115,22 @@
 <p>After successful installation, the package must be loaded into the working space:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(blockRAR)</a></code></pre></div>
 </div>
+<div id="required-input" class="section level1">
+<h1 class="hasAnchor">
+<a href="#required-input" class="anchor"></a>Required input</h1>
+<div id="frequentist-approach" class="section level2">
+<h2 class="hasAnchor">
+<a href="#frequentist-approach" class="anchor"></a>Frequentist Approach</h2>
+<p><strong>Data</strong>: Input to LPWC is a matrix or data frame. We assume here that it is gene expression data, but other data types are suitable as well. The expression matrix should be n -by- p where n is the number of genes (in rows) and p is the number of timepoints. If <strong>data</strong> is a data frame, the gene names can be specified using the <code><a href="https://www.rdocumentation.org/packages/base/topics/row.names">row.names()</a></code>.</p>
+<p>The object <strong>simdata</strong> is a simulated dataset for 200 genes with 8 timepoints that follow the biological <a href="https://doi.org/10.1093/bioinformatics/btw665">impulse model</a>. This is stored as a data frame in the package with row names representing gene labels.</p>
+<p><strong>Timepoints:</strong> The object <strong>timepoints</strong> should be a vector of timepoints that specify when the data were collected. This should match the column length in <strong>Data</strong>. This can be in any form (seconds, minutes, hours, or even days), but make sure the units are uniform throughout.</p>
+<p><strong>Data</strong> and <strong>Timepoints</strong> are the main requirement to run LPWC, however, there are other optional parameters that affect the results. Our manuscript referenced above describes these parameters in more detail.</p>
+<p><strong>Max.lag:</strong> The object <strong>max.lag</strong> should be an integer value that controls the maximum lag. This max.lag has to be less than the floor of length(timepoints) / 4. That is because longer lags lead to comparisons between two expression profiles that use less than half of the data points, which can lead to spurious correlations.</p>
+<p><strong>C:</strong> The object <strong>C</strong> should be a numeric. This controls the width of the Gaussian kernel function used to penalize the lag and the weights in weighed correlation vector. The parameter <strong>C</strong> can be set automatically by setting <strong>C</strong> to the default NULL value and setting the <strong>penalty</strong> argument described below. If <strong>C</strong> is set to a specific value, the <strong>penalty</strong> is ignored.</p>
+<p><strong>penalty:</strong> The object <strong>penalty</strong> only allows two values: “low” and “high”. It is used to automatically set the value of <strong>C</strong>. High imposes a higher penalty on lags thus favoring grouping genes without introducing lags. The lower penalty leads to more lagged genes in the clusters. The default is set to the “high” penalty. This argument is ignored if <strong>C</strong> is set to a specific value.</p>
+<p><strong>iter:</strong> The object <strong>iter</strong> should be a numeric. This controls the number of values of C that are tested when automatically setting the C parameter. The default is 10. Increasing iter increases computational time. This is only relevant for the low penalty because the high penalty uses a single C instead of searching over multiple C.</p>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -123,6 +140,11 @@
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction">Introduction</a></li>
       <li><a href="#running-blockrar">Running blockRAR</a></li>
+      <li>
+<a href="#required-input">Required input</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#frequentist-approach">Frequentist Approach</a></li>
+      </ul>
+</li>
       </ul>
 </div>
       </div>

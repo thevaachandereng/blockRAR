@@ -95,8 +95,9 @@
 <li>In addition to these examples, an investigator who wants to game the system could cross his/her fingers that his favored treatment arm is ahead, then progressively enroll better prognosis patients over time</li>
 </ul>
 <p>Therefore, we designed a stratified group-sequential method on altering the randomization ratio in a block/group level to address this issue instead of altering the randomization ratio by patient basis. In each block/group, the randomization ratio is kept constant. However, the ideal number of block/group is still vague.</p>
-<p><code>blockRAR</code> is an R package for the simulation and analysis of adaptive Bayesian randomzied controlled trials under a range of trial designs and outcome types. Currently, it supports binomial data types, with time-to-event data and Gaussian data type to follow soon. The package allows the (optional) incorporation of historical data and permits interim analyses of early stopping for futility or success.</p>
-<p>If you use <code>blockRAR</code> in published research, please cite: <strong>TBA</strong>.</p>
+<p><code>blockRAR</code> is an R package for the simulation of response-adaptive randomization trials with binomial outcomes where patients are assigned in block and randomization ratio is altered by block rather than patient by patient basis using both frequentist and Bayesian method. For more details on the method, please look at our <a href="https://arxiv.org/abs/1904.07758">preprint</a>.</p>
+<p>If you use <code>blockRAR</code> in published research, please cite our preprint:</p>
+<p>Robust Response-Adaptive Randomization Design. Chandereng, T., &amp; Chappell, R. (2019). <a href="https://arxiv.org/abs/1904.07758">arXiv preprint arXiv:1904.07758</a>.</p>
 <p>If after reading through this vignette you have questions or problems using <code>blockRAR</code>, please post them to <a href="https://github.com/thevaachandereng/blockRAR/issues" class="uri">https://github.com/thevaachandereng/blockRAR/issues</a>. This will notify the package maintainers and we can work to address the issue(s). Please note that comments and questions should <strong>not</strong> be emailed directly to the package authors.</p>
 </div>
 <div id="running-blockrar" class="section level1">
@@ -106,10 +107,8 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"blockRAR"</span>)</a></code></pre></div>
 <p>There are additional ways to download <code>blockRAR</code>. The first option is most useful for downloading a specific version of <code>blockRAR</code> (which can be found at <a href="https://github.com/thevaachandereng/bayesCT/releases" class="uri">https://github.com/thevaachandereng/bayesCT/releases</a>):</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"thevaachandereng/blockRAR@vx.xx.x"</span>)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co"># or </span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_version</a></span>(<span class="st">"blockRAR"</span>, <span class="dt">version =</span> <span class="st">"x.x.x"</span>, <span class="dt">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co"># or </span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_version</a></span>(<span class="st">"blockRAR"</span>, <span class="dt">version =</span> <span class="st">"x.x.x"</span>, <span class="dt">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>)</a></code></pre></div>
 <p>The second option is to download the most recent stable version through GitHub:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"thevaachandereng/blockRAR"</span>)</a></code></pre></div>
 <p>After successful installation, the package must be loaded into the working space:</p>
@@ -118,18 +117,172 @@
 <div id="required-input" class="section level1">
 <h1 class="hasAnchor">
 <a href="#required-input" class="anchor"></a>Required input</h1>
+<p>In this section, we will describe each input for the frequentist and Bayesian approach of block design for RAR.</p>
 <div id="frequentist-approach" class="section level2">
 <h2 class="hasAnchor">
 <a href="#frequentist-approach" class="anchor"></a>Frequentist Approach</h2>
-<p><strong>Data</strong>: Input to LPWC is a matrix or data frame. We assume here that it is gene expression data, but other data types are suitable as well. The expression matrix should be n -by- p where n is the number of genes (in rows) and p is the number of timepoints. If <strong>data</strong> is a data frame, the gene names can be specified using the <code><a href="https://www.rdocumentation.org/packages/base/topics/row.names">row.names()</a></code>.</p>
-<p>The object <strong>simdata</strong> is a simulated dataset for 200 genes with 8 timepoints that follow the biological <a href="https://doi.org/10.1093/bioinformatics/btw665">impulse model</a>. This is stored as a data frame in the package with row names representing gene labels.</p>
-<p><strong>Timepoints:</strong> The object <strong>timepoints</strong> should be a vector of timepoints that specify when the data were collected. This should match the column length in <strong>Data</strong>. This can be in any form (seconds, minutes, hours, or even days), but make sure the units are uniform throughout.</p>
-<p><strong>Data</strong> and <strong>Timepoints</strong> are the main requirement to run LPWC, however, there are other optional parameters that affect the results. Our manuscript referenced above describes these parameters in more detail.</p>
-<p><strong>Max.lag:</strong> The object <strong>max.lag</strong> should be an integer value that controls the maximum lag. This max.lag has to be less than the floor of length(timepoints) / 4. That is because longer lags lead to comparisons between two expression profiles that use less than half of the data points, which can lead to spurious correlations.</p>
-<p><strong>C:</strong> The object <strong>C</strong> should be a numeric. This controls the width of the Gaussian kernel function used to penalize the lag and the weights in weighed correlation vector. The parameter <strong>C</strong> can be set automatically by setting <strong>C</strong> to the default NULL value and setting the <strong>penalty</strong> argument described below. If <strong>C</strong> is set to a specific value, the <strong>penalty</strong> is ignored.</p>
-<p><strong>penalty:</strong> The object <strong>penalty</strong> only allows two values: “low” and “high”. It is used to automatically set the value of <strong>C</strong>. High imposes a higher penalty on lags thus favoring grouping genes without introducing lags. The lower penalty leads to more lagged genes in the clusters. The default is set to the “high” penalty. This argument is ignored if <strong>C</strong> is set to a specific value.</p>
-<p><strong>iter:</strong> The object <strong>iter</strong> should be a numeric. This controls the number of values of C that are tested when automatically setting the C parameter. The default is 10. Increasing iter increases computational time. This is only relevant for the low penalty because the high penalty uses a single C instead of searching over multiple C.</p>
+<p><strong>p_control</strong>: The object <strong>p_control</strong> has to be <span class="math inline">\(0 &lt;\)</span> <strong>p_control</strong> <span class="math inline">\(&lt; 1\)</span>. This determines the proportion of events in the control group.</p>
+<p><strong>p_treatment</strong>: The object <strong>p_treatment</strong> has to be <span class="math inline">\(0 &lt;\)</span> <strong>p_treatment</strong> <span class="math inline">\(&lt; 1\)</span>. This determines the proportion of events in the treatment group.</p>
+<p><strong>N_total</strong>: The object <strong>N_total</strong> determines the targeted sample size of subjects enrolled in the trial. When early stopping criteria is specified, the total sample size enrolled in the trial might be smaller than the one used.</p>
+<p><strong>block_number</strong>: The object <strong>block_number</strong> determines the number of blocks/groups used in the design of the trial. The value of <strong>block_number</strong> needs to smaller or equal to the size of <strong>N_total</strong>. For traditional RAR, set <strong>block_number</strong> equal to <strong>N_total</strong>. For traditional RCT, select <strong>block_number</strong> to 1. The early stopping criteria is applied after completing enrollment and data collection in each block. The randomization ratio is also altered at the block level. The default <strong>block_number</strong> is set to 4.</p>
+<p><strong>drift</strong>: The object <strong>drift</strong> controls the size of the patient-drift as described in the preprint.The <strong>drift</strong> changes the magnitude of proportion of events in either positive/negative direction. The drift is applied at the block level where <strong>p_control</strong> and <strong>p_treatment</strong> both increasing in a step-wise manner at each block level from their initial values to final value of the <strong>drift</strong>. Please make sure that the drift is within the limit specified, 0 &lt; <strong>p_treatment</strong> + <strong>drift</strong> &lt; 1 and 0 &lt; <strong>p_control</strong> + <strong>drift</strong> &lt; 1.</p>
+<p><strong>simulation</strong>: The object <strong>simulation</strong> sets the number of trials to be run.</p>
+<p><strong>conf_int</strong>: The object <strong>conf_int</strong> determines the confidence interval of the trial. This value is same as 1- <span class="math inline">\(\alpha\)</span> in the clinical setting.</p>
+<p><strong>alternative</strong>: The object <strong>alternative</strong> only takes two value “greater” (default) or “less”. If <strong>alternative</strong> is greater then the the trial is successful <strong>p_treatment</strong> &gt; <strong>p_control</strong> and vice versa.</p>
+<p><strong>correct</strong>: The object <strong>correct</strong> is a logical indicator. If correct is set to FALSE (default), the Yates-continuity correction is not applied and vice-versa.</p>
+<p><strong>replace</strong>: The object <strong>replace</strong> is a logical indicator. If replace is set to TRUE (default), the sampling is done with replacement. If replace is set to FALSE, the replacement is done without replacement.</p>
+<p><strong>early_stop</strong>: The object <strong>early_stop</strong> is a logical indicator. The default is set to FALSE, which does not allow early stopping. If early stopping is applied, the early stopping is done at block level using the Lan-DeMets alpha-spending function.</p>
 </div>
+<div id="bayesian-approach" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bayesian-approach" class="anchor"></a>Bayesian Approach</h2>
+<p><strong>p_control</strong>: The object <strong>p_control</strong> has to be <span class="math inline">\(0 &lt;\)</span> <strong>p_control</strong> <span class="math inline">\(&lt; 1\)</span>. This determines the proportion of events in the control group.</p>
+<p><strong>p_treatment</strong>: The object <strong>p_treatment</strong> has to be <span class="math inline">\(0 &lt;\)</span> <strong>p_treatment</strong> <span class="math inline">\(&lt; 1\)</span>. This determines the proportion of events in the treatment group.</p>
+<p><strong>N_total</strong>: The object <strong>N_total</strong> determines the targeted sample size of subjects enrolled in the trial. When early stopping criteria is specified, the total sample size enrolled in the trial might be smaller than the one used.</p>
+<p><strong>block_number</strong>: The object <strong>block_number</strong> determines the number of blocks/groups used in the design of the trial. The value of <strong>block_number</strong> needs to smaller or equal to the size of <strong>N_total</strong>. For traditional RAR, set <strong>block_number</strong> equal to <strong>N_total</strong>. For traditional RCT, select <strong>block_number</strong> to 1. The early stopping criteria is applied after completing enrollment and data collection in each block. The randomization ratio is also altered at the block level. The default <strong>block_number</strong> is set to 4.</p>
+<p><strong>drift</strong>: The object <strong>drift</strong> controls the size of the patient-drift as described in the preprint.The <strong>drift</strong> changes the magnitude of proportion of events in either positive/negative direction. The drift is applied at the block level where <strong>p_control</strong> and <strong>p_treatment</strong> both increasing in a step-wise manner at each block level from their initial values to final value of the <strong>drift</strong>. Please make sure that the drift is within the limit specified, 0 &lt; <strong>p_treatment</strong> + <strong>drift</strong> &lt; 1 and 0 &lt; <strong>p_control</strong> + <strong>drift</strong> &lt; 1.</p>
+<p><strong>simulation</strong>: The object <strong>simulation</strong> sets the number of trials to be run.</p>
+<p><strong>a0</strong>: The object <strong>a0</strong> set the parameter value of a in the non-informative prior in Beta(a, b).</p>
+<p><strong>b0</strong>: The object <strong>b0</strong> set the parameter value of b in the non-informative prior in Beta(a, b).</p>
+<p><strong>p</strong>: The object <strong>p</strong> sets the power in the allocation probability. The probability of randomizing subjects to treatment A in stratum j is defined as <span class="math display">\[\pi_{j, A} = \frac{(p_{A&gt;B} (data))^ {p}}{(p_{A&gt;B} (data))^ {p} + (p_{B&gt;A} (data))^ {p}},\]</span> where <span class="math inline">\(p_{A &gt; B}(data)\)</span> is the posterior probability that treatment A has a higher success rate than treatment B and <span class="math inline">\(p_{A&gt;B} (data)) = 1 - p_{B&gt;A} (data))\)</span>.</p>
+<p><strong>number_mcmc</strong>: The object <strong>number_mcmc</strong> determines the number of posterior sample draw randomly using Monte-Carlo method. The default is set to 10,000.</p>
+<p><strong>prob_accept_ha</strong>: The object <strong>prob_accept_ha</strong> controls the posterior probability of accepting the alternative hypothesis. The default is set to 0.95.</p>
+<p><strong>early_success_prob</strong>: The object <strong>early_success_prob</strong> sets the probability of stopping early for success. The default is set to 0.99. Change this value to 1 if you do not want to stop early for success.</p>
+<p><strong>futility_prob</strong>: The object <strong>futility_prob</strong> sets the probability of stopping early for futility. The default is set to 0.01. Change this value to 0 if you do not want to stop early for futility.</p>
+<p><strong>alternative</strong>: The object <strong>alternative</strong> only takes two value “greater” (default) or “less”. If <strong>alternative</strong> is greater then the the trial is successful <strong>p_treatment</strong> &gt; <strong>p_control</strong> and vice versa.</p>
+</div>
+</div>
+<div id="obtaining-power-and-sample-size" class="section level1">
+<h1 class="hasAnchor">
+<a href="#obtaining-power-and-sample-size" class="anchor"></a>Obtaining Power and Sample Size</h1>
+<p>blockRAR computes power (true-positive) and return several outputs: power (proportion of true-positive), mean estimated proportion of events in the control and treatment group, stratified proportion difference in treatment, sample size enrolled, sample size in each treatment group.</p>
+<div id="frequentist-approach-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#frequentist-approach-1" class="anchor"></a>Frequentist Approach</h2>
+<p>Computing power, stratified difference in treatment proportion using the <strong>binomial_freq</strong> function.</p>
+<p>An example function execution with proportion of events in control is 0.25, proportion of events in treatment is 0.45, targeted sample size of 200, 5 number of blocks where randomization ratio is altered, no drift is applied, <span class="math inline">\(\alpha\)</span> of 0.05, alternative of “greater”, sampling with replacement and early stopping not applied.</p>
+<pre><code>#&gt; $power
+#&gt; [1] 0.9
+#&gt; 
+#&gt; $p_control_estimate
+#&gt;   [1] 0.2446809 0.2197802 0.2696629 0.2783505 0.3020833 0.1470588 0.2365591
+#&gt;   [8] 0.2840909 0.1666667 0.2365591 0.2151899 0.2285714 0.1791045 0.1704545
+#&gt;  [15] 0.1538462 0.2352941 0.2588235 0.2054795 0.2947368 0.1720430 0.2083333
+#&gt;  [22] 0.2527473 0.2828283 0.1747573 0.2976190 0.1621622 0.2727273 0.2500000
+#&gt;  [29] 0.2700000 0.2429907 0.2739726 0.2613636 0.2696629 0.2705882 0.2289157
+#&gt;  [36] 0.2658228 0.2921348 0.2736842 0.1139241 0.2307692 0.2929293 0.2916667
+#&gt;  [43] 0.2790698 0.2531646 0.2682927 0.1758242 0.1538462 0.3118280 0.2784810
+#&gt;  [50] 0.2317073 0.2211538 0.2870370 0.2352941 0.2658228 0.2268041 0.2134831
+#&gt;  [57] 0.2500000 0.2784810 0.2857143 0.2539683 0.2000000 0.2555556 0.2471910
+#&gt;  [64] 0.2891566 0.2187500 0.2500000 0.3333333 0.2631579 0.2558140 0.2413793
+#&gt;  [71] 0.1830986 0.2315789 0.2222222 0.2906977 0.2625000 0.2626263 0.2474227
+#&gt;  [78] 0.2705882 0.2207792 0.2727273 0.2054795 0.2111111 0.3048780 0.2812500
+#&gt;  [85] 0.2761905 0.2400000 0.2596154 0.2465753 0.3113208 0.3176471 0.2804878
+#&gt;  [92] 0.1827957 0.2500000 0.2134831 0.2359551 0.3444444 0.2739726 0.1527778
+#&gt;  [99] 0.2650602 0.2916667
+#&gt; 
+#&gt; $p_treatment_estimate
+#&gt;   [1] 0.4716981 0.4220183 0.4684685 0.4854369 0.5192308 0.4848485 0.3925234
+#&gt;   [8] 0.4017857 0.4344262 0.5046729 0.5371901 0.5153846 0.3834586 0.4375000
+#&gt;  [15] 0.4666667 0.4173913 0.4173913 0.4409449 0.5904762 0.3831776 0.3653846
+#&gt;  [22] 0.4128440 0.4059406 0.4329897 0.4396552 0.4126984 0.5089286 0.4038462
+#&gt;  [29] 0.4700000 0.5161290 0.5196850 0.4017857 0.4864865 0.4782609 0.4786325
+#&gt;  [36] 0.4710744 0.3963964 0.4761905 0.4710744 0.5000000 0.4158416 0.4807692
+#&gt;  [43] 0.4912281 0.4049587 0.4830508 0.4862385 0.4344262 0.4485981 0.4710744
+#&gt;  [50] 0.3728814 0.4062500 0.3586957 0.5043478 0.4049587 0.4466019 0.4594595
+#&gt;  [57] 0.3888889 0.5041322 0.4019608 0.4744526 0.4250000 0.5545455 0.4324324
+#&gt;  [64] 0.5128205 0.3557692 0.4913793 0.4158416 0.4666667 0.4210526 0.4601770
+#&gt;  [71] 0.4496124 0.5333333 0.4201681 0.4561404 0.5166667 0.4653465 0.4757282
+#&gt;  [78] 0.5043478 0.4308943 0.5040650 0.4724409 0.4000000 0.3983051 0.3750000
+#&gt;  [85] 0.4736842 0.5200000 0.3645833 0.4488189 0.4042553 0.4869565 0.4152542
+#&gt;  [92] 0.4299065 0.4351852 0.4594595 0.4594595 0.3909091 0.4330709 0.4453125
+#&gt;  [99] 0.4615385 0.4326923
+#&gt; 
+#&gt; $prop_diff_estimate
+#&gt;   [1] 0.21878279 0.20671835 0.18832194 0.20629921 0.22759674 0.31322506
+#&gt;   [7] 0.14588592 0.11562179 0.25605727 0.25298082 0.33083110 0.27142857
+#&gt;  [13] 0.19156415 0.26736842 0.31116252 0.17677553 0.16330749 0.23399433
+#&gt;  [19] 0.30341207 0.22448980 0.14771574 0.16059518 0.10512688 0.26288923
+#&gt;  [25] 0.13592751 0.26152074 0.23435897 0.15532995 0.18331617 0.25871942
+#&gt;  [31] 0.25598219 0.13949843 0.22299839 0.19451630 0.21628768 0.20751720
+#&gt;  [37] 0.09868766 0.21828454 0.36729223 0.30939227 0.12456052 0.17638037
+#&gt;  [43] 0.19065521 0.15311005 0.21204188 0.28137092 0.30056497 0.12480418
+#&gt;  [49] 0.21105795 0.13597884 0.19050051 0.05968586 0.26420010 0.14203051
+#&gt;  [55] 0.21759500 0.22347873 0.10874089 0.23545405 0.12010309 0.22537764
+#&gt;  [61] 0.22842105 0.30804954 0.19813761 0.23026674 0.15092402 0.25313808
+#&gt;  [67] 0.05841742 0.20652728 0.17045455 0.21003621 0.26925338 0.29914098
+#&gt;  [73] 0.19121585 0.14943123 0.24358974 0.20746040 0.23490614 0.23789693
+#&gt;  [79] 0.22760981 0.21656407 0.26946438 0.20472009 0.09884332 0.10243408
+#&gt;  [85] 0.19603860 0.28696127 0.10515672 0.20162602 0.08646999 0.17539126
+#&gt;  [91] 0.12303665 0.26541009 0.19070010 0.22674095 0.22312787 0.05015674
+#&gt;  [97] 0.16826111 0.30022321 0.21574803 0.14554974
+#&gt; 
+#&gt; $N_enrolled
+#&gt;   [1] 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200
+#&gt;  [18] 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200
+#&gt;  [35] 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200
+#&gt;  [52] 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200
+#&gt;  [69] 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200
+#&gt;  [86] 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200
+#&gt; 
+#&gt; $N_control
+#&gt;   [1]  94  91  89  97  96  68  93  88  78  93  79  70  67  88  65  85  85
+#&gt;  [18]  73  95  93  96  91  99 103  84  74  88  96 100 107  73  88  89  85
+#&gt;  [35]  83  79  89  95  79  78  99  96  86  79  82  91  78  93  79  82 104
+#&gt;  [52] 108  85  79  97  89  92  79  98  63  80  90  89  83  96  84  99  95
+#&gt;  [69]  86  87  71  95  81  86  80  99  97  85  77  77  73  90  82  96 105
+#&gt;  [86]  75 104  73 106  85  82  93  92  89  89  90  73  72  83  96
+#&gt; 
+#&gt; $N_treatment
+#&gt;   [1] 106 109 111 103 104 132 107 112 122 107 121 130 133 112 135 115 115
+#&gt;  [18] 127 105 107 104 109 101  97 116 126 112 104 100  93 127 112 111 115
+#&gt;  [35] 117 121 111 105 121 122 101 104 114 121 118 109 122 107 121 118  96
+#&gt;  [52]  92 115 121 103 111 108 121 102 137 120 110 111 117 104 116 101 105
+#&gt;  [69] 114 113 129 105 119 114 120 101 103 115 123 123 127 110 118 104  95
+#&gt;  [86] 125  96 127  94 115 118 107 108 111 111 110 127 128 117 104</code></pre>
+</div>
+</div>
+<div id="session-info" class="section level1">
+<h1 class="hasAnchor">
+<a href="#session-info" class="anchor"></a>Session Info</h1>
+<pre><code>#&gt; R version 3.5.3 (2017-01-27)
+#&gt; Platform: x86_64-pc-linux-gnu (64-bit)
+#&gt; Running under: Ubuntu 14.04.5 LTS
+#&gt; 
+#&gt; Matrix products: default
+#&gt; BLAS: /home/travis/R-bin/lib/R/lib/libRblas.so
+#&gt; LAPACK: /home/travis/R-bin/lib/R/lib/libRlapack.so
+#&gt; 
+#&gt; locale:
+#&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+#&gt;  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+#&gt;  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+#&gt;  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+#&gt;  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+#&gt; [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+#&gt; 
+#&gt; attached base packages:
+#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     
+#&gt; 
+#&gt; other attached packages:
+#&gt; [1] blockRAR_1.0.0 ggplot2_3.1.1 
+#&gt; 
+#&gt; loaded via a namespace (and not attached):
+#&gt;  [1] Rcpp_1.0.1       nloptr_1.2.1     compiler_3.5.3   pillar_1.3.1    
+#&gt;  [5] plyr_1.8.4       tools_3.5.3      boot_1.3-20      lme4_1.1-21     
+#&gt;  [9] digest_0.6.18    nlme_3.1-137     lattice_0.20-38  evaluate_0.13   
+#&gt; [13] memoise_1.1.0    tibble_2.1.1     gtable_0.3.0     pkgconfig_2.0.2 
+#&gt; [17] rlang_0.3.4      Matrix_1.2-15    commonmark_1.7   yaml_2.2.0      
+#&gt; [21] pkgdown_1.3.0    xfun_0.6         coda_0.19-2      withr_2.1.2     
+#&gt; [25] stringr_1.4.0    dplyr_0.8.0.1    roxygen2_6.1.1   xml2_1.2.0      
+#&gt; [29] knitr_1.22       ldbounds_1.1-1.1 desc_1.2.0       fs_1.2.7        
+#&gt; [33] rprojroot_1.3-2  grid_3.5.3       tidyselect_0.2.5 glue_1.3.1      
+#&gt; [37] R6_2.4.0         survival_2.43-3  arm_1.10-1       rmarkdown_1.12  
+#&gt; [41] bayesDP_1.3.2    minqa_1.2.4      purrr_0.3.2      magrittr_1.5    
+#&gt; [45] splines_3.5.3    backports_1.1.4  scales_1.0.0     htmltools_0.3.6 
+#&gt; [49] MASS_7.3-51.1    abind_1.4-5      assertthat_0.2.1 colorspace_1.4-1
+#&gt; [53] labeling_0.3     stringi_1.4.3    lazyeval_0.2.2   munsell_0.5.0   
+#&gt; [57] crayon_1.3.4</code></pre>
 </div>
   </div>
 
@@ -143,8 +296,15 @@
       <li>
 <a href="#required-input">Required input</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#frequentist-approach">Frequentist Approach</a></li>
+      <li><a href="#bayesian-approach">Bayesian Approach</a></li>
       </ul>
 </li>
+      <li>
+<a href="#obtaining-power-and-sample-size">Obtaining Power and Sample Size</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#frequentist-approach-1">Frequentist Approach</a></li>
+      </ul>
+</li>
+      <li><a href="#session-info">Session Info</a></li>
       </ul>
 </div>
       </div>

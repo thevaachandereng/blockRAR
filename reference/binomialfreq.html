@@ -118,8 +118,7 @@
     <pre class="usage"><span class='fu'>binomialfreq</span>(<span class='no'>p_control</span>, <span class='no'>p_treatment</span>, <span class='no'>N_total</span>, <span class='kw'>block_number</span> <span class='kw'>=</span> <span class='fl'>4</span>,
   <span class='kw'>drift</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>conf_int</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
   <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"greater"</span>, <span class='kw'>correct</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>early_stop</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"rosenberger"</span>, <span class='kw'>zvalue</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1.5</span>, <span class='fl'>2</span>),
-  <span class='kw'>rand_ratio</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1.5</span>, <span class='fl'>2</span>, <span class='fl'>2.5</span>))</pre>
+  <span class='kw'>early_stop</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,22 +177,6 @@ the sampling is done based on randomization ratio provided with replacement.</p>
       <th>early_stop</th>
       <td><p>logical. A logical indicating whether the trials are stopped early
 for success or futility.</p></td>
-    </tr>
-    <tr>
-      <th>method</th>
-      <td><p>character. The method used to alter randomization ratio. The function
-supports both rosenberg method and stepwise method.</p></td>
-    </tr>
-    <tr>
-      <th>zvalue</th>
-      <td><p>vector. The z-value cutoff for corrected chi-square test statistics. This
-parameter is ignored if the stepwise method is not used.</p></td>
-    </tr>
-    <tr>
-      <th>rand_ratio</th>
-      <td><p>vector. The randomization ratio is set based on the corrected
-chi-square test statistic. The length of rand_ratio should be the same length of
-zvalue. This parameter is ignored if the stepwise method is not used.</p></td>
     </tr>
     </table>
     

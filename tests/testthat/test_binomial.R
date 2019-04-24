@@ -1,6 +1,7 @@
 context("binomialfreq")
 test_that("the binomial frequentist RAR output is", {
   set.seed(100211)
+  suppressWarnings(RNGversion("3.5.0"))
   expect_equal(max(binomialfreq(p_control = 0.7, p_treatment = 0.7, N_total = 200,
                            block_number = 2, simulation = 10)$N_enrolled), 200)
   expect_equal(binomialfreq(p_control = 0.1, p_treatment = 0.5, N_total = 200,

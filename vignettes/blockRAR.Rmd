@@ -155,9 +155,9 @@ When early stopping criteria is specified, the total sample size enrolled in the
 
 **simulation**: The object **simulation** sets the number of trials to be run. 
 
-**a0**: The object **a0** set the parameter value of a in the prior in Beta(a, b).  
+**a0**: The object **a0** set the parameter value of a in the non-informative prior in Beta(a, b).  
 
-**b0**: The object **b0** set the parameter value of b in the prior in Beta(a, b).   
+**b0**: The object **b0** set the parameter value of b in the non-informative prior in Beta(a, b).   
 
 **p**: The object **p** sets the power in the allocation probability. The probability of randomizing subjects to treatment A in stratum j is defined as
 $$\pi_{j, A} = \frac{(p_{A>B} (data))^ {p}}{(p_{A>B} (data))^ {p} + (p_{B>A} (data))^ {p}},$$

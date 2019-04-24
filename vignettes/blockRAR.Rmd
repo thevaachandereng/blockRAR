@@ -173,7 +173,7 @@ where $p_{A > B}(data)$ is the posterior probability that treatment A has a high
 **alternative**: The object **alternative** only takes two value "greater" (default) or "less". If **alternative** is greater then the the trial is successful **p_treatment** > **p_control** and vice versa.
 
 
-# Obtaining Power and Sample Size Imbalance
+# Obtaining Power and Sample Size 
 
 blockRAR computes power (true positive) and return several outputs:
 power (proportion of true positive), mean estimated proportion of events in the control and treatment group,

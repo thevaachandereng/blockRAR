@@ -175,11 +175,15 @@ where $p_{A > B}(data)$ is the posterior probability that treatment A has a high
 
 # Obtaining Power and Sample Size 
 
-blockRAR computes power (true positive) and return several outputs:
-power (proportion of true positive), mean estimated proportion of events in the control and treatment group,
+blockRAR computes power (true-positive) and return several outputs:
+power (proportion of true-positive), mean estimated proportion of events in the control and treatment group,
 stratified proportion difference in treatment, sample size enrolled, sample size in each treatment group.
 
 ## Frequentist Approach
+
+Computing power, stratified difference in treatment proportion using the **binomial_freq** function.
+
+An example function execution with proportion of events in control is 0.25, proportion of events in treatment is 0.45, targeted sample size of 200, 5 number of blocks where randomization ratio is altered, no drift is applied, $\alpha$ of 0.05, alternative of "greater", sampling with replacement and early stopping not applied. 
 
 ```{r, warning=FALSE}
 binomialfreq(p_control    = 0.25, 
@@ -194,6 +198,11 @@ binomialfreq(p_control    = 0.25,
              early_stop   = FALSE)
 ```
 
+# Session Info
+
+```{r}
+sessionInfo()
+```
 
 
 

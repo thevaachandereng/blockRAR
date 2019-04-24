@@ -18,7 +18,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-set.seed(43232)
 ```
 
 
@@ -172,6 +171,29 @@ where $p_{A > B}(data)$ is the posterior probability that treatment A has a high
 **futility_prob**: The object **futility_prob** sets the probability of stopping early for futility. The default is set to 0.01. Change this value to 0 if you do not want to stop early for futility. 
 
 **alternative**: The object **alternative** only takes two value "greater" (default) or "less". If **alternative** is greater then the the trial is successful **p_treatment** > **p_control** and vice versa.
+
+
+# Obtaining Power and Sample Size Imbalance
+
+blockRAR computes power (true positive) and return several outputs:
+power (proportion of true positive), mean estimated proportion of events in the control and treatment group,
+stratified proportion difference in treatment, sample size enrolled, sample size in each treatment group.
+
+## Frequentist Approach
+
+```{r, warning=FALSE}
+binomialfreq(p_control    = 0.25, 
+             p_treatment  = 0.45, 
+             N_total      = 200, 
+             block_number = 5,  
+             drift        = 0, 
+             simulation   = 100, 
+             conf_int     = 0.95,
+             alternative  = "greater",
+             replace      = TRUE, 
+             early_stop   = FALSE)
+```
+
 
 
 

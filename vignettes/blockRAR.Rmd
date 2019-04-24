@@ -111,15 +111,58 @@ library(blockRAR)
 
 ## Frequentist Approach
 
-
 **p_control**:  The object **p_control** has to be $0 <$ **p_control** $< 1$. 
-This determine the proportion of events in the control group. 
+This determines the proportion of events in the control group. 
 
 **p_treatment**:  The object **p_treatment** has to be $0 <$ **p_treatment** $< 1$. 
-This determine the proportion of events in the treatment group. 
+This determines the proportion of events in the treatment group. 
 
 **N_total**: The object **N_total** determines the targeted sample size of subjects enrolled in the trial. 
 When early stopping criteria is specified, the total sample size enrolled in the trial might be smaller than the one used.  
+
+**block_number**: The object **block_number** determines the number of blocks/groups used in the design of the trial. The value of **block_number** needs to smaller or equal to the size of **N_total**. For traditional RAR, set **block_number** equal to **N_total**. For traditional RCT, select **block_number** to 1. The early stopping criteria is applied after completing enrollment and data collection in each block. The randomization ratio is also altered at the block level. The default **block_number** is set to 4. 
+
+**drift**: The object **drift** controls the size of the patient-drift as described in the preprint.The **drift** changes the magnitude of proportion of events in either positive/negative direction. The drift is applied at the block level where  **p_control** and **p_treatment** both increasing in a step-wise manner at each block level from their initial values to final value of the **drift**. Please make sure that the drift is within the limit specified, 0 < **p_treatment** + **drift** < 1 and 0 < **p_control** + **drift** < 1.
+
+**simulation**: The object **simulation** sets the number of trials to be run. 
+
+**conf_int**: The object **conf_int** determines the confidence interval of the trial. This value is same as 1- $\alpha$ in the clinical setting. 
+
+**alternative**: The object **alternative** only takes two value "greater" (default) or "less". If **alternative** is greater then the the trial is successful **p_treatment** > **p_control** and vice versa.
+
+**correct**: The object **correct** is a logical indicator. If correct is set to FALSE (default), the Yates-continuity correction is not applied and vice-versa.
+
+**replace**: The object **replace** is a logical indicator. If replace is set to TRUE (default), the sampling is done with replacement. If replace is set to FALSE, the replacement is done without replacement. 
+
+**early_stop**: The object **early_stop** is a logical indicator. The default is set to FALSE, which does not allow early stopping. If early stopping is applied, the early stopping is done at block level using the Lan-DeMets alpha-spending function. 
+
+
+## Bayesian Approach
+
+**p_control**:  The object **p_control** has to be $0 <$ **p_control** $< 1$. 
+This determines the proportion of events in the control group. 
+
+**p_treatment**:  The object **p_treatment** has to be $0 <$ **p_treatment** $< 1$. 
+This determines the proportion of events in the treatment group. 
+
+**N_total**: The object **N_total** determines the targeted sample size of subjects enrolled in the trial. 
+When early stopping criteria is specified, the total sample size enrolled in the trial might be smaller than the one used.  
+
+**block_number**: The object **block_number** determines the number of blocks/groups used in the design of the trial. The value of **block_number** needs to smaller or equal to the size of **N_total**. For traditional RAR, set **block_number** equal to **N_total**. For traditional RCT, select **block_number** to 1. The early stopping criteria is applied after completing enrollment and data collection in each block. The randomization ratio is also altered at the block level. The default **block_number** is set to 4. 
+
+**drift**: The object **drift** controls the size of the patient-drift as described in the preprint.The **drift** changes the magnitude of proportion of events in either positive/negative direction. The drift is applied at the block level where  **p_control** and **p_treatment** both increasing in a step-wise manner at each block level from their initial values to final value of the **drift**. Please make sure that the drift is within the limit specified, 0 < **p_treatment** + **drift** < 1 and 0 < **p_control** + **drift** < 1.
+
+**simulation**: The object **simulation** sets the number of trials to be run. 
+
+**a0**: The object **a0** set the parameter value of a in the prior in Beta(a, b).  
+
+**b0**: The object **b0** set the parameter value of b in the prior in Beta(a, b).   
+
+**p**: The object **p** sets the power in the allocation probability. The probability of randomizing subjects to treatment A in stratum j is defined as
+$$\pi_{j, A} = \frac{(p_{A>B} (data))^ {p}}{(p_{A>B} (data))^ {p} + (p_{B>A} (data))^ {p}},$$
+where $p_{A > B}(data)$ is the posterior probability that treatment A has a higher success rate than  treatment B and $p_{A>B} (data)) = 1 - p_{B>A} (data))$ . 
+
+**alternative**: The object **alternative** only takes two value "greater" (default) or "less". If **alternative** is greater then the the trial is successful **p_treatment** > **p_control** and vice versa.
 
 
 

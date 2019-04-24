@@ -160,7 +160,9 @@ When early stopping criteria is specified, the total sample size enrolled in the
 
 **p**: The object **p** sets the power in the allocation probability. The probability of randomizing subjects to treatment A in stratum j is defined as
 $$\pi_{j, A} = \frac{(p_{A>B} (data))^ {p}}{(p_{A>B} (data))^ {p} + (p_{B>A} (data))^ {p}},$$
-where $p_{A > B}(data)$ is the posterior probability that treatment A has a higher success rate than  treatment B and $p_{A>B} (data)) = 1 - p_{B>A} (data))$ . 
+where $p_{A > B}(data)$ is the posterior probability that treatment A has a higher success rate than  treatment B and $p_{A>B} (data)) = 1 - p_{B>A} (data))$.
+
+**number_mcmc**: The object **number_mcmc** determines the number of posterior sample draw randomly using Monte-Carlo method. 
 
 **alternative**: The object **alternative** only takes two value "greater" (default) or "less". If **alternative** is greater then the the trial is successful **p_treatment** > **p_control** and vice versa.
 

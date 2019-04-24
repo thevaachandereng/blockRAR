@@ -7,8 +7,7 @@
 binomialfreq(p_control, p_treatment, N_total, block_number = 4,
   drift = 0, simulation = 10000, conf_int = 0.95,
   alternative = "greater", correct = FALSE, replace = TRUE,
-  early_stop = FALSE, method = "rosenberger", zvalue = c(1, 1.5, 2),
-  rand_ratio = c(1, 1.5, 2, 2.5))
+  early_stop = FALSE)
 }
 \arguments{
 \item{p_control}{scalar. Proportion of events under the control arm.}
@@ -43,16 +42,6 @@ the sampling is done based on randomization ratio provided with replacement.}
 
 \item{early_stop}{logical. A logical indicating whether the trials are stopped early
 for success or futility.}
-
-\item{method}{character. The method used to alter randomization ratio. The function
-supports both rosenberg method and stepwise method.}
-
-\item{zvalue}{vector. The z-value cutoff for corrected chi-square test statistics. This
-parameter is ignored if the stepwise method is not used.}
-
-\item{rand_ratio}{vector. The randomization ratio is set based on the corrected
-chi-square test statistic. The length of rand_ratio should be the same length of
-zvalue. This parameter is ignored if the stepwise method is not used.}
 }
 \value{
 a list with details on the simulation.

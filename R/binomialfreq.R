@@ -24,13 +24,6 @@
 #'    the sampling is done based on randomization ratio provided with replacement.
 #' @param early_stop logical. A logical indicating whether the trials are stopped early
 #'    for success or futility.
-#' @param method character. The method used to alter randomization ratio. The function
-#'    supports both rosenberg method and stepwise method.
-#' @param zvalue vector. The z-value cutoff for corrected chi-square test statistics. This
-#'   parameter is ignored if the stepwise method is not used.
-#' @param rand_ratio vector. The randomization ratio is set based on the corrected
-#'   chi-square test statistic. The length of rand_ratio should be the same length of
-#'   zvalue. This parameter is ignored if the stepwise method is not used.
 #'
 #' @return a list with details on the simulation.
 #' \describe{
@@ -76,10 +69,7 @@ binomialfreq <- function(
   alternative     = "greater",
   correct         = FALSE,
   replace         = TRUE,
-  early_stop      = FALSE,
-  method          = "rosenberger",
-  zvalue          = c(1, 1.5, 2),
-  rand_ratio      = c(1, 1.5, 2, 2.5)
+  early_stop      = FALSE
 ){
    # stop if proportion of control is not between 0 and 1.
   if((p_control <= 0 | p_control >= 1)){
@@ -126,17 +116,6 @@ binomialfreq <- function(
     stop("The replacement for sampling is either TRUE or FALSE!")
   }
 
-  # the z-values need to be greater than 0
-  if(any(zvalue <= 0)){
-    stop("The zvalue can only be greater than 0!")
-  }
-
-  # the randomization ratio needs to be greater than or equal to 1.
-  if(any(rand_ratio < 1) | (length(rand_ratio) - 1) != length(zvalue)){
-    stop("The randomization ratio needs to be greater than or equal to 1 and the length of
-         randomization ratio needs to be greater than the length of zvalue by one!")
-  }
-
   # the drift value cant make the prop of control/treatment exceed 1 or below 0.
   if(drift + p_control >= 1 | drift + p_control <= 0 |
      drift + p_treatment >= 1 | drift + p_treatment <= 0){
@@ -147,11 +126,6 @@ binomialfreq <- function(
   # if
   if(!(early_stop == FALSE | early_stop == TRUE)){
     stop("Early stopping can be only TRUE or FALSE!")
-  }
-
-  # only two methods allowed (rosenberg and stepwise)
-  if(method != "rosenberger" & method != "stepwise"){
-    stop("Method needs to be either rosenberger or stepwise!")
   }
 
   # if number of patient in each block is 2 or smaller, sampling is done with replacement
@@ -210,35 +184,19 @@ binomialfreq <- function(
         trt_prop <- 0
       }
 
-      if(method == "stepwise"){
-        #if rand_ratio is length of 1, use the rand_ratio throughout the simulation
-        if(length(rand_ratio) == 1){
-          rr <- rand_ratio
-        }
-        #else get the test statistics and match the corresponding z-value to
-        # obtain the correct rand_ratio
-        else{
-          zval <- c(-0.1, zvalue)
-          rr <- rand_ratio[max(which(test_stat >= zval))]
-        }
+      ## if both event dont occur, dont change randomization ratio
+      if(ctrl_prop == 0 | trt_prop == 0 |
+         ctrl_prop == 1 | trt_prop == 1 |
+         is.null(data_total)){
+        rr <- 1
       }
-      ## using the rosenberger method
+      # if the alternative is greater, use proportion to set randomization ratio
+      else if(alternative == "greater"){
+        rr <- as.numeric(sqrt(trt_prop / ctrl_prop))
+      }
+      # if the alternative is greater, use 1 - proportion to set randomization ratio
       else{
-        ## if both event dont occur, dont change randomization ratio
-        if(ctrl_prop == 0 | trt_prop == 0 |
-           ctrl_prop == 1 | trt_prop == 1 |
-           is.null(data_total)){
-          rr <- 1
-        }
-        # if the alternative is greater, use proportion to set randomization ratio
-        else if(alternative == "greater"){
-          rr <- as.numeric(sqrt(trt_prop / ctrl_prop))
-        }
-        # if the alternative is greater, use 1 - proportion to set randomization ratio
-        else{
-          rr <- as.numeric(sqrt((1 - trt_prop) / (1 - ctrl_prop)))
-        }
-
+        rr <- as.numeric(sqrt((1 - trt_prop) / (1 - ctrl_prop)))
       }
 
       # generate data frame treatment assignment based on sampling and

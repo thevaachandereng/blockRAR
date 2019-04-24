@@ -159,7 +159,7 @@
 <div id="frequentist-approach-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#frequentist-approach-1" class="anchor"></a>Frequentist Approach</h2>
-<p>Computing power, stratified difference in treatment proportion using the <strong>binomial_freq</strong> function.</p>
+<p>Computing power, stratified difference in treatment proportion using the <strong>binomialfreq</strong> function.</p>
 <p>An example function execution with proportion of events in control is 0.25, proportion of events in treatment is 0.45, targeted sample size of 200, 5 number of blocks where randomization ratio is altered, no drift is applied, <span class="math inline">\(\alpha\)</span> of 0.05, alternative of “greater”, sampling with replacement and early stopping not applied.</p>
 <pre><code>#&gt; $power
 #&gt; [1] 0.9
@@ -241,6 +241,49 @@
 #&gt;  [69] 114 113 129 105 119 114 120 101 103 115 123 123 127 110 118 104  95
 #&gt;  [86] 125  96 127  94 115 118 107 108 111 111 110 127 128 117 104</code></pre>
 </div>
+<div id="bayesian-approach-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bayesian-approach-1" class="anchor"></a>Bayesian Approach</h2>
+<p>Computing power, stratified difference in treatment proportion using the <strong>binomialbayes</strong> function.</p>
+<p>An example function execution with proportion of events in control is 0.35, proportion of events in treatment is 0.35, targeted sample size of 150, 2 number of blocks where randomization ratio is altered, 0.10 drift is applied, <span class="math inline">\(Beta(0.5, 0.5)\)</span> non-informative prior is used, probability of accepting alternative of 0.95, alternative of “greater”, sampling with replacement and early stopping not applied.</p>
+<pre><code>#&gt; $power
+#&gt; [1] 0.14
+#&gt; 
+#&gt; $prop_diff_estimate
+#&gt;  [1]  0.179605218 -0.096250351 -0.023740624  0.030620196 -0.069010838
+#&gt;  [6] -0.134546636 -0.025178217  0.086149386 -0.015030624  0.146519677
+#&gt; [11]  0.211309027  0.016106372  0.021033281  0.034212252 -0.010214150
+#&gt; [16]  0.055368146  0.003761014 -0.096809134  0.024545134  0.027000311
+#&gt; [21] -0.083498715  0.084879244  0.171424741 -0.036038606  0.137161630
+#&gt; [26] -0.047212645  0.162462415 -0.076793132 -0.007625169  0.084774358
+#&gt; [31]  0.129479478 -0.149948866  0.001114347  0.074530541  0.202850215
+#&gt; [36]  0.075823650  0.025962079  0.017307523  0.072999012  0.139462742
+#&gt; [41] -0.094929642 -0.141804760  0.122248103 -0.027994537 -0.085930666
+#&gt; [46]  0.029755774  0.380043687  0.019254497 -0.138866733  0.151591753
+#&gt; 
+#&gt; $N_enrolled
+#&gt;  [1] 150 150 150 150 150 150 150 150 150 150 150 150 150 150 150 150 150
+#&gt; [18] 150 150 150 150 150 150 150 150 150 150 150 150 150 150 150 150 150
+#&gt; [35] 150 150 150 150 150 150 150 150 150 150 150 150 150 150 150 150
+#&gt; 
+#&gt; $N_control
+#&gt;  [1]  50  83  81  83  82  70  70  73  66  50  42  74  90  82  89  93  72
+#&gt; [18]  65  65  80  87  55  55  83  50  61  63  77  84  54  69  98  76  54
+#&gt; [35]  48  57  69  74  78  41 100  79  72  76  80  93  39  73  94  54
+#&gt; 
+#&gt; $N_treatment
+#&gt;  [1] 100  67  69  67  68  80  80  77  84 100 108  76  60  68  61  57  78
+#&gt; [18]  85  85  70  63  95  95  67 100  89  87  73  66  96  81  52  74  96
+#&gt; [35] 102  93  81  76  72 109  50  71  78  74  70  57 111  77  56  96
+#&gt; 
+#&gt; $early_success
+#&gt;  [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+#&gt; [36] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+#&gt; 
+#&gt; $early_futilty
+#&gt;  [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+#&gt; [36] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</code></pre>
+</div>
 </div>
 <div id="session-info" class="section level1">
 <h1 class="hasAnchor">
@@ -302,6 +345,7 @@
       <li>
 <a href="#obtaining-power-and-sample-size">Obtaining Power and Sample Size</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#frequentist-approach-1">Frequentist Approach</a></li>
+      <li><a href="#bayesian-approach-1">Bayesian Approach</a></li>
       </ul>
 </li>
       <li><a href="#session-info">Session Info</a></li>

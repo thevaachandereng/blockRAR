@@ -108,6 +108,7 @@ library(blockRAR)
 ```
 
 # Required input
+In this section, we will describe each input for the frequentist and Bayesian approach of block design for RAR. 
 
 ## Frequentist Approach
 
@@ -162,7 +163,13 @@ When early stopping criteria is specified, the total sample size enrolled in the
 $$\pi_{j, A} = \frac{(p_{A>B} (data))^ {p}}{(p_{A>B} (data))^ {p} + (p_{B>A} (data))^ {p}},$$
 where $p_{A > B}(data)$ is the posterior probability that treatment A has a higher success rate than  treatment B and $p_{A>B} (data)) = 1 - p_{B>A} (data))$.
 
-**number_mcmc**: The object **number_mcmc** determines the number of posterior sample draw randomly using Monte-Carlo method. 
+**number_mcmc**: The object **number_mcmc** determines the number of posterior sample draw randomly using Monte-Carlo method. The default is set to 10,000.
+
+**prob_accept_ha**: The object **prob_accept_ha** controls the posterior probability of accepting the alternative hypothesis. The default is set to 0.95. 
+
+**early_success_prob**: The object **early_success_prob** sets the probability of stopping early for success. The default is set to 0.99. Change this value to 1 if you do not want to stop early for success. 
+
+**futility_prob**: The object **futility_prob** sets the probability of stopping early for futility. The default is set to 0.01. Change this value to 0 if you do not want to stop early for futility. 
 
 **alternative**: The object **alternative** only takes two value "greater" (default) or "less". If **alternative** is greater then the the trial is successful **p_treatment** > **p_control** and vice versa.
 

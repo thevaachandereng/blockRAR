@@ -8,7 +8,7 @@
 #'  Default is 0.5.
 #' @param b0 scalar. Prior value for the beta rate \code{Beta(a0, b0)}.
 #'  Default is 0.5.
-#' @param p sclar. Power for randomization ratio.
+#' @param p scalar. Power for randomization ratio.
 #' @param number_mcmc scalar. Number of Monte Carlo Markov Chain draws in
 #'   sampling posterior.
 #' @param prob_accept_ha scalar. Probability of accepting

@@ -33,7 +33,7 @@ Default is 0.5.}
 \item{b0}{scalar. Prior value for the beta rate \code{Beta(a0, b0)}.
 Default is 0.5.}
 
-\item{p}{sclar. Power for randomization ratio.}
+\item{p}{scalar. Power for randomization ratio.}
 
 \item{number_mcmc}{scalar. Number of Monte Carlo Markov Chain draws in
 sampling posterior.}

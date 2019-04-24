@@ -181,7 +181,7 @@ stratified proportion difference in treatment, sample size enrolled, sample size
 
 ## Frequentist Approach
 
-Computing power, stratified difference in treatment proportion using the **binomial_freq** function.
+Computing power, stratified difference in treatment proportion using the **binomialfreq** function.
 
 An example function execution with proportion of events in control is 0.25, proportion of events in treatment is 0.45, targeted sample size of 200, 5 number of blocks where randomization ratio is altered, no drift is applied, $\alpha$ of 0.05, alternative of "greater", sampling with replacement and early stopping not applied. 
 
@@ -197,6 +197,32 @@ binomialfreq(p_control    = 0.25,
              replace      = TRUE, 
              early_stop   = FALSE)
 ```
+
+
+
+## Bayesian Approach 
+Computing power, stratified difference in treatment proportion using the **binomialbayes** function.
+
+An example function execution with proportion of events in control is 0.35, proportion of events in treatment is 0.35, targeted sample size of 150, 2 number of blocks where randomization ratio is altered, 0.10 drift is applied, $Beta(0.5, 0.5)$ non-informative prior is used, probability of accepting alternative of 0.95, alternative of "greater", sampling with replacement and early stopping not applied. 
+
+```{r}
+binomialbayes(p_control          = 0.35, 
+              p_treatment        = 0.35, 
+              N_total            = 150, 
+              block_number       = 2,
+              drift              = 0.10,
+              simulation         = 50,
+              a0                 = 0.5,
+              b0                 = 0.5, 
+              number_mcmc        = 10000, 
+              prob_accept_ha     = 0.95,
+              early_success_prob = 1,
+              futility_prob      = 0,
+              alternative        = "greater")
+```
+
+
+
 
 # Session Info
 

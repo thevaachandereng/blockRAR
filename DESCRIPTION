@@ -1,6 +1,6 @@
 Package: blockRAR
 Version: 1.0.0
-Date: 2019-01-02
+Date: 2019-04-25
 Title: Block Design for Response-Adaptive Randomization
 Authors@R: c(person(given = "Thevaa",
              family = "Chandereng",
@@ -10,7 +10,7 @@ Authors@R: c(person(given = "Thevaa",
       person(given = "Rick",
              family = "Chapppell",
              role = c("aut", "cph")))
-Description: Computes power for response-adaptive randomization with a block design that captures both the time and treatment effect. 
+Description: Computes power for response-adaptive randomization with a block design that captures both the time and treatment effect. T. Chandereng, R. Chappell (2019) <arxiv.org/abs/1904.07758>.
 Suggests: testthat, 
      rmarkdown, 
      pkgdown, 

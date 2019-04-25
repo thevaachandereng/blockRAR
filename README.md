@@ -17,7 +17,7 @@ ratio are altered based on a patient outcome.
 blockRAR assigns patient in a block (group) manner and the the block results are analyzed before the randomization ratio is altered.
 Time is divided into factor level in each block (group).
 The treatment effect is obtained upon adjusting for the time effect in this design. 
-The blockRAR website is available [here](https://thevaachandereng/blockRAR/). 
+The blockRAR website is available [here](https://thevaachandereng.github.io/blockRAR/). 
 
 
 Installation
@@ -58,7 +58,7 @@ See the [vignette](https://thevaachandereng.github.io/blockRAR/articles/blockRAR
 
 Reference
 ------------
-If you use blockRAR, please cite TBA. 
+If you use blockRAR, please cite Chandereng, T. and Chappell, R., 2019. Robust Response-Adaptive Randomization Design. arXiv preprint arXiv:1904.07758.. 
 
 License
 ------------

@@ -58,7 +58,9 @@ See the [vignette](https://thevaachandereng.github.io/blockRAR/articles/blockRAR
 
 Reference
 ------------
-If you use blockRAR, please cite Chandereng, T. and Chappell, R., 2019. Robust Response-Adaptive Randomization Design. arXiv preprint arXiv:1904.07758.. 
+If you use blockRAR, please cite:
+
+Chandereng, T., & Chappell, R. (2019). Robust Response-Adaptive Randomization Design. arXiv preprint arXiv:1904.07758.
 
 License
 ------------

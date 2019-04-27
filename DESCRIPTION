@@ -10,7 +10,7 @@ Authors@R: c(person(given = "Thevaa",
       person(given = "Rick",
              family = "Chapppell",
              role = c("aut", "cph")))
-Description: Computes power for response-adaptive randomization with a block design that captures both the time and treatment effect. T. Chandereng, R. Chappell (2019) <arxiv:1904.07758>.
+Description: Computes power for response-adaptive randomization with a block design that captures both the time and treatment effect. T. Chandereng, R. Chappell (2019) <arXiv:1904.07758>.
 Suggests: testthat, 
      rmarkdown, 
      pkgdown, 

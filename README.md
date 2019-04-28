@@ -1,6 +1,7 @@
 # blockRAR: Block Design for Response Adaptive Randomization
 
 [![Build Status](https://travis-ci.org/thevaachandereng/blockRAR.svg?branch=master)](https://travis-ci.org/thevaachandereng/blockRAR)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/blockRAR)](https://cran.r-project.org/package=blockRAR)
 [![Download badge](https://cranlogs.r-pkg.org/badges/blockRAR)](https://cran.r-project.org/package=blockRAR)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![codecov](https://codecov.io/gh/thevaachandereng/blockRAR/branch/master/graph/badge.svg)](https://codecov.io/gh/thevaachandereng/blockRAR)

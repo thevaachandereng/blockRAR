@@ -176,8 +176,6 @@ binomialbayes <- function(
                                (1 - data$treatment) * p_control +
                                drift_p[((1:dim(data)[1]) + dim(data_total)[1])])
 
-      print( drift_p[((1:dim(data)[1]) + dim(data_total)[1])])
-
       # joining the dataset using rbind
       data_total <- rbind(data_total, data)
 

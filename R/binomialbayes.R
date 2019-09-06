@@ -115,7 +115,7 @@ binomialbayes <- function(
     group[index] <- group[index] + 1
   }
 
-  # storing all the important variables
+  # storing values all important variables as well as the drift
   power              <- 0
   N_control          <- NULL
   N_treatment        <- NULL
@@ -123,19 +123,21 @@ binomialbayes <- function(
   prop_diff_estimate <- NULL
   early_success      <- NULL
   early_futility     <- NULL
+  drift_p            <- seq(drift / N_total, drift,  length.out = N_total)
 
   # going through all the simulations
   for(k in 1:simulation){
-    # storing values for each simulation
-    data_total            <- NULL
+    #storing each simulation values
+    data_total            <- data.frame()
     test_stat             <- 0
     index                 <- block_number
     stop_success          <- 0
     stop_futility         <- 0
+
     for(i in 1:block_number){
 
       # if data_total is null, set all the outcome to 0
-      if(is.null(data_total)){
+      if(dim(data_total)[1] == 0){
         yt <- 0
         Nt <- 0
         yc <- 0
@@ -172,7 +174,9 @@ binomialbayes <- function(
       # adding the outcome with time trends (linear time trend)
       data$outcome <- rbinom(dim(data)[1], 1, prob = data$treatment * p_treatment +
                                (1 - data$treatment) * p_control +
-                               drift * sum(group[1:i]) / N_total)
+                               drift_p[((1:dim(data)[1]) + dim(data_total)[1])])
+
+      print( drift_p[((1:dim(data)[1]) + dim(data_total)[1])])
 
       # joining the dataset using rbind
       data_total <- rbind(data_total, data)

@@ -154,19 +154,20 @@ binomialfreq <- function(
   #assigning power to 0
   power <- 0
 
-  # assigning overall variables as NULL
+  # assigning overall variables as NULL and drift for patient by patient
   N_control            <- NULL
   N_treatment          <- NULL
   sample_size          <- NULL
   p_control_estimate   <- NULL
   p_treatment_estimate <- NULL
   prop_diff_estimate   <- NULL
+  drift_p              <- seq(drift / N_total, drift,  length.out = N_total)
 
   # looping overall all simulation
   for(k in 1:simulation){
 
     # assigning variables as NULL for each simulation
-    data_total            <- NULL
+    data_total            <- data.frame()
     test_stat             <- 0
     index                 <- block_number
 
@@ -175,7 +176,7 @@ binomialfreq <- function(
 
       # create a data summary from previos block or if its null, create an empty
       # summary
-      if(!is.null(data_total) & length(levels(factor(data_total$treatment))) == 2){
+      if(dim(data_total)[1] != 0 & length(levels(factor(data_total$treatment))) == 2){
         ctrl_prop <- mean(as.numeric(as.character(data_total$outcome[data_total$treatment == 0])))
         trt_prop <- mean(as.numeric(as.character(data_total$outcome[data_total$treatment == 1])))
       }
@@ -217,7 +218,7 @@ binomialfreq <- function(
       # of event in respective arm
       data$outcome <- rbinom(dim(data)[1], 1, prob = data$treatment * p_treatment +
                                (1 - data$treatment) * p_control +
-                               drift * sum(group[1:i]) / N_total)
+                               drift_p[((1:dim(data)[1]) + dim(data_total)[1])])
 
       # bind the data with previous block if available
       data_total <- rbind(data_total, data)

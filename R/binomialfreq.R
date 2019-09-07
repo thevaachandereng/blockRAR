@@ -188,15 +188,15 @@ binomialfreq <- function(
       if(ctrl_prop == 0 | trt_prop == 0 |
          ctrl_prop == 1 | trt_prop == 1 |
          is.null(data_total)){
-        rr <- 1
+        prob_trt <- 0.5
       }
       # if the alternative is greater, use proportion to set randomization ratio
       else if(alternative == "greater"){
-        rr <- as.numeric(sqrt(trt_prop / ctrl_prop))
+        prob_trt <- sqrt(trt_prop) / (sqrt(ctrl_prop) + sqrt(trt_prop))
       }
       # if the alternative is greater, use 1 - proportion to set randomization ratio
       else{
-        rr <- as.numeric(sqrt((1 - trt_prop) / (1 - ctrl_prop)))
+        prob_trt <-sqrt(1 - trt_prop) / (sqrt(1 - ctrl_prop) + sqrt(1 - trt_prop))
       }
 
       # generate data frame treatment assignment based on sampling and
@@ -204,32 +204,12 @@ binomialfreq <- function(
       data <- data.frame(
         treatment =
           if(replace == TRUE){
-            if((alternative == "less" &
-               (ctrl_prop >= trt_prop)) |
-               (alternative == "greater" &
-                (trt_prop > ctrl_prop))){
-              sample(0:1, replace = T, group[i], prob = c(1, rr))
-            }
-            else{
-              sample(0:1, replace = T, group[i], prob = c(rr, 1))
-            }
+            sample(0:1, replace = T, group[i], prob = c(1 - prob_trt, prob_trt))
           }
         else{
-          if((alternative == "less" &
-              (ctrl_prop >= trt_prop)) |
-             (alternative == "greater" &
-              (trt_prop >= ctrl_prop))){
-            sum_ratio <- rr + 1
-            sampling <- rep(c(0, 1), round(c(group[i] * 1 / sum_ratio - 0.0001,
-                                           group[i] * rr / sum_ratio + 0.0001)))
+            sampling <- rep(c(0, 1), round(c(group[i] * (1 - prob_trt) / sum_ratio - 0.0001,
+                                           group[i] * prob_trt / sum_ratio + 0.0001)))
             sample(sampling, length(sampling))
-          }
-          else{
-            sum_ratio <- rr + 1
-            sampling <- rep(c(0, 1), round(c(group[i] * rr / sum_ratio - 0.0001,
-                                             group[i] * 1 / sum_ratio + 0.0001)))
-            sample(sampling, length(sampling))
-          }
         },
         outcome = rep(NA, group[i]))
 

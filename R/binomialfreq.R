@@ -207,8 +207,8 @@ binomialfreq <- function(
             sample(0:1, replace = T, group[i], prob = c(1 - prob_trt, prob_trt))
           }
         else{
-            sampling <- rep(c(0, 1), round(c(group[i] * (1 - prob_trt) / sum_ratio - 0.0001,
-                                           group[i] * prob_trt / sum_ratio + 0.0001)))
+            sampling <- rep(c(0, 1), round(c(group[i] * (1 - prob_trt) - 0.0001,
+                                           group[i] * prob_trt + 0.0001)))
             sample(sampling, length(sampling))
         },
         outcome = rep(NA, group[i]))

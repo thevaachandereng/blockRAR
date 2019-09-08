@@ -1,6 +1,7 @@
 Package: blockRAR
 Version: 1.0.1
 Title: Block Design for Response-Adaptive Randomization
+Date: 2019-09-08
 Authors@R: c(person(given = "Thevaa",
              family = "Chandereng",
              role = c("aut", "cre", "cph"),

@@ -123,7 +123,7 @@ When early stopping criteria is specified, the total sample size enrolled in the
 
 **block_number**: The object **block_number** determines the number of blocks/groups used in the design of the trial. The value of **block_number** needs to smaller or equal to the size of **N_total**. For traditional RAR, set **block_number** equal to **N_total**. For traditional RCT, select **block_number** to 1. The early stopping criteria is applied after completing enrollment and data collection in each block. The randomization ratio is also altered at the block level. The default **block_number** is set to 4. 
 
-**drift**: The object **drift** controls the size of the patient-drift as described in the preprint.The **drift** changes the magnitude of proportion of events in either positive/negative direction. The drift is applied at the block level where  **p_control** and **p_treatment** both increasing in a step-wise manner at each block level from their initial values to final value of the **drift**. Please make sure that the drift is within the limit specified, 0 < **p_treatment** + **drift** < 1 and 0 < **p_control** + **drift** < 1.
+**drift**: The object **drift** controls the size of the patient-drift as described in the preprint.The **drift** changes the magnitude of proportion of events in either positive/negative direction. The drift is applied at the block level where  **p_control** and **p_treatment** both increasing in a patient-patient basis from their initial values to final value of the **drift**. Please make sure that the drift is within the limit specified, 0 < **p_treatment** + **drift** < 1 and 0 < **p_control** + **drift** < 1.
 
 **simulation**: The object **simulation** sets the number of trials to be run. 
 

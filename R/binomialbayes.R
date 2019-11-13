@@ -112,6 +112,11 @@ binomialbayes <- function(
          in either the control or treatment group, pick a lower value for drift!")
   }
 
+  # making sure the drift didnt make the prop of control/treatment > 1 / < 0
+  if(N_total >= block_number){
+    stop("The number of blocks can't exceed the number of patients!")
+  }
+
   # computing the group size if its symmetric or not
   group <- rep(floor(N_total / block_number), block_number)
 
@@ -213,7 +218,7 @@ binomialbayes <- function(
       }
 
       # check for early stopping for success
-      if(rr > early_success_prob & dim(data_total) > min_patient_earlystop){
+      if(rr > early_success_prob & dim(data_total)[1] > min_patient_earlystop){
         index        <- i
         stop_success <- 1
         if(i  < block_number){
@@ -223,7 +228,7 @@ binomialbayes <- function(
       }
 
       # check for early stopping for futility
-      if(rr < futility_prob & dim(data_total) > min_patient_earlystop){
+      if(rr < futility_prob & dim(data_total)[1] > min_patient_earlystop){
         index         <- i
         stop_futility <- 1
         if(i  < block_number){

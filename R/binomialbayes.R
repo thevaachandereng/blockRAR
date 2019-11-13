@@ -53,17 +53,19 @@ binomialbayes <- function(
   p_control,
   p_treatment,
   N_total,
-  block_number       = 4,
-  drift              = 0,
-  simulation         = 10000,
-  a0                 = 0.5,
-  b0                 = 0.5,
-  p                  = 0.5,
-  number_mcmc        = 10000,
-  prob_accept_ha     = 0.95,
-  early_success_prob = 0.99,
-  futility_prob      = 0.01,
-  alternative        = "greater"
+  block_number              = 4,
+  drift                     = 0,
+  simulation                = 10000,
+  a0                        = 0.5,
+  b0                        = 0.5,
+  p                         = 0.5,
+  number_mcmc               = 10000,
+  prob_accept_ha            = 0.95,
+  early_success_prob        = 0.99,
+  futility_prob             = 0.01,
+  alternative               = "greater",
+  size_equal_randomization  = 20,
+  min_patient_earlystop     = 30
   ){
 
   # stop if proportion of control is not between 0 and 1
@@ -124,6 +126,7 @@ binomialbayes <- function(
   early_success      <- NULL
   early_futility     <- NULL
   drift_p            <- seq(drift / N_total, drift,  length.out = N_total)
+  randomization      <- array(NA, c(simulation, block_number))
 
   # going through all the simulations
   for(k in 1:simulation){
@@ -137,7 +140,7 @@ binomialbayes <- function(
     for(i in 1:block_number){
 
       # if data_total is null, set all the outcome to 0
-      if(dim(data_total)[1] == 0){
+      if(dim(data_total)[1] < size_equal_randomization){
         yt <- 0
         Nt <- 0
         yc <- 0
@@ -165,6 +168,8 @@ binomialbayes <- function(
                   est_interim$posterior_control$posterior
           rr <- mean(diff < 0)^p / (mean(diff > 0)^p + mean(diff < 0)^p)
         }
+
+      randomization[k, i] <- rr
 
       # creating the dataset for each block
       data <- data.frame(
@@ -205,16 +210,22 @@ binomialbayes <- function(
       }
 
       # check for early stopping for success
-      if(rr > early_success_prob){
+      if(rr > early_success_prob & dim(data_total) > min_patient_earlystop){
         index        <- i
         stop_success <- 1
+        if(i  < block_number){
+          randomization[k, (i+1):block_number] <- 1
+        }
         break
       }
 
       # check for early stopping for futility
-      if(rr < futility_prob){
+      if(rr < futility_prob & dim(data_total) > min_patient_earlystop){
         index         <- i
         stop_futility <- 1
+        if(i  < block_number){
+          randomization[k, (i+1):block_number] <- 0
+        }
         break
       }
 
@@ -359,7 +370,8 @@ binomialbayes <- function(
     N_control             = N_control,
     N_treatment           = N_treatment,
     early_success         = early_success,
-    early_futilty         = early_futility
+    early_futilty         = early_futility,
+    randomization_ratio   = randomization
   )
 
   # return output

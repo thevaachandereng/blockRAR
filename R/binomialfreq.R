@@ -24,6 +24,10 @@
 #'    the sampling is done based on randomization ratio provided with replacement.
 #' @param early_stop logical. A logical indicating whether the trials are stopped early
 #'    for success or futility.
+#' @param size_equal_randomization scalar. The number of run in patients because adaptive
+#'    randomization is applied.
+#' @param min_patient_earlystop scalar. Minimum number of patients before early stopping
+#'    rule is applied.
 #'
 #' @return a list with details on the simulation.
 #' \describe{
@@ -62,14 +66,16 @@ binomialfreq <- function(
   p_control,
   p_treatment,
   N_total,
-  block_number    = 4,
-  drift           = 0,
-  simulation      = 10000,
-  conf_int        = 0.95,
-  alternative     = "greater",
-  correct         = FALSE,
-  replace         = TRUE,
-  early_stop      = FALSE
+  block_number             = 4,
+  drift                    = 0,
+  simulation               = 10000,
+  conf_int                 = 0.95,
+  alternative              = "greater",
+  correct                  = FALSE,
+  replace                  = TRUE,
+  early_stop               = FALSE,
+  size_equal_randomization = 20,
+  min_patient_earlystop    = 40
 ){
    # stop if proportion of control is not between 0 and 1.
   if((p_control <= 0 | p_control >= 1)){
@@ -146,7 +152,7 @@ binomialfreq <- function(
   # if we allow early stopping, compute the lan-demets bound
   if(early_stop){
     # divided time equally between 0 and 1 with the number of blocks
-    time <- seq(1 / block_number, 1, 1 / block_number)
+    time <- cumsum(group)[cumsum(group) > min_patient_earlystop] / N_total
     #using lan-demets bound, computing the early stopping criteria for the number of blocks
     bounds <- bounds(time, iuse = c(1, 1), alpha = c(1 - conf_int, 1 - conf_int))$upper.bounds
   }
@@ -176,28 +182,28 @@ binomialfreq <- function(
 
       # create a data summary from previos block or if its null, create an empty
       # summary
-      if(dim(data_total)[1] != 0 & length(levels(factor(data_total$treatment))) == 2){
-        ctrl_prop <- mean(as.numeric(as.character(data_total$outcome[data_total$treatment == 0])))
-        trt_prop <- mean(as.numeric(as.character(data_total$outcome[data_total$treatment == 1])))
+      if(dim(data_total)[1] != 0 & dim(data_total)[1] >= min_patient_earlystop){
+        y_ctr     <- sum(as.numeric(as.character(data_total$outcome[data_total$treatment == 0])))
+        N_ctr     <- length(as.numeric(as.character(data_total$outcome[data_total$treatment == 0])))
+        y_trt     <- sum(as.numeric(as.character(data_total$outcome[data_total$treatment == 1])))
+        N_trt     <- length(as.numeric(as.character(data_total$outcome[data_total$treatment == 1])))
       }
       else{
-        ctrl_prop <- 0
-        trt_prop <- 0
+        y_ctr     <- 0
+        N_ctrt    <- 0
+        y_trt     <- 0
+        N_trt     <- 0
       }
 
-      ## if both event dont occur, dont change randomization ratio
-      if(ctrl_prop == 0 | trt_prop == 0 |
-         ctrl_prop == 1 | trt_prop == 1 |
-         is.null(data_total)){
-        prob_trt <- 0.5
-      }
       # if the alternative is greater, use proportion to set randomization ratio
-      else if(alternative == "greater"){
-        prob_trt <- sqrt(trt_prop) / (sqrt(ctrl_prop) + sqrt(trt_prop))
+      if(alternative == "greater"){
+        prob_trt <- sqrt((y_trt + 1) / (N_trt + 2)) /
+                    (sqrt((y_trt + 1) / (N_trt + 2)) + sqrt((y_ctr + 1) / (N_ctr + 2)))
       }
       # if the alternative is greater, use 1 - proportion to set randomization ratio
       else{
-        prob_trt <-sqrt(1 - trt_prop) / (sqrt(1 - ctrl_prop) + sqrt(1 - trt_prop))
+        prob_trt <- sqrt(1 - (y_trt + 1) / (N_trt + 2)) /
+                   (sqrt(1 - (y_trt + 1) / (N_trt + 2)) + sqrt(1 - (y_ctr + 1) / (N_ctr + 2)))
       }
 
       # generate data frame treatment assignment based on sampling and
@@ -266,7 +272,7 @@ binomialfreq <- function(
 
       # if we allow early stopping and the
       # the test_statistics exceed the lan-demets bound, quit the loop
-      if(early_stop){
+      if(early_stop & dim(data_total)[1] > min_patient_earlystop){
         if(test_stat > bounds[i]){
           index <- i
           break

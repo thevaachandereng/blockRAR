@@ -8,7 +8,7 @@ binomialfreq(p_control, p_treatment, N_total, block_number = 4,
   drift = 0, simulation = 10000, conf_int = 0.95,
   alternative = "greater", correct = FALSE, replace = TRUE,
   early_stop = FALSE, size_equal_randomization = 20,
-  min_patient_earlystop = 40)
+  min_patient_earlystop = 20)
 }
 \arguments{
 \item{p_control}{scalar. Proportion of events under the control arm.}

@@ -75,7 +75,7 @@ binomialfreq <- function(
   replace                  = TRUE,
   early_stop               = FALSE,
   size_equal_randomization = 20,
-  min_patient_earlystop    = 40
+  min_patient_earlystop    = 20
 ){
    # stop if proportion of control is not between 0 and 1.
   if((p_control <= 0 | p_control >= 1)){
@@ -168,6 +168,7 @@ binomialfreq <- function(
   p_treatment_estimate <- NULL
   prop_diff_estimate   <- NULL
   drift_p              <- seq(drift / N_total, drift,  length.out = N_total)
+  randomization        <- array(NA, c(simulation, block_number))
 
   # looping overall all simulation
   for(k in 1:simulation){
@@ -190,21 +191,24 @@ binomialfreq <- function(
       }
       else{
         y_ctr     <- 0
-        N_ctrt    <- 0
+        N_ctr    <- 0
         y_trt     <- 0
         N_trt     <- 0
       }
 
       # if the alternative is greater, use proportion to set randomization ratio
       if(alternative == "greater"){
-        prob_trt <- sqrt((y_trt + 1) / (N_trt + 2)) /
-                    (sqrt((y_trt + 1) / (N_trt + 2)) + sqrt((y_ctr + 1) / (N_ctr + 2)))
+        prob_trt <- (y_trt + 1) / (N_trt + 2) /
+                    ((y_trt + 1) / (N_trt + 2) + (y_ctr + 1) / (N_ctr + 2))
       }
       # if the alternative is greater, use 1 - proportion to set randomization ratio
       else{
-        prob_trt <- sqrt(1 - (y_trt + 1) / (N_trt + 2)) /
-                   (sqrt(1 - (y_trt + 1) / (N_trt + 2)) + sqrt(1 - (y_ctr + 1) / (N_ctr + 2)))
+        prob_trt <- (1 - (y_trt + 1) / (N_trt + 2)) /
+                   (1 - (y_trt + 1) / (N_trt + 2) + (1 - (y_ctr + 1) / (N_ctr + 2)))
       }
+
+      # storing info of prob_trt
+      randomization[k, i] <- prob_trt
 
       # generate data frame treatment assignment based on sampling and
       # alternative hypothesis. leave the outcome variable empty.
@@ -336,7 +340,8 @@ binomialfreq <- function(
     prop_diff_estimate    = prop_diff_estimate,
     N_enrolled            = sample_size,
     N_control             = N_control,
-    N_treatment           = N_treatment
+    N_treatment           = N_treatment,
+    randomization_ratio   = randomization
     )
 
   return(output)

@@ -113,7 +113,7 @@ binomialbayes <- function(
   }
 
   # making sure the drift didnt make the prop of control/treatment > 1 / < 0
-  if(N_total >= block_number){
+  if(N_total < block_number){
     stop("The number of blocks can't exceed the number of patients!")
   }
 

@@ -47,6 +47,8 @@
 #'   \item{\code{N_control}}{
 #'     vector. The number of patients enrolled in the experimental group for
 #'     each simulation.}
+#'   \item{\code{randomization_ratio}}{
+#'     matrix. The randomization ratio allocated for each block.}
 #' }
 #'
 #' @importFrom stats rbinom mantelhaen.test chisq.test

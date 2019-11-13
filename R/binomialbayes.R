@@ -65,7 +65,7 @@ binomialbayes <- function(
   futility_prob             = 0.01,
   alternative               = "greater",
   size_equal_randomization  = 20,
-  min_patient_earlystop     = 30
+  min_patient_earlystop     = 20
   ){
 
   # stop if proportion of control is not between 0 and 1
@@ -112,8 +112,9 @@ binomialbayes <- function(
 
   # computing the group size if its symmetric or not
   group <- rep(floor(N_total / block_number), block_number)
+
   if((N_total - sum(group)) > 0){
-    index <- sample(1:block_number, N_total - sum(group))
+    index        <- sample(1:block_number, N_total - sum(group))
     group[index] <- group[index] + 1
   }
 

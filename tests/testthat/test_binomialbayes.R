@@ -6,6 +6,10 @@ test_that("the binomial Bayesian RAR output is", {
                                  block_number = 2, simulation = 10)$N_enrolled), 200)
   expect_equal(binomialbayes(p_control = 0.1, p_treatment = 0.5, N_total = 200,
                             block_number = 3, simulation = 10)$power, 1)
+  expect_equal(binomialbayes(p_control = 0.1, p_treatment = 0.5, N_total = 200,
+                             block_number = 100, simulation = 10)$early_success, rep(1, 10))
+  expect_equal(binomialbayes(p_control = 0.1, p_treatment = 0.5, N_total = 200,
+                             block_number = 1, simulation = 10)$power, 1)
   expect_equal(binomialbayes(p_control = 0.1, p_treatment = 0.6, N_total = 200,
                             block_number = 3, simulation = 10,
                             alternative = "greater")$power, 1)
@@ -38,4 +42,6 @@ test_that("the binomial Bayesian RAR output is", {
                             alternative = "two-sided"))
   expect_error(binomialbayes(p_control = 0.1, p_treatment = 0.2, N_total = 100,
                             block_number = 120, simulation = 2))
+  expect_error(binomialbayes(p_control = 0.1, p_treatment = 0.2, N_total = 100,
+                             block_number = 10, simulation = 2, prob_accept_ha = 1.2))
 })

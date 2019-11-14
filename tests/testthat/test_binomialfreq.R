@@ -39,6 +39,8 @@ test_that("the binomial frequentist RAR output is", {
                            block_number = 2, simulation = 10)$p_treatment_estimate), 0)
   expect_equal(min(binomialfreq(p_control = 0.01, p_treatment = 0.2, N_total = 200,
                                block_number = 2, simulation = 10)$p_control_estimate), 0)
+  expect_equal(binomialfreq(p_control = 0.1, p_treatment = 0.2, N_total = 1000,
+                            block_number = 1, simulation = 1)$N_enrolled, 1000)
   expect_error(binomialfreq(p_control = 1.1, p_treatment = 0.5, N_total = 200,
                            block_number = 3, simulation = 10))
   expect_error(binomialfreq(p_control = 0.1, p_treatment = 1.2, N_total = 200,

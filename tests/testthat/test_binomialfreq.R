@@ -17,6 +17,12 @@ test_that("the binomial frequentist RAR output is", {
   expect_equal(binomialfreq(p_control = 0.1, p_treatment = 0.1, N_total = 200,
                            block_number = 3, simulation = 10,
                            alternative = "less", replace = TRUE)$power, 0.2)
+  expect_equal(binomialfreq(p_control = 0.3, p_treatment = 0.3, N_total = 100,
+                            block_number = 3, simulation = 10,
+                            alternative = "less")$power, 0)
+  expect_equal(binomialfreq(p_control = 0.3, p_treatment = 0.3, N_total = 400,
+                            block_number = 1, simulation = 10,
+                            alternative = "less")$power, 0)
   expect_equal(binomialfreq(p_control = 0.1, p_treatment = 0.2, N_total = 200,
                            block_number = 4, simulation = 10,
                            alternative = "less", replace = TRUE)$power, 0)

@@ -70,7 +70,7 @@ In each block/group, the randomization ratio is kept constant.
 However, the ideal number of block/group is still vague.  
 
 
-`blockRAR` is an R package for the simulation of response-adaptive randomization trials with binomial outcomes where patients are assigned in block and randomization ratio is altered by block rather than patient by patient basis using both frequentist and Bayesian method. For more details on the method, please look at our [preprint](https://arxiv.org/abs/1904.07758).
+`blockRAR` is an R package for the simulation of response-adaptive randomization trials with binomial outcomes where patients are assigned in block and randomization ratio is altered by block rather than patient by patient basis using both frequentist and Bayesian methods. For more details on the method, please look at our [preprint](https://arxiv.org/abs/1904.07758).
 
 If you use `blockRAR` in published research, please cite our preprint:
 

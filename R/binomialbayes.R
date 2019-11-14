@@ -222,7 +222,7 @@ binomialbayes <- function(
         index        <- i
         stop_success <- 1
         if(i  < block_number){
-          randomization[k, (i+1):block_number] <- 1
+          randomization[k, (i+1):block_number] <- 0
         }
         break
       }

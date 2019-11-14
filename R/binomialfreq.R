@@ -170,6 +170,7 @@ binomialfreq <- function(
   p_treatment_estimate <- NULL
   prop_diff_estimate   <- NULL
   drift_p              <- seq(drift / N_total, drift,  length.out = N_total)
+  early_stopping       <- rep(0, simulation)
   randomization        <- array(NA, c(simulation, block_number))
 
   # looping overall all simulation
@@ -280,7 +281,9 @@ binomialfreq <- function(
       # the test_statistics exceed the lan-demets bound, quit the loop
       if(early_stop & dim(data_total)[1] > min_patient_earlystop){
         if(test_stat > bounds[i]){
-          index <- i
+          index               <- i
+          early_stopping[k]   <- 1
+          randomization[k, i] <- 0
           break
         }
       }
@@ -343,6 +346,7 @@ binomialfreq <- function(
     N_enrolled            = sample_size,
     N_control             = N_control,
     N_treatment           = N_treatment,
+    early_stop            = early_stopping,
     randomization_ratio   = randomization
     )
 

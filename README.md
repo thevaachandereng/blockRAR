@@ -12,9 +12,8 @@
 
 Overview
 --------
-Response-Adaptive Randomization (RAR) is an adaptive trial where the randomization ratio of the patient changes based on the performance of the control and experimental treatment. 
-However, most design complete ignores the time trend aspect in this design and the randomization
-ratio are altered based on a patient outcome. 
+Response-Adaptive Randomization (RAR) is an adaptive trial where the randomization ratio of the patient changes based on the patient's performance and treatment assignment. 
+However, most designs completely ignores the time trend aspect in this design and the randomization ratio's are altered based on patient's outcomes. 
 blockRAR assigns patient in a block (group) manner and the the block results are analyzed before the randomization ratio is altered.
 Time is divided into factor level in each block (group).
 The treatment effect is obtained upon adjusting for the time effect in this design. 

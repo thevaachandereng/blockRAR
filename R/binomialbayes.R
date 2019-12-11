@@ -148,7 +148,7 @@ binomialbayes <- function(
     for(i in 1:block_number){
 
       # if data_total is null, set all the outcome to 0
-      if(dim(data_total)[1] < size_equal_randomization){
+      if(nrow(data_total) < size_equal_randomization){
         yt <- 0
         Nt <- 0
         yc <- 0
@@ -164,17 +164,26 @@ binomialbayes <- function(
                                  b0          = b0,
                                  number_mcmc = number_mcmc)
 
+      if(p == "n/2N"){
+        pi <- nrow(data_total) / (2 * N_total)
+      }
+      else if(p > 0 & p <= 1){
+        pi <- p
+      }
+      else{
+        pi <- 0.5
+      }
         # altering the randomization ratio based on Thall and Wathen's paper
         if(alternative == "greater"){
           diff <- est_interim$posterior_treatment$posterior -
                   est_interim$posterior_control$posterior
 
-          rr <- mean(diff > 0)^p / (mean(diff > 0)^p + mean(diff < 0)^p)
+          rr <- mean(diff > 0)^pi / (mean(diff > 0)^pi + mean(diff < 0)^pi)
         }
         else{
           diff <- est_interim$posterior_treatment$posterior -
                   est_interim$posterior_control$posterior
-          rr <- mean(diff < 0)^p / (mean(diff > 0)^p + mean(diff < 0)^p)
+          rr <- mean(diff < 0)^pi / (mean(diff > 0)^pi + mean(diff < 0)^pi)
         }
 
       randomization[k, i] <- rr
@@ -218,7 +227,7 @@ binomialbayes <- function(
       }
 
       # check for early stopping for success
-      if(rr > early_success_prob & dim(data_total)[1] > min_patient_earlystop){
+      if(rr > early_success_prob & nrow(data_total) > min_patient_earlystop){
         index        <- i
         stop_success <- 1
         if(i  < block_number){

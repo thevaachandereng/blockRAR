@@ -9,7 +9,7 @@ binomialbayes(p_control, p_treatment, N_total, block_number = 4,
   number_mcmc = 10000, prob_accept_ha = 0.95,
   early_success_prob = 0.99, futility_prob = 0.01,
   alternative = "greater", size_equal_randomization = 20,
-  min_patient_earlystop = 20)
+  min_patient_earlystop = 20, max_prob = 0.8)
 }
 \arguments{
 \item{p_control}{scalar. Proportion of events under the control arm.}
@@ -54,6 +54,9 @@ randomization is applied.}
 
 \item{min_patient_earlystop}{scalar. Minimum number of patients before early stopping
 rule is applied.}
+
+\item{max_prob}{scalar. The maximum probability for assigning to treatment/control
+group is 0.8.}
 }
 \value{
 a list with details on the simulation.

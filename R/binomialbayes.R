@@ -40,7 +40,6 @@
 #'
 #' @importFrom stats rbinom binomial coef quasi rbeta
 #' @importFrom arm bayesglm sim
-#' @importFrom bayesDP bdpbinomial
 #' @importFrom dplyr mutate group_by summarize
 #' @importFrom tibble as.tibble
 #'
@@ -67,7 +66,8 @@ binomialbayes <- function(
   futility_prob             = 0.01,
   alternative               = "greater",
   size_equal_randomization  = 20,
-  min_patient_earlystop     = 20
+  min_patient_earlystop     = 20,
+  max_prob                  = 0.8
   ){
 
   # stop if proportion of control is not between 0 and 1
@@ -185,6 +185,16 @@ binomialbayes <- function(
                   est_interim$posterior_control$posterior
           rr <- mean(diff < 0)^pi / (mean(diff > 0)^pi + mean(diff < 0)^pi)
         }
+
+      # maximum probability assigning to the treatment group is 0.8
+      if(rr > max_prob){
+        rr <- max_prob
+      }
+
+      # maximum probability assigning to the control group is 0.8
+      else if(rr < (1 - max_prob)){
+        rr <- 1 - max_prob
+      }
 
       randomization[k, i] <- rr
 

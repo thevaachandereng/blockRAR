@@ -28,5 +28,5 @@ Imports: dplyr,
     magrittr, 
     ldbounds,
     tibble,
-    bayesDP,
+    methods,
     arm

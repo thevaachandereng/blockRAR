@@ -28,6 +28,9 @@
 #'    randomization is applied.
 #' @param min_patient_earlystop scalar. Minimum number of patients before early stopping
 #'    rule is applied.
+#' @param max_prob scalar. The maximum probability for assigning to treatment/control
+#'    group is 0.8.
+#'
 #'
 #' @return a list with details on the simulation.
 #' \describe{
@@ -77,7 +80,8 @@ binomialfreq <- function(
   replace                  = TRUE,
   early_stop               = FALSE,
   size_equal_randomization = 20,
-  min_patient_earlystop    = 20
+  min_patient_earlystop    = 20,
+  max_prob                 = 0.8
 ){
    # stop if proportion of control is not between 0 and 1.
   if((p_control <= 0 | p_control >= 1)){
@@ -156,7 +160,7 @@ binomialfreq <- function(
     # divided time equally between 0 and 1 with the number of blocks
     time <- cumsum(group)[cumsum(group) > min_patient_earlystop] / N_total
     #using lan-demets bound, computing the early stopping criteria for the number of blocks
-    bounds <- bounds(time, iuse = c(1, 1), alpha = c(1 - conf_int, 1 - conf_int))$upper.bounds
+    bounds <- bounds(time, iuse = c(1, 1), alpha = c((1 - conf_int) / 2, (1 - conf_int) / 2))$upper.bounds
   }
 
   #assigning power to 0
@@ -208,6 +212,16 @@ binomialfreq <- function(
       else{
         prob_trt <- (1 - (y_trt + 1) / (N_trt + 2)) /
                    (1 - (y_trt + 1) / (N_trt + 2) + (1 - (y_ctr + 1) / (N_ctr + 2)))
+      }
+
+      # maximum probability assigning to the treatment group is 0.8
+      if(prob_trt > max_prob){
+        prob_trt <- max_prob
+      }
+
+      # maximum probability assigning to the control group is 0.8
+      else if(prob_trt < (1 - max_prob)){
+        prob_trt <- 1 - max_prob
       }
 
       # storing info of prob_trt
@@ -309,7 +323,7 @@ binomialfreq <- function(
       if(((ctrl_prop - trt_prop >= 0) & alternative == "less") |
          ((trt_prop - ctrl_prop >= 0) & alternative == "greater")){
         p.val <- chisq.test(data_total$treatment, data_total$outcome,
-                            correct = correct)$p.value
+                            correct = correct)$p.value / 2
       }
       else{
         p.val <- 1

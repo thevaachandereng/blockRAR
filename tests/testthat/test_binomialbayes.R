@@ -23,8 +23,8 @@ test_that("the binomial Bayesian RAR output is", {
                              alternative = "less")$power, 0)
   expect_equal(binomialbayes(p_control = 0.1, p_treatment = 0.1, N_total = 1,
                              block_number = 1, simulation = 10)$power, 0)
-  expect_equal(binomialbayes(p_control = 0.1, p_treatment = 0.1, N_total = 5,
-                             block_number = 3, simulation = 10)$power, 0.1)
+  expect_equal(binomialbayes(p_control = 0.1, p_treatment = 0.1, N_total = 4,
+                             block_number = 3, simulation = 10)$power, 0)
   expect_equal(min(binomialbayes(p_control = 0.01, p_treatment = 0.2, N_total = 200,
                                 block_number = 2, simulation = 10)$N_enrolled[1]), 100)
   expect_error(binomialbayes(p_control = 1.1, p_treatment = 0.5, N_total = 200,

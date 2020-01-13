@@ -187,10 +187,10 @@ binomialfreq <- function(
 
     #looping over all blocks
     for(i in 1:block_number){
-
+      print(i)
       # create a data summary from previos block or if its null, create an empty
       # summary
-      if(dim(data_total)[1] != 0 & dim(data_total)[1] >= min_patient_earlystop){
+      if(nrow(data_total) != 0 & nrow(data_total) >= min_patient_earlystop){
         y_ctr     <- sum(as.numeric(as.character(data_total$outcome[data_total$treatment == 0])))
         N_ctr     <- length(as.numeric(as.character(data_total$outcome[data_total$treatment == 0])))
         y_trt     <- sum(as.numeric(as.character(data_total$outcome[data_total$treatment == 1])))
@@ -243,9 +243,9 @@ binomialfreq <- function(
 
       # fill in the outcome variable based on the treatment assignement and proportion
       # of event in respective arm
-      data$outcome <- rbinom(dim(data)[1], 1, prob = data$treatment * p_treatment +
+      data$outcome <- rbinom(nrow(data), 1, prob = data$treatment * p_treatment +
                                (1 - data$treatment) * p_control +
-                               drift_p[((1:dim(data)[1]) + dim(data_total)[1])])
+                               drift_p[((1:nrow(data)) + nrow(data_total))])
 
       # bind the data with previous block if available
       data_total <- rbind(data_total, data)
@@ -293,8 +293,9 @@ binomialfreq <- function(
 
       # if we allow early stopping and the
       # the test_statistics exceed the lan-demets bound, quit the loop
-      if(early_stop & dim(data_total)[1] > min_patient_earlystop){
-        if(test_stat > bounds[i]){
+      if(early_stop & nrow(data_total) > min_patient_earlystop){
+        print(test_stat)
+        if(test_stat > bounds[i - size_equal_randomization]){
           index               <- i
           early_stopping[k]   <- 1
           randomization[k, i] <- 0
@@ -339,7 +340,7 @@ binomialfreq <- function(
     # control and treatment estimate
     N_control            <- c(N_control, sum(data_total$treatment == 0))
     N_treatment          <- c(N_treatment, sum(data_total$treatment == 1))
-    sample_size          <- c(sample_size, dim(data_total)[1])
+    sample_size          <- c(sample_size, nrow(data_total))
     p_control_estimate   <- c(p_control_estimate, ctrl_prop)
     p_treatment_estimate <- c(p_treatment_estimate, trt_prop)
     prop_diff_estimate   <- c(prop_diff_estimate, prop_diff)

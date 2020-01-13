@@ -204,9 +204,9 @@ binomialbayes <- function(
         outcome   = rep(NA, group[i]))
 
       # adding the outcome with time trends (linear time trend)
-      data$outcome <- rbinom(dim(data)[1], 1, prob = data$treatment * p_treatment +
+      data$outcome <- rbinom(nrow(data), 1, prob = data$treatment * p_treatment +
                                (1 - data$treatment) * p_control +
-                               drift_p[((1:dim(data)[1]) + dim(data_total)[1])])
+                               drift_p[((1:nrow(data)) + nrow(data_total))])
 
       # joining the dataset using rbind
       data_total <- rbind(data_total, data)
@@ -247,7 +247,7 @@ binomialbayes <- function(
       }
 
       # check for early stopping for futility
-      if(rr < futility_prob & dim(data_total)[1] > min_patient_earlystop){
+      if(rr < futility_prob & nrow(data_total) > min_patient_earlystop){
         index         <- i
         stop_futility <- 1
         if(i  < block_number){
@@ -376,7 +376,7 @@ binomialbayes <- function(
     # storing all the control, treatment information for each trial simulation
     N_control          <- c(N_control, sum(data_final$treatment == 0))
     N_treatment        <- c(N_treatment, sum(data_final$treatment == 1))
-    sample_size        <- c(sample_size, dim(data_final)[1])
+    sample_size        <- c(sample_size, nrow(data_final))
     prop_diff_estimate <- c(prop_diff_estimate, diff_est)
     early_success      <- c(early_success, stop_success)
     early_futility     <- c(early_futility, stop_futility)

@@ -124,7 +124,7 @@
   <span class='kw'>number_mcmc</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>prob_accept_ha</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
   <span class='kw'>early_success_prob</span> <span class='kw'>=</span> <span class='fl'>0.99</span>, <span class='kw'>futility_prob</span> <span class='kw'>=</span> <span class='fl'>0.01</span>,
   <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"greater"</span>, <span class='kw'>size_equal_randomization</span> <span class='kw'>=</span> <span class='fl'>20</span>,
-  <span class='kw'>min_patient_earlystop</span> <span class='kw'>=</span> <span class='fl'>20</span>)</pre>
+  <span class='kw'>min_patient_earlystop</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>max_prob</span> <span class='kw'>=</span> <span class='fl'>0.8</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -204,6 +204,11 @@ randomization is applied.</p></td>
       <td><p>scalar. Minimum number of patients before early stopping
 rule is applied.</p></td>
     </tr>
+    <tr>
+      <th>max_prob</th>
+      <td><p>scalar. The maximum probability for assigning to treatment/control
+group is 0.8.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -225,68 +230,68 @@ rule is applied.</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>binomialbayes</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.20</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.30</span>, <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; $power
-#&gt; [1] 0.5
+    <pre class="examples"><div class='input'><span class='fu'>binomialbayes</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.20</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.30</span>, <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: non-finite coefficients at iteration 14</span></div><div class='output co'>#&gt; <span class='warning'>Warning: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: algorithm stopped at boundary value</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: non-finite coefficients at iteration 18</span></div><div class='output co'>#&gt; <span class='warning'>Warning: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: algorithm did not converge</span></div><div class='output co'>#&gt; $power
+#&gt; [1] 0.4
 #&gt; 
 #&gt; $prop_diff_estimate
-#&gt;  [1]  0.05174973 -0.03820063  0.08641154  0.23570896  0.08972070  0.23012826
-#&gt;  [7] -0.01416401  0.17117942  0.26028206  0.12845934
+#&gt;  [1]  0.10315756  0.20829054  0.03384310  0.02770040  0.17083913  0.22541563
+#&gt;  [7]  0.02363688 -0.41601688  0.20935820  0.11125441
 #&gt; 
 #&gt; $N_enrolled
-#&gt;  [1] 100 100 100  50 100 100 100 100 100 100
+#&gt;  [1] 100 100 100 100 100 100 100  50 100 100
 #&gt; 
 #&gt; $N_control
-#&gt;  [1] 37 52 48 25 36 33 65 34 46 17
+#&gt;  [1] 52 31 47 54 29 39 51 27 25 38
 #&gt; 
 #&gt; $N_treatment
-#&gt;  [1] 63 48 52 25 64 67 35 66 54 83
+#&gt;  [1] 48 69 53 46 71 61 49 23 75 62
 #&gt; 
 #&gt; $early_success
-#&gt;  [1] 0 0 0 1 0 0 0 0 0 0
+#&gt;  [1] 0 0 0 0 0 0 0 0 0 0
 #&gt; 
 #&gt; $early_futilty
-#&gt;  [1] 0 0 0 0 0 0 0 0 0 0
+#&gt;  [1] 0 0 0 0 0 0 0 1 0 0
 #&gt; 
 #&gt; $randomization_ratio
 #&gt;            [,1]      [,2]      [,3]      [,4]
-#&gt;  [1,] 0.5020500 0.5185756 0.6928872 0.6808100
-#&gt;  [2,] 0.4975999 0.5458832 0.4375403 0.3177884
-#&gt;  [3,] 0.5040503 0.6417439 0.6749971 0.6187980
-#&gt;  [4,] 0.4955496 0.6248831 0.0000000 0.0000000
-#&gt;  [5,] 0.5012000 0.5216907 0.6994180 0.7357074
-#&gt;  [6,] 0.4989500 0.7774953 0.7109926 0.8103937
-#&gt;  [7,] 0.5043503 0.2718189 0.3297668 0.5842239
-#&gt;  [8,] 0.5021500 0.5936767 0.6259683 0.7477236
-#&gt;  [9,] 0.5007000 0.4119517 0.8272241 0.5636658
-#&gt; [10,] 0.5000500 0.7337968 0.8194467 0.7563686
-#&gt; </div><div class='input'><span class='fu'>binomialbayes</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.50</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.30</span>, <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: step size truncated: out of bounds</span></div><div class='output co'>#&gt; <span class='warning'>Warning: algorithm stopped at boundary value</span></div><div class='output co'>#&gt; $power
+#&gt;  [1,] 0.4988500 0.4254273 0.4143045 0.5723860
+#&gt;  [2,] 0.5000500 0.6586658 0.7380271 0.8000000
+#&gt;  [3,] 0.5006000 0.4778064 0.4290496 0.5440902
+#&gt;  [4,] 0.5033001 0.2666777 0.5870620 0.4129928
+#&gt;  [5,] 0.4997500 0.8000000 0.7025562 0.7720312
+#&gt;  [6,] 0.4993500 0.5256675 0.7254353 0.7771249
+#&gt;  [7,] 0.5006500 0.6632861 0.5390874 0.4873419
+#&gt;  [8,] 0.5038002 0.3905445 0.0000000 0.0000000
+#&gt;  [9,] 0.4978000 0.8000000 0.8000000 0.8000000
+#&gt; [10,] 0.4998500 0.6663890 0.6423156 0.8000000
+#&gt; </div><div class='input'><span class='fu'>binomialbayes</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.50</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.30</span>, <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: algorithm did not converge</span></div><div class='output co'>#&gt; $power
 #&gt; [1] 0
 #&gt; 
 #&gt; $prop_diff_estimate
-#&gt; [1] -0.1977062 -0.2764503 -0.4409175 -0.3771927 -0.2817458
+#&gt; [1] -0.24829929 -0.19629528 -0.05514236 -0.49155379 -0.47819563
 #&gt; 
 #&gt; $N_enrolled
-#&gt; [1] 100 100  50  50  75
+#&gt; [1] 100 100 100  75  50
 #&gt; 
 #&gt; $N_control
-#&gt; [1] 54 71 40 30 47
+#&gt; [1] 67 65 55 57 34
 #&gt; 
 #&gt; $N_treatment
-#&gt; [1] 46 29 10 20 28
+#&gt; [1] 33 35 45 18 16
 #&gt; 
 #&gt; $early_success
 #&gt; [1] 0 0 0 0 0
 #&gt; 
 #&gt; $early_futilty
-#&gt; [1] 0 0 1 1 1
+#&gt; [1] 0 0 0 1 1
 #&gt; 
 #&gt; $randomization_ratio
-#&gt;           [,1]       [,2]      [,3]      [,4]
-#&gt; [1,] 0.5058508 0.35755719 0.3942753 0.1968965
-#&gt; [2,] 0.5009000 0.15797118 0.2883309 0.1605735
-#&gt; [3,] 0.4978000 0.09048213 0.0000000 0.0000000
-#&gt; [4,] 0.5036502 0.19645235 0.0000000 0.0000000
-#&gt; [5,] 0.5006000 0.43496819 0.2025434 0.0000000
+#&gt;           [,1]      [,2]      [,3]      [,4]
+#&gt; [1,] 0.5048505 0.2457812 0.2694996 0.2000000
+#&gt; [2,] 0.4998000 0.3088119 0.2000000 0.2000000
+#&gt; [3,] 0.4988500 0.3846160 0.2781652 0.5435274
+#&gt; [4,] 0.4990000 0.2000000 0.2000000 0.0000000
+#&gt; [5,] 0.4987000 0.2000000 0.0000000 0.0000000
 #&gt; </div><div class='input'>
 </div></pre>
   </div>

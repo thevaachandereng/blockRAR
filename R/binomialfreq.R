@@ -187,7 +187,6 @@ binomialfreq <- function(
 
     #looping over all blocks
     for(i in 1:block_number){
-      print(i)
       # create a data summary from previos block or if its null, create an empty
       # summary
       if(nrow(data_total) != 0 & nrow(data_total) >= min_patient_earlystop){
@@ -291,14 +290,20 @@ binomialfreq <- function(
                                                 correct = correct)$statistic))
       }
 
+      if(N_total / block_number > min_patient_earlystop){
+        bound_index <- i
+      }
+      else{
+        bound_index <- i - min_patient_earlystop / (N_total / block_number)
+      }
+
       # if we allow early stopping and the
       # the test_statistics exceed the lan-demets bound, quit the loop
-      if(early_stop & nrow(data_total) > min_patient_earlystop){
-        print(test_stat)
-        if(test_stat > bounds[i - size_equal_randomization]){
+      if(early_stop & (nrow(data_total) > min_patient_earlystop) & (nrow(data_total) < N_total)){
+        if(test_stat > bounds[bound_index]){
           index               <- i
           early_stopping[k]   <- 1
-          randomization[k, i] <- 0
+          randomization[k, (i + 1):block_number] <- 0
           break
         }
       }

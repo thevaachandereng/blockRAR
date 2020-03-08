@@ -167,7 +167,7 @@ binomialbayes <- function(
       if(p == "n/2N"){
         pi <- nrow(data_total) / (2 * N_total)
       }
-      else if(p > 0 & p <= 1){
+      else if(p >= 0 & p <= 1){
         pi <- p
       }
       else{

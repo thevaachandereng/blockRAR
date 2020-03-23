@@ -59,7 +59,7 @@ binomialbayes <- function(
   simulation                = 10000,
   a0                        = 0.5,
   b0                        = 0.5,
-  p                         = 0.5,
+  p                         = "n/2N",
   number_mcmc               = 10000,
   prob_accept_ha            = 0.95,
   early_success_prob        = 0.99,
@@ -134,74 +134,77 @@ binomialbayes <- function(
   early_success      <- NULL
   early_futility     <- NULL
   drift_p            <- seq(drift / N_total, drift,  length.out = N_total)
-  randomization      <- array(NA, c(simulation, block_number))
+  randomization      <- array(NA, c(simulation, N_total))
 
   # going through all the simulations
   for(k in 1:simulation){
     #storing each simulation values
     data_total            <- data.frame()
     test_stat             <- 0
-    index                 <- block_number
+    time                  <- rep(1:block_number, group[1:block_number])
     stop_success          <- 0
     stop_futility         <- 0
 
-    for(i in 1:block_number){
+    for(i in 1:N_total){
 
-      # if data_total is null, set all the outcome to 0
-      if(nrow(data_total) < size_equal_randomization){
-        yt <- 0
-        Nt <- 0
-        yc <- 0
-        Nc <- 0
-      }
+      if(any((i - 1) == cumsum(group)) | i == 1){
 
-      # estimating the interim value estimates
-      est_interim <- bdpbinomial(y_t         = yt,
-                                 N_t         = Nt,
-                                 y_c         = yc,
-                                 N_c         = Nc,
-                                 a0          = a0,
-                                 b0          = b0,
-                                 number_mcmc = number_mcmc)
+        # if data_total is null, set all the outcome to 0
+        if(nrow(data_total) < size_equal_randomization){
+          yt <- 0
+          Nt <- 0
+          yc <- 0
+          Nc <- 0
+        }
 
-      if(p == "n/2N"){
-        pi <- nrow(data_total) / (2 * N_total)
-      }
-      else if(p >= 0 & p <= 1){
-        pi <- p
-      }
-      else{
-        pi <- 0.5
-      }
+        # estimating the interim value estimates
+        est_interim <- bdpbinomial(y_t         = yt,
+                                   N_t         = Nt,
+                                   y_c         = yc,
+                                   N_c         = Nc,
+                                   a0          = a0,
+                                   b0          = b0,
+                                   number_mcmc = number_mcmc)
+
+        if(p == "n/2N"){
+          pi <- nrow(data_total) / (2 * N_total)
+        }
+        else if(p >= 0 & p <= 1){
+          pi <- p
+        }
+        else{
+          pi <- 0.5
+        }
         # altering the randomization ratio based on Thall and Wathen's paper
         if(alternative == "greater"){
           diff <- est_interim$posterior_treatment$posterior -
-                  est_interim$posterior_control$posterior
+            est_interim$posterior_control$posterior
 
           rr <- mean(diff > 0)^pi / (mean(diff > 0)^pi + mean(diff < 0)^pi)
         }
         else{
           diff <- est_interim$posterior_treatment$posterior -
-                  est_interim$posterior_control$posterior
+            est_interim$posterior_control$posterior
           rr <- mean(diff < 0)^pi / (mean(diff > 0)^pi + mean(diff < 0)^pi)
         }
 
-      # maximum probability assigning to the treatment group is 0.8
-      if(rr > max_prob){
-        rr <- max_prob
-      }
+        # maximum probability assigning to the treatment group is 0.8
+        if(rr > max_prob){
+          rr <- max_prob
+        }
 
-      # maximum probability assigning to the control group is 0.8
-      else if(rr < (1 - max_prob)){
-        rr <- 1 - max_prob
+        # maximum probability assigning to the control group is 0.8
+        else if(rr < (1 - max_prob)){
+          rr <- 1 - max_prob
+        }
       }
 
       randomization[k, i] <- rr
 
       # creating the dataset for each block
       data <- data.frame(
-        treatment = sample(0:1, replace = T, group[i], prob = c(1 - rr, rr)),
-        outcome   = rep(NA, group[i]))
+        treatment = sample(0:1, size = 1, replace = T, prob = c(1 - rr, rr)),
+        outcome   = rep(NA, 1))
 
       # adding the outcome with time trends (linear time trend)
       data$outcome <- rbinom(nrow(data), 1, prob = data$treatment * p_treatment +
@@ -228,30 +231,30 @@ binomialbayes <- function(
 
       # calculating the mean posterior difference for treatment estimate
       if(alternative == "greater"){
-        rr <- mean(est_interim$posterior_treatment$posterior -
-                     est_interim$posterior_control$posterior > 0)
+        int_analysis <- mean(est_interim$posterior_treatment$posterior -
+                               est_interim$posterior_control$posterior > 0)
       }
       else{
-        rr <- mean(est_interim$posterior_treatment$posterior -
-                     est_interim$posterior_control$posterior < 0)
+        int_analysis <- mean(est_interim$posterior_treatment$posterior -
+                               est_interim$posterior_control$posterior < 0)
       }
 
       # check for early stopping for success
-      if(rr > early_success_prob & nrow(data_total) > min_patient_earlystop){
-        index        <- i
+      if(int_analysis > early_success_prob & nrow(data_total) > min_patient_earlystop){
+        time         <- time[1:i]
         stop_success <- 1
-        if(i  < block_number){
-          randomization[k, (i+1):block_number] <- 0
+        if(i < N_total){
+          randomization[k, (i+1):N_total] <- 0
         }
         break
       }
 
       # check for early stopping for futility
-      if(rr < futility_prob & nrow(data_total) > min_patient_earlystop){
-        index         <- i
+      if(int_analysis < futility_prob & nrow(data_total) > min_patient_earlystop){
+        time          <- time[1:i]
         stop_futility <- 1
-        if(i  < block_number){
-          randomization[k, (i+1):block_number] <- 0
+        if(i < N_total){
+          randomization[k, (i+1):N_total] <- 0
         }
         break
       }
@@ -260,7 +263,7 @@ binomialbayes <- function(
 
     # mutate time factor for time column
     data_total <- data_total %>%
-      mutate(time = factor(rep(1:index, group[1:index])))
+      mutate(time = time)
 
     # setting data final same as data_total
     data_final <- data_total
@@ -323,13 +326,13 @@ binomialbayes <- function(
       if(length(levels(data_total$time)) > 1){
         # perform bayes generalized linear models with quasi family and identity link
         fit0 <- tryCatch(expr = bayesglm(formula = outcome ~ as.factor(treatment) + as.factor(time),
-                         data    = data_total,
-                         family  = quasi(link = "identity", variance = "mu(1-mu)"),
-                         start   = rep(0.1, 1 + length(levels(data_total$time)))),
+                                         data    = data_total,
+                                         family  = quasi(link = "identity", variance = "mu(1-mu)"),
+                                         start   = rep(0.1, 1 + length(levels(data_total$time)))),
                          error   = function(data = data_total){
-                             rbeta(number_mcmc,
-                                   sum(data$outcome[data$time == data$time[1] & data$treatment == 1]) + a0,
-                                   length(data$outcome[data$time == data$time[1] & data$treatment == 1]) + b0) -
+                           rbeta(number_mcmc,
+                                 sum(data$outcome[data$time == data$time[1] & data$treatment == 1]) + a0,
+                                 length(data$outcome[data$time == data$time[1] & data$treatment == 1]) + b0) -
                              rbeta(number_mcmc,
                                    sum(data$outcome[data$time == data$time[1] & data$treatment == 0]) + a0,
                                    length(data$outcome[data$time == data$time[1] & data$treatment == 0])) + b0})

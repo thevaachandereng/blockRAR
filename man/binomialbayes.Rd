@@ -5,7 +5,7 @@
 \title{Block Design for Response-Adaptive Randomization for Binomial Data}
 \usage{
 binomialbayes(p_control, p_treatment, N_total, block_number = 4,
-  drift = 0, simulation = 10000, a0 = 0.5, b0 = 0.5, p = 0.5,
+  drift = 0, simulation = 10000, a0 = 0.5, b0 = 0.5, p = "n/2N",
   number_mcmc = 10000, prob_accept_ha = 0.95,
   early_success_prob = 0.99, futility_prob = 0.01,
   alternative = "greater", size_equal_randomization = 20,

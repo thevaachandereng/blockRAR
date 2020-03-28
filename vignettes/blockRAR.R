@@ -4,10 +4,10 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-set.seed(43232)
 
 ## ---- echo = FALSE, fig=TRUE, fig.width = 6, fig.height = 6--------------
 library(ggplot2)
+suppressWarnings(RNGversion("3.5.0"))
 set.seed(20999)
 
 
@@ -33,14 +33,41 @@ p
 
 ## ---- eval = FALSE, echo=TRUE--------------------------------------------
 #  devtools::install_github("thevaachandereng/blockRAR@vx.xx.x")
-#  
 #  # or
-#  
 #  devtools::install_version("blockRAR", version = "x.x.x", repos = "http://cran.us.r-project.org")
 
-## ---- cache=FALSE, warning=FALSE, comment=FALSE, eval = TRUE, echo=TRUE, results="hide"----
-devtools::install_github("thevaachandereng/blockRAR")
+## ---- cache=FALSE, warning=FALSE, comment=FALSE, eval = FALSE, echo=TRUE, results="hide"----
+#  devtools::install_github("thevaachandereng/blockRAR")
 
 ## ----lib, results="asis", eval=TRUE, echo=TRUE---------------------------
 library(blockRAR)
+
+## ---- warning=FALSE------------------------------------------------------
+binomialfreq(p_control    = 0.25, 
+             p_treatment  = 0.45, 
+             N_total      = 200, 
+             block_number = 5,  
+             drift        = 0, 
+             simulation   = 10, 
+             conf_int     = 0.95,
+             alternative  = "greater",
+             early_stop   = FALSE)
+
+## ------------------------------------------------------------------------
+binomialbayes(p_control          = 0.35, 
+              p_treatment        = 0.35, 
+              N_total            = 150, 
+              block_number       = 2,
+              drift              = 0.10,
+              simulation         = 10,
+              a0                 = 0.5,
+              b0                 = 0.5, 
+              number_mcmc        = 10000, 
+              prob_accept_ha     = 0.95,
+              early_success_prob = 1,
+              futility_prob      = 0,
+              alternative        = "greater")
+
+## ------------------------------------------------------------------------
+sessionInfo()
 

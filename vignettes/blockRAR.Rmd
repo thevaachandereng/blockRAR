@@ -108,7 +108,7 @@ library(blockRAR)
 ```
 
 # Required input
-In this section, we will describe each input for the frequentist and Bayesian approach of block design for RAR. 
+In this section, we will describe each input for the frequentist and Bayesian approaches of block design for RAR. 
 
 ## Frequentist Approach
 
@@ -133,7 +133,6 @@ When early stopping criteria is specified, the total sample size enrolled in the
 
 **correct**: The object **correct** is a logical indicator. If correct is set to FALSE (default), the Yates-continuity correction is not applied and vice-versa.
 
-**replace**: The object **replace** is a logical indicator. If replace is set to TRUE (default), the sampling is done with replacement. If replace is set to FALSE, the replacement is done without replacement. 
 
 **early_stop**: The object **early_stop** is a logical indicator. The default is set to FALSE, which does not allow early stopping. If early stopping is applied, the early stopping is done at block level using the Lan-DeMets alpha-spending function. 
 
@@ -177,14 +176,14 @@ where $p_{A > B}(data)$ is the posterior probability that treatment A has a high
 # Obtaining Power and Sample Size 
 
 blockRAR computes power (true-positive) and return several outputs:
-power (proportion of true-positive), mean estimated proportion of events in the control and treatment group,
+power (proportion of true-positive),
 stratified proportion difference in treatment, sample size enrolled, sample size in each treatment group.
 
 ## Frequentist Approach
 
 Computing power, stratified difference in treatment proportion using the **binomialfreq** function.
 
-An example function execution with proportion of events in control is 0.25, proportion of events in treatment is 0.45, targeted sample size of 200, 5 number of blocks where randomization ratio is altered, no drift is applied, $\alpha$ of 0.05, alternative of "greater", sampling with replacement and early stopping not applied. 
+An example function execution with proportion of events in control is 0.25, proportion of events in treatment is 0.45, targeted sample size of 200, 5 number of blocks where randomization ratio is altered, no drift is applied, $\alpha$ of 0.05, alternative of "greater", and early stopping not applied. 
 
 ```{r, warning=FALSE}
 binomialfreq(p_control    = 0.25, 
@@ -192,10 +191,9 @@ binomialfreq(p_control    = 0.25,
              N_total      = 200, 
              block_number = 5,  
              drift        = 0, 
-             simulation   = 100, 
+             simulation   = 10, 
              conf_int     = 0.95,
              alternative  = "greater",
-             replace      = TRUE, 
              early_stop   = FALSE)
 ```
 
@@ -204,7 +202,7 @@ binomialfreq(p_control    = 0.25,
 ## Bayesian Approach 
 Computing power, stratified difference in treatment proportion using the **binomialbayes** function.
 
-An example function execution with proportion of events in control is 0.35, proportion of events in treatment is 0.35, targeted sample size of 150, 2 number of blocks where randomization ratio is altered, 0.10 drift is applied, $Beta(0.5, 0.5)$ non-informative prior is used, probability of accepting alternative of 0.95, alternative of "greater", sampling with replacement and early stopping not applied. 
+An example function execution with proportion of events in control is 0.35, proportion of events in treatment is 0.35, targeted sample size of 150, 2 number of blocks where randomization ratio is altered, 0.10 drift is applied, $Beta(0.5, 0.5)$ non-informative prior is used, probability of accepting alternative of 0.95, alternative of "greater", and early stopping not applied. 
 
 ```{r}
 binomialbayes(p_control          = 0.35, 
@@ -212,7 +210,7 @@ binomialbayes(p_control          = 0.35,
               N_total            = 150, 
               block_number       = 2,
               drift              = 0.10,
-              simulation         = 50,
+              simulation         = 10,
               a0                 = 0.5,
               b0                 = 0.5, 
               number_mcmc        = 10000, 

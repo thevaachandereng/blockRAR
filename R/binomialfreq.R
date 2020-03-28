@@ -18,10 +18,6 @@
 #' @param correct logical. A logical indicating whether to apply continuity correction
 #'    when computing the test statistic: one half is subtracted from all |O - E|
 #'    differences; however, the correction will not be bigger than the differences themselves.
-#' @param replace logical. should sampling be with replacement? If replace is set to
-#'    FALSE (default), the 0 for control, 1 for treatment is replicated to the closest
-#'    integer and this vector is sampled with no replacement. If replace is set to TRUE,
-#'    the sampling is done based on randomization ratio provided with replacement.
 #' @param early_stop logical. A logical indicating whether the trials are stopped early
 #'    for success or futility.
 #' @param size_equal_randomization scalar. The number of run in patients because adaptive
@@ -37,10 +33,6 @@
 #'   \item{\code{power}}{
 #'     scalar. The power of the trial, ie. the proportion of success over the
 #'     number of simulation ran.}
-#'   \item{\code{p_control_estimate}}{
-#'     scalar. The estimated proportion of events under the control group.}
-#'   \item{\code{p_treatment_estimate}}{
-#'     scalar. The estimated proportion of events under the treatment group.}
 #'   \item{\code{N_enrolled}}{
 #'     vector. The number of patients enrolled in the trial (sum of control
 #'     and experimental group for each simulation. )}
@@ -63,9 +55,9 @@
 #'
 #' @examples
 #' binomialfreq(p_control = 0.7, p_treatment = 0.65, N_total = 200,
-#'             block_number = 2, simulation = 100)
+#'             block_number = 2, simulation = 5)
 #' binomialfreq(p_control = 0.5, p_treatment = 0.40, N_total = 200,
-#'             block_number = 2, simulation = 100, drift = -0.15)
+#'             block_number = 2, simulation = 5, drift = -0.15)
 
 binomialfreq <- function(
   p_control,
@@ -77,7 +69,6 @@ binomialfreq <- function(
   conf_int                 = 0.95,
   alternative              = "greater",
   correct                  = FALSE,
-  replace                  = TRUE,
   early_stop               = FALSE,
   size_equal_randomization = 20,
   min_patient_earlystop    = 20,
@@ -123,11 +114,6 @@ binomialfreq <- function(
     stop("The alternative can only be less or greater!")
   }
 
-  # sampling accept either true or false
-  if((replace != "TRUE" & replace != "FALSE")){
-    stop("The replacement for sampling is either TRUE or FALSE!")
-  }
-
   # the drift value cant make the prop of control/treatment exceed 1 or below 0.
   if(drift + p_control >= 1 | drift + p_control <= 0 |
      drift + p_treatment >= 1 | drift + p_treatment <= 0){
@@ -138,11 +124,6 @@ binomialfreq <- function(
   # if
   if(!(early_stop == FALSE | early_stop == TRUE)){
     stop("Early stopping can be only TRUE or FALSE!")
-  }
-
-  # if number of patient in each block is 2 or smaller, sampling is done with replacement
-  if(replace == FALSE & N_total / block_number <= 2){
-    replace <- TRUE
   }
 
   # total sample size is divided equally into blocks
@@ -158,7 +139,7 @@ binomialfreq <- function(
   # if we allow early stopping, compute the lan-demets bound
   if(early_stop){
     # divided time equally between 0 and 1 with the number of blocks
-    time <- cumsum(group)[cumsum(group) > min_patient_earlystop] / N_total
+    time <- (min_patient_earlystop:(N_total - 1)) / N_total
     #using lan-demets bound, computing the early stopping criteria for the number of blocks
     bounds <- bounds(time, iuse = c(1, 1), alpha = c((1 - conf_int) / 2, (1 - conf_int) / 2))$upper.bounds
   }
@@ -175,7 +156,7 @@ binomialfreq <- function(
   prop_diff_estimate   <- NULL
   drift_p              <- seq(drift / N_total, drift,  length.out = N_total)
   early_stopping       <- rep(0, simulation)
-  randomization        <- array(NA, c(simulation, block_number))
+  randomization        <- array(NA, c(simulation, N_total))
 
   # looping overall all simulation
   for(k in 1:simulation){
@@ -183,44 +164,48 @@ binomialfreq <- function(
     # assigning variables as NULL for each simulation
     data_total            <- data.frame()
     test_stat             <- 0
+    time                  <- rep(1:block_number, group[1:block_number])
     index                 <- block_number
 
     #looping over all blocks
-    for(i in 1:block_number){
+    for(i in 1:N_total){
       # create a data summary from previos block or if its null, create an empty
       # summary
-      if(nrow(data_total) != 0 & nrow(data_total) >= min_patient_earlystop){
-        y_ctr     <- sum(as.numeric(as.character(data_total$outcome[data_total$treatment == 0])))
-        N_ctr     <- length(as.numeric(as.character(data_total$outcome[data_total$treatment == 0])))
-        y_trt     <- sum(as.numeric(as.character(data_total$outcome[data_total$treatment == 1])))
-        N_trt     <- length(as.numeric(as.character(data_total$outcome[data_total$treatment == 1])))
-      }
-      else{
-        y_ctr     <- 0
-        N_ctr    <- 0
-        y_trt     <- 0
-        N_trt     <- 0
-      }
 
-      # if the alternative is greater, use proportion to set randomization ratio
-      if(alternative == "greater"){
-        prob_trt <- (y_trt + 1) / (N_trt + 2) /
-                    ((y_trt + 1) / (N_trt + 2) + (y_ctr + 1) / (N_ctr + 2))
-      }
-      # if the alternative is greater, use 1 - proportion to set randomization ratio
-      else{
-        prob_trt <- (1 - (y_trt + 1) / (N_trt + 2)) /
-                   (1 - (y_trt + 1) / (N_trt + 2) + (1 - (y_ctr + 1) / (N_ctr + 2)))
-      }
+      if(any((i - 1) == cumsum(group)) | i == 1){
+        if(nrow(data_total) != 0 & nrow(data_total) >= min_patient_earlystop){
+          y_ctr     <- sum(as.numeric(as.character(data_total$outcome[data_total$treatment == 0])))
+          N_ctr     <- length(as.numeric(as.character(data_total$outcome[data_total$treatment == 0])))
+          y_trt     <- sum(as.numeric(as.character(data_total$outcome[data_total$treatment == 1])))
+          N_trt     <- length(as.numeric(as.character(data_total$outcome[data_total$treatment == 1])))
+        }
+        else{
+          y_ctr     <- 0
+          N_ctr     <- 0
+          y_trt     <- 0
+          N_trt     <- 0
+        }
 
-      # maximum probability assigning to the treatment group is 0.8
-      if(prob_trt > max_prob){
-        prob_trt <- max_prob
-      }
+        # if the alternative is greater, use proportion to set randomization ratio
+        if(alternative == "greater"){
+          prob_trt <- (y_trt + 1) / (N_trt + 2) /
+            ((y_trt + 1) / (N_trt + 2) + (y_ctr + 1) / (N_ctr + 2))
+        }
+        # if the alternative is greater, use 1 - proportion to set randomization ratio
+        else{
+          prob_trt <- (1 - (y_trt + 1) / (N_trt + 2)) /
+            (1 - (y_trt + 1) / (N_trt + 2) + (1 - (y_ctr + 1) / (N_ctr + 2)))
+        }
 
-      # maximum probability assigning to the control group is 0.8
-      else if(prob_trt < (1 - max_prob)){
-        prob_trt <- 1 - max_prob
+        # maximum probability assigning to the treatment group is 0.8
+        if(prob_trt > max_prob){
+          prob_trt <- max_prob
+        }
+
+        # maximum probability assigning to the control group is 0.8
+        else if(prob_trt < (1 - max_prob)){
+          prob_trt <- 1 - max_prob
+        }
       }
 
       # storing info of prob_trt
@@ -229,22 +214,14 @@ binomialfreq <- function(
       # generate data frame treatment assignment based on sampling and
       # alternative hypothesis. leave the outcome variable empty.
       data <- data.frame(
-        treatment =
-          if(replace == TRUE){
-            sample(0:1, replace = T, group[i], prob = c(1 - prob_trt, prob_trt))
-          }
-        else{
-            sampling <- rep(c(0, 1), round(c(group[i] * (1 - prob_trt) - 0.0001,
-                                           group[i] * prob_trt + 0.0001)))
-            sample(sampling, length(sampling))
-        },
-        outcome = rep(NA, group[i]))
+        treatment = sample(x = 0:1, size = 1, prob = c(1 - prob_trt, prob_trt)),
+        outcome = rep(NA, 1))
 
       # fill in the outcome variable based on the treatment assignement and proportion
       # of event in respective arm
       data$outcome <- rbinom(nrow(data), 1, prob = data$treatment * p_treatment +
                                (1 - data$treatment) * p_control +
-                               drift_p[((1:nrow(data)) + nrow(data_total))])
+                               drift_p[i])
 
       # bind the data with previous block if available
       data_total <- rbind(data_total, data)
@@ -290,20 +267,15 @@ binomialfreq <- function(
                                                 correct = correct)$statistic))
       }
 
-      if(N_total / block_number > min_patient_earlystop){
-        bound_index <- i
-      }
-      else{
-        bound_index <- i - min_patient_earlystop / (N_total / block_number)
-      }
 
       # if we allow early stopping and the
       # the test_statistics exceed the lan-demets bound, quit the loop
-      if(early_stop & (nrow(data_total) > min_patient_earlystop) & (nrow(data_total) < N_total)){
-        if(test_stat > bounds[bound_index]){
-          index               <- i
-          early_stopping[k]   <- 1
-          randomization[k, (i + 1):block_number] <- 0
+      if(early_stop & (i >= min_patient_earlystop) & (i < N_total)){
+        if(test_stat > bounds[i - min_patient_earlystop + 1]){
+          index                                  <- i
+          early_stopping[k]                      <- 1
+          time                                   <- time[1:i]
+          randomization[k, (i + 1):N_total]      <- 0
           break
         }
       }
@@ -312,11 +284,11 @@ binomialfreq <- function(
 
     # adding the time factor to the data using group function
     data_total <- data_total %>%
-      mutate(time = factor(rep(1:index, group[1:index])))
+      mutate(time = factor(time))
 
     # summarizing the data by treatment group
     ctrl_prop <- mean(as.numeric(as.character(data_total$outcome[data_total$treatment == 0])))
-    trt_prop <- mean(as.numeric(as.character(data_total$outcome[data_total$treatment == 1])))
+    trt_prop  <- mean(as.numeric(as.character(data_total$outcome[data_total$treatment == 1])))
 
     # estimating prop_difference
     prop_diff <- prop_strata(treatment = data_total$treatment,
@@ -337,8 +309,13 @@ binomialfreq <- function(
     }
     # compute mantelhaen.test for number of block > 1.
     else{
-      p.val <- mantelhaen.test(table(data_total), alternative = alternative,
-                               correct = correct)$p.val
+      if(any(table(data_total$time) == 1)){
+        remove          <- as.numeric(which(table(data_total$time) == 1))
+        data_total      <- data_total[!(data_total$time == remove), ]
+        data_total$time <- droplevels(data_total$time)
+      }
+      p.val             <- mantelhaen.test(table(data_total), alternative = alternative,
+                                           correct = correct)$p.val
     }
 
     # compute the sample size for control, treatment and proportion for
@@ -360,8 +337,6 @@ binomialfreq <- function(
   #return all the output in a list
   output <- list(
     power                 = power / simulation,
-    p_control_estimate    = p_control_estimate ,
-    p_treatment_estimate  = p_treatment_estimate,
     prop_diff_estimate    = prop_diff_estimate,
     N_enrolled            = sample_size,
     N_control             = N_control,

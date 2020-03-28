@@ -6,9 +6,9 @@
 \usage{
 binomialfreq(p_control, p_treatment, N_total, block_number = 4,
   drift = 0, simulation = 10000, conf_int = 0.95,
-  alternative = "greater", correct = FALSE, replace = TRUE,
-  early_stop = FALSE, size_equal_randomization = 20,
-  min_patient_earlystop = 20, max_prob = 0.8)
+  alternative = "greater", correct = FALSE, early_stop = FALSE,
+  size_equal_randomization = 20, min_patient_earlystop = 20,
+  max_prob = 0.8)
 }
 \arguments{
 \item{p_control}{scalar. Proportion of events under the control arm.}
@@ -36,11 +36,6 @@ must be one of "less" or "greater" (default).}
 when computing the test statistic: one half is subtracted from all |O - E|
 differences; however, the correction will not be bigger than the differences themselves.}
 
-\item{replace}{logical. should sampling be with replacement? If replace is set to
-FALSE (default), the 0 for control, 1 for treatment is replicated to the closest
-integer and this vector is sampled with no replacement. If replace is set to TRUE,
-the sampling is done based on randomization ratio provided with replacement.}
-
 \item{early_stop}{logical. A logical indicating whether the trials are stopped early
 for success or futility.}
 
@@ -59,10 +54,6 @@ a list with details on the simulation.
   \item{\code{power}}{
     scalar. The power of the trial, ie. the proportion of success over the
     number of simulation ran.}
-  \item{\code{p_control_estimate}}{
-    scalar. The estimated proportion of events under the control group.}
-  \item{\code{p_treatment_estimate}}{
-    scalar. The estimated proportion of events under the treatment group.}
   \item{\code{N_enrolled}}{
     vector. The number of patients enrolled in the trial (sum of control
     and experimental group for each simulation. )}
@@ -82,7 +73,7 @@ Simulation for binomial counts for block design for
 }
 \examples{
 binomialfreq(p_control = 0.7, p_treatment = 0.65, N_total = 200,
-            block_number = 2, simulation = 100)
+            block_number = 2, simulation = 5)
 binomialfreq(p_control = 0.5, p_treatment = 0.40, N_total = 200,
-            block_number = 2, simulation = 100, drift = -0.15)
+            block_number = 2, simulation = 5, drift = -0.15)
 }

@@ -46,7 +46,7 @@
 #' @export binomialbayes
 #'
 #' @examples
-#' binomialbayes(p_control = 0.20, p_treatment = 0.30, N_total = 100, simulation = 10)
+#' binomialbayes(p_control = 0.20, p_treatment = 0.30, N_total = 100, simulation = 5)
 #' binomialbayes(p_control = 0.50, p_treatment = 0.30, N_total = 100, simulation = 5)
 #'
 
@@ -201,7 +201,7 @@ binomialbayes <- function(
 
       randomization[k, i] <- rr
 
-      # creating the dataset for each block
+      # creating the dataset for each patient
       data <- data.frame(
         treatment = sample(0:1, size = 1, replace = T, prob = c(1 - rr, rr)),
         outcome   = rep(NA, 1))
@@ -209,7 +209,7 @@ binomialbayes <- function(
       # adding the outcome with time trends (linear time trend)
       data$outcome <- rbinom(nrow(data), 1, prob = data$treatment * p_treatment +
                                (1 - data$treatment) * p_control +
-                               drift_p[((1:nrow(data)) + nrow(data_total))])
+                               drift_p[i])
 
       # joining the dataset using rbind
       data_total <- rbind(data_total, data)
@@ -240,7 +240,7 @@ binomialbayes <- function(
       }
 
       # check for early stopping for success
-      if(int_analysis > early_success_prob & nrow(data_total) > min_patient_earlystop){
+      if(int_analysis > early_success_prob & nrow(data_total) >= min_patient_earlystop){
         time         <- time[1:i]
         stop_success <- 1
         if(i < N_total){
@@ -250,7 +250,7 @@ binomialbayes <- function(
       }
 
       # check for early stopping for futility
-      if(int_analysis < futility_prob & nrow(data_total) > min_patient_earlystop){
+      if(int_analysis < futility_prob & nrow(data_total) >= min_patient_earlystop){
         time          <- time[1:i]
         stop_futility <- 1
         if(i < N_total){

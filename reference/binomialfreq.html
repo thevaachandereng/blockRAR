@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -38,7 +42,6 @@
 <meta property="og:title" content="Block Design for Response-Adaptive Randomization for Binomial Data — binomialfreq" />
 <meta property="og:description" content="Simulation for binomial counts for block design for
    response-adaptive randomization with time as a confounding" />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -56,7 +59,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -91,7 +94,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/thevaachandereng/blockRAR">
+  <a href="https://github.com/thevaachandereng/blockRAR/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -121,9 +124,9 @@
 
     <pre class="usage"><span class='fu'>binomialfreq</span>(<span class='no'>p_control</span>, <span class='no'>p_treatment</span>, <span class='no'>N_total</span>, <span class='kw'>block_number</span> <span class='kw'>=</span> <span class='fl'>4</span>,
   <span class='kw'>drift</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>conf_int</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"greater"</span>, <span class='kw'>correct</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>early_stop</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>size_equal_randomization</span> <span class='kw'>=</span> <span class='fl'>20</span>,
-  <span class='kw'>min_patient_earlystop</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>max_prob</span> <span class='kw'>=</span> <span class='fl'>0.8</span>)</pre>
+  <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"greater"</span>, <span class='kw'>correct</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>early_stop</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>size_equal_randomization</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>min_patient_earlystop</span> <span class='kw'>=</span> <span class='fl'>20</span>,
+  <span class='kw'>max_prob</span> <span class='kw'>=</span> <span class='fl'>0.8</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -172,13 +175,6 @@ when computing the test statistic: one half is subtracted from all |O - E|
 differences; however, the correction will not be bigger than the differences themselves.</p></td>
     </tr>
     <tr>
-      <th>replace</th>
-      <td><p>logical. should sampling be with replacement? If replace is set to
-FALSE (default), the 0 for control, 1 for treatment is replicated to the closest
-integer and this vector is sampled with no replacement. If replace is set to TRUE,
-the sampling is done based on randomization ratio provided with replacement.</p></td>
-    </tr>
-    <tr>
       <th>early_stop</th>
       <td><p>logical. A logical indicating whether the trials are stopped early
 for success or futility.</p></td>
@@ -202,11 +198,9 @@ group is 0.8.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a list with details on the simulation.</p><dl class='dl-horizontal'>
+    <p>a list with details on the simulation.</p><dl'>
   <dt><code>power</code></dt><dd><p>scalar. The power of the trial, ie. the proportion of success over the
     number of simulation ran.</p></dd>
-  <dt><code>p_control_estimate</code></dt><dd><p>scalar. The estimated proportion of events under the control group.</p></dd>
-  <dt><code>p_treatment_estimate</code></dt><dd><p>scalar. The estimated proportion of events under the treatment group.</p></dd>
   <dt><code>N_enrolled</code></dt><dd><p>vector. The number of patients enrolled in the trial (sum of control
     and experimental group for each simulation. )</p></dd>
   <dt><code>N_control</code></dt><dd><p>vector. The number of patients enrolled in the control group for
@@ -220,397 +214,327 @@ group is 0.8.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>binomialfreq</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.7</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.65</span>, <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>200</span>,
-            <span class='kw'>block_number</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; $power
-#&gt; [1] 0.02
-#&gt; 
-#&gt; $p_control_estimate
-#&gt;   [1] 0.6761905 0.6886792 0.7706422 0.7211538 0.6428571 0.6132075 0.6593407
-#&gt;   [8] 0.7280702 0.7300000 0.6344086 0.7682927 0.7613636 0.6804124 0.7352941
-#&gt;  [15] 0.6739130 0.6702128 0.6666667 0.6555556 0.6700000 0.7173913 0.6836735
-#&gt;  [22] 0.6250000 0.6538462 0.7045455 0.6500000 0.6521739 0.7500000 0.7500000
-#&gt;  [29] 0.6880734 0.6914894 0.6972477 0.6969697 0.7790698 0.6574074 0.7327586
-#&gt;  [36] 0.6120690 0.7282609 0.7000000 0.7128713 0.7087379 0.6730769 0.7959184
-#&gt;  [43] 0.6810345 0.7169811 0.7572816 0.6630435 0.6213592 0.6728972 0.6701031
-#&gt;  [50] 0.6666667 0.7244898 0.6597938 0.7450980 0.8058252 0.7033898 0.6588235
-#&gt;  [57] 0.7653061 0.7040816 0.7070707 0.6605505 0.6960784 0.6761905 0.7234043
-#&gt;  [64] 0.7083333 0.8269231 0.7102804 0.6813187 0.6185567 0.7100000 0.6396396
-#&gt;  [71] 0.7169811 0.6881720 0.7227723 0.6914894 0.7524752 0.7876106 0.6300000
-#&gt;  [78] 0.6521739 0.7428571 0.6435644 0.7064220 0.6886792 0.7500000 0.7027027
-#&gt;  [85] 0.7685185 0.7128713 0.6697248 0.7142857 0.6195652 0.6725664 0.7475728
-#&gt;  [92] 0.6774194 0.6800000 0.7448980 0.5876289 0.7700000 0.7288136 0.6900000
-#&gt;  [99] 0.6436782 0.6915888
-#&gt; 
-#&gt; $p_treatment_estimate
-#&gt;   [1] 0.6631579 0.7234043 0.6153846 0.6041667 0.7352941 0.6595745 0.7247706
-#&gt;   [8] 0.6860465 0.6800000 0.7289720 0.6610169 0.6517857 0.6990291 0.6530612
-#&gt;  [15] 0.5833333 0.6132075 0.5978261 0.6363636 0.6600000 0.6574074 0.6862745
-#&gt;  [22] 0.6458333 0.7708333 0.6250000 0.6800000 0.6388889 0.6111111 0.6442308
-#&gt;  [29] 0.6153846 0.7075472 0.6153846 0.6831683 0.6666667 0.6521739 0.5952381
-#&gt;  [36] 0.6071429 0.6666667 0.5875000 0.6363636 0.5979381 0.6979167 0.7647059
-#&gt;  [43] 0.5595238 0.6702128 0.6185567 0.7222222 0.6701031 0.6559140 0.7184466
-#&gt;  [50] 0.6631579 0.6176471 0.6504854 0.6326531 0.7216495 0.6219512 0.6608696
-#&gt;  [57] 0.7058824 0.7156863 0.6930693 0.7362637 0.7244898 0.6105263 0.7075472
-#&gt;  [64] 0.6538462 0.6875000 0.6559140 0.6513761 0.7087379 0.5700000 0.6067416
-#&gt;  [71] 0.6595745 0.7196262 0.6767677 0.6698113 0.6767677 0.6896552 0.6500000
-#&gt;  [78] 0.6481481 0.7157895 0.6565657 0.6813187 0.7340426 0.6500000 0.6179775
-#&gt;  [85] 0.6630435 0.6464646 0.6153846 0.6526316 0.7500000 0.5632184 0.5876289
-#&gt;  [92] 0.7102804 0.6100000 0.6176471 0.7184466 0.7100000 0.6585366 0.6600000
-#&gt;  [99] 0.6371681 0.6881720
-#&gt; 
-#&gt; $prop_diff_estimate
-#&gt;   [1] -0.023862941  0.034012220 -0.162024802 -0.114365971  0.092473979
-#&gt;   [6]  0.041010101  0.073175662 -0.045361667 -0.052737520  0.095738235
-#&gt;  [11] -0.103828548 -0.103869654  0.021638950 -0.081927711 -0.101701783
-#&gt;  [16] -0.057005219 -0.074623831 -0.017784964 -0.016233766 -0.058870968
-#&gt;  [21]  0.003202562  0.019839679  0.100328947 -0.079837067  0.030612245
-#&gt;  [26] -0.013894482 -0.135217568 -0.093750000 -0.072595281  0.016220600
-#&gt;  [31] -0.081266384 -0.016683417 -0.105749487 -0.005233494 -0.142917369
-#&gt;  [36] -0.003289474 -0.048455353 -0.112500000 -0.077587940 -0.111200160
-#&gt;  [41]  0.019354839 -0.032032854 -0.121510673 -0.046987952 -0.129633422
-#&gt;  [46]  0.059403947  0.048848849 -0.017529720  0.040565086 -0.007052186
-#&gt;  [51] -0.108979592 -0.008308004 -0.142142559 -0.082139253 -0.090643275
-#&gt;  [56] -0.005060089 -0.059647718  0.012409928 -0.013202641  0.076225045
-#&gt;  [61]  0.036807279 -0.066573090 -0.020000000 -0.054487179 -0.142054575
-#&gt;  [66] -0.051678535 -0.041468950  0.090690691 -0.140000000 -0.026653103
-#&gt;  [71] -0.057406664  0.035984461 -0.047009402 -0.019277108 -0.069207003
-#&gt;  [76] -0.098067141  0.018518519 -0.004032258 -0.025167445  0.007934893
-#&gt;  [81] -0.022565562  0.047389558 -0.098557692 -0.086903054 -0.108870968
-#&gt;  [86] -0.072588731 -0.055051422 -0.062010837  0.133870968 -0.116593796
-#&gt;  [91] -0.159559560  0.030175015 -0.070228091 -0.126901521  0.132132132
-#&gt;  [96] -0.058823529 -0.069294606 -0.028611445 -0.010836230  0.005673759
-#&gt; 
-#&gt; $N_enrolled
-#&gt;   [1] 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200
-#&gt;  [19] 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200
-#&gt;  [37] 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200
-#&gt;  [55] 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200
-#&gt;  [73] 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200
-#&gt;  [91] 200 200 200 200 200 200 200 200 200 200
-#&gt; 
-#&gt; $N_control
-#&gt;   [1] 105 106 109 104  98 106  91 114 100  93  82  88  97 102  92  94 108  90
-#&gt;  [19] 100  92  98 104 104  88 100  92  92  96 109  94 109  99  86 108 116 116
-#&gt;  [37]  92 120 101 103 104  98 116 106 103  92 103 107  97 105  98  97 102 103
-#&gt;  [55] 118  85  98  98  99 109 102 105  94  96 104 107  91  97 100 111 106  93
-#&gt;  [73] 101  94 101 113 100  92 105 101 109 106 100 111 108 101 109 105  92 113
-#&gt;  [91] 103  93 100  98  97 100 118 100  87 107
-#&gt; 
-#&gt; $N_treatment
-#&gt;   [1]  95  94  91  96 102  94 109  86 100 107 118 112 103  98 108 106  92 110
-#&gt;  [19] 100 108 102  96  96 112 100 108 108 104  91 106  91 101 114  92  84  84
-#&gt;  [37] 108  80  99  97  96 102  84  94  97 108  97  93 103  95 102 103  98  97
-#&gt;  [55]  82 115 102 102 101  91  98  95 106 104  96  93 109 103 100  89  94 107
-#&gt;  [73]  99 106  99  87 100 108  95  99  91  94 100  89  92  99  91  95 108  87
-#&gt;  [91]  97 107 100 102 103 100  82 100 113  93
-#&gt; 
-#&gt; $early_stop
-#&gt;   [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-#&gt;  [38] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-#&gt;  [75] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-#&gt; 
-#&gt; $randomization_ratio
-#&gt;        [,1]      [,2]
-#&gt;   [1,]  0.5 0.4683544
-#&gt;   [2,]  0.5 0.5175151
-#&gt;   [3,]  0.5 0.4533333
-#&gt;   [4,]  0.5 0.4307692
-#&gt;   [5,]  0.5 0.5443658
-#&gt;   [6,]  0.5 0.5191703
-#&gt;   [7,]  0.5 0.5506608
-#&gt;   [8,]  0.5 0.5070221
-#&gt;   [9,]  0.5 0.4750000
-#&gt;  [10,]  0.5 0.5774648
-#&gt;  [11,]  0.5 0.4985770
-#&gt;  [12,]  0.5 0.4801646
-#&gt;  [13,]  0.5 0.5131579
-#&gt;  [14,]  0.5 0.4597080
-#&gt;  [15,]  0.5 0.4719472
-#&gt;  [16,]  0.5 0.5014620
-#&gt;  [17,]  0.5 0.4317156
-#&gt;  [18,]  0.5 0.5188470
-#&gt;  [19,]  0.5 0.4773348
-#&gt;  [20,]  0.5 0.4929498
-#&gt;  [21,]  0.5 0.5138889
-#&gt;  [22,]  0.5 0.5209288
-#&gt;  [23,]  0.5 0.5297584
-#&gt;  [24,]  0.5 0.5005675
-#&gt;  [25,]  0.5 0.4382698
-#&gt;  [26,]  0.5 0.4812287
-#&gt;  [27,]  0.5 0.4650687
-#&gt;  [28,]  0.5 0.4551845
-#&gt;  [29,]  0.5 0.5039932
-#&gt;  [30,]  0.5 0.5065789
-#&gt;  [31,]  0.5 0.4701677
-#&gt;  [32,]  0.5 0.4633530
-#&gt;  [33,]  0.5 0.4711538
-#&gt;  [34,]  0.5 0.4686825
-#&gt;  [35,]  0.5 0.4000000
-#&gt;  [36,]  0.5 0.4836434
-#&gt;  [37,]  0.5 0.5209037
-#&gt;  [38,]  0.5 0.4460432
-#&gt;  [39,]  0.5 0.4854155
-#&gt;  [40,]  0.5 0.4558824
-#&gt;  [41,]  0.5 0.5205559
-#&gt;  [42,]  0.5 0.5009916
-#&gt;  [43,]  0.5 0.3997462
-#&gt;  [44,]  0.5 0.4605263
-#&gt;  [45,]  0.5 0.4645124
-#&gt;  [46,]  0.5 0.5268817
-#&gt;  [47,]  0.5 0.4488902
-#&gt;  [48,]  0.5 0.4988532
-#&gt;  [49,]  0.5 0.5658760
-#&gt;  [50,]  0.5 0.4974262
-#&gt;  [51,]  0.5 0.4733862
-#&gt;  [52,]  0.5 0.5384615
-#&gt;  [53,]  0.5 0.3946911
-#&gt;  [54,]  0.5 0.4389152
-#&gt;  [55,]  0.5 0.4765957
-#&gt;  [56,]  0.5 0.5036496
-#&gt;  [57,]  0.5 0.5335366
-#&gt;  [58,]  0.5 0.5200000
-#&gt;  [59,]  0.5 0.4903846
-#&gt;  [60,]  0.5 0.4802528
-#&gt;  [61,]  0.5 0.4578313
-#&gt;  [62,]  0.5 0.4981009
-#&gt;  [63,]  0.5 0.5118925
-#&gt;  [64,]  0.5 0.5181347
-#&gt;  [65,]  0.5 0.4691358
-#&gt;  [66,]  0.5 0.5033003
-#&gt;  [67,]  0.5 0.4809843
-#&gt;  [68,]  0.5 0.5397558
-#&gt;  [69,]  0.5 0.4428571
-#&gt;  [70,]  0.5 0.5070221
-#&gt;  [71,]  0.5 0.4936089
-#&gt;  [72,]  0.5 0.5288462
-#&gt;  [73,]  0.5 0.4722621
-#&gt;  [74,]  0.5 0.4927536
-#&gt;  [75,]  0.5 0.4438386
-#&gt;  [76,]  0.5 0.4860335
-#&gt;  [77,]  0.5 0.4988453
-#&gt;  [78,]  0.5 0.4882252
-#&gt;  [79,]  0.5 0.4707113
-#&gt;  [80,]  0.5 0.5445073
-#&gt;  [81,]  0.5 0.4832013
-#&gt;  [82,]  0.5 0.4897959
-#&gt;  [83,]  0.5 0.4807692
-#&gt;  [84,]  0.5 0.4202899
-#&gt;  [85,]  0.5 0.4269536
-#&gt;  [86,]  0.5 0.4818731
-#&gt;  [87,]  0.5 0.4521158
-#&gt;  [88,]  0.5 0.4666667
-#&gt;  [89,]  0.5 0.5544095
-#&gt;  [90,]  0.5 0.4299419
-#&gt;  [91,]  0.5 0.4981009
-#&gt;  [92,]  0.5 0.5179395
-#&gt;  [93,]  0.5 0.5096154
-#&gt;  [94,]  0.5 0.4303165
-#&gt;  [95,]  0.5 0.4903846
-#&gt;  [96,]  0.5 0.4972332
-#&gt;  [97,]  0.5 0.4695260
-#&gt;  [98,]  0.5 0.5055394
-#&gt;  [99,]  0.5 0.4979757
-#&gt; [100,]  0.5 0.4752475
-#&gt; </div><div class='input'><span class='fu'>binomialfreq</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.40</span>, <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>200</span>,
-            <span class='kw'>block_number</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>drift</span> <span class='kw'>=</span> -<span class='fl'>0.15</span>)</div><div class='output co'>#&gt; $power
+            <span class='kw'>block_number</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; $power
 #&gt; [1] 0
 #&gt; 
-#&gt; $p_control_estimate
-#&gt;   [1] 0.4273504 0.3473684 0.4234234 0.4368932 0.5098039 0.4086957 0.3818182
-#&gt;   [8] 0.4205607 0.4642857 0.4210526 0.4056604 0.3684211 0.4479167 0.4368932
-#&gt;  [15] 0.4913793 0.4672897 0.4509804 0.3577982 0.4285714 0.3518519 0.3867925
-#&gt;  [22] 0.4285714 0.4259259 0.4414414 0.3058824 0.3469388 0.4553571 0.4554455
-#&gt;  [29] 0.4017857 0.3636364 0.4141414 0.3263158 0.4961832 0.4193548 0.4310345
-#&gt;  [36] 0.4181818 0.4038462 0.4857143 0.5283019 0.4361702 0.4369748 0.3763441
-#&gt;  [43] 0.3888889 0.3867925 0.3444444 0.3421053 0.3106796 0.3796296 0.3600000
-#&gt;  [50] 0.4150943 0.4181818 0.3775510 0.4259259 0.3551402 0.3333333 0.4476190
-#&gt;  [57] 0.4210526 0.3548387 0.4090909 0.4752475 0.4444444 0.4695652 0.4107143
-#&gt;  [64] 0.4150943 0.5042017 0.3908046 0.4905660 0.4653465 0.3963964 0.3853211
-#&gt;  [71] 0.3513514 0.5000000 0.4845361 0.4806202 0.4482759 0.4166667 0.4174757
-#&gt;  [78] 0.4380952 0.4387755 0.4838710 0.3333333 0.4117647 0.4444444 0.3863636
-#&gt;  [85] 0.4070796 0.4242424 0.3678161 0.4687500 0.4824561 0.4326923 0.4019608
-#&gt;  [92] 0.3838384 0.4653465 0.4455446 0.3486239 0.4183673 0.4329897 0.3760684
-#&gt;  [99] 0.4247788 0.3939394
-#&gt; 
-#&gt; $p_treatment_estimate
-#&gt;   [1] 0.2891566 0.3523810 0.2921348 0.3505155 0.3673469 0.2823529 0.3888889
-#&gt;   [8] 0.3440860 0.2386364 0.4380952 0.3510638 0.3523810 0.4134615 0.2886598
-#&gt;  [15] 0.2738095 0.3225806 0.3571429 0.3076923 0.3068182 0.2934783 0.3404255
-#&gt;  [22] 0.2736842 0.2826087 0.4943820 0.3304348 0.3333333 0.3409091 0.3838384
-#&gt;  [29] 0.2954545 0.3214286 0.3267327 0.3047619 0.2898551 0.3364486 0.3452381
-#&gt;  [36] 0.3222222 0.3437500 0.4421053 0.3723404 0.3679245 0.3703704 0.3738318
-#&gt;  [43] 0.2909091 0.2553191 0.3636364 0.3139535 0.3505155 0.3152174 0.4000000
-#&gt;  [50] 0.2872340 0.3333333 0.3235294 0.2934783 0.3440860 0.3163265 0.3684211
-#&gt;  [57] 0.2952381 0.2897196 0.3111111 0.3333333 0.4239130 0.3176471 0.2954545
-#&gt;  [64] 0.3404255 0.3456790 0.3451327 0.3829787 0.3131313 0.3258427 0.2967033
-#&gt;  [71] 0.3033708 0.3444444 0.3398058 0.2816901 0.3452381 0.3369565 0.3711340
-#&gt;  [78] 0.3684211 0.3235294 0.3026316 0.3368421 0.3061224 0.2771084 0.3482143
-#&gt;  [85] 0.2643678 0.3465347 0.3451327 0.4134615 0.3837209 0.3333333 0.3673469
-#&gt;  [92] 0.4059406 0.2828283 0.3030303 0.3406593 0.3627451 0.3009709 0.3012048
-#&gt;  [99] 0.3678161 0.2970297
-#&gt; 
 #&gt; $prop_diff_estimate
-#&gt;   [1] -0.154121864  0.018469657 -0.139009737 -0.079058540 -0.162448980
-#&gt;   [6] -0.135568206  0.009296686 -0.080193431 -0.235207721  0.011037528
-#&gt;  [11] -0.054794521 -0.019064820 -0.045967742 -0.157618567 -0.240339703
-#&gt;  [16] -0.146490336 -0.094475580 -0.058156028 -0.137149918 -0.057390254
-#&gt;  [21] -0.046366921 -0.156783920 -0.147474747  0.049645390  0.024554942
-#&gt;  [26] -0.008835341 -0.135333613 -0.057672918 -0.101307190 -0.029411765
-#&gt;  [31] -0.090490490 -0.024282561 -0.234514286 -0.081472541 -0.083047945
-#&gt;  [36] -0.100000000 -0.059118236 -0.037477332 -0.155601660 -0.065060241
-#&gt;  [41] -0.065420561  0.004029821 -0.099029911 -0.131515152  0.035465355
-#&gt;  [46] -0.035110533  0.047426842 -0.060483871  0.033653846 -0.132197891
-#&gt;  [51] -0.092631579 -0.057245797 -0.161256762 -0.012261307 -0.013061224
-#&gt;  [56] -0.078178521 -0.126831226 -0.076752171 -0.100161878 -0.146546547
-#&gt;  [61] -0.020531401 -0.154822855 -0.112870483 -0.070303030 -0.164097149
-#&gt;  [66] -0.037743590 -0.098307816 -0.151030206 -0.069447257 -0.087517645
-#&gt;  [71] -0.058189217 -0.162206002 -0.169005236 -0.225806452 -0.105143094
-#&gt;  [76] -0.076612903 -0.052906860 -0.082809012 -0.117835671 -0.190517241
-#&gt;  [81]  0.001804692 -0.105642257 -0.192085561 -0.041869919 -0.139482794
-#&gt;  [86] -0.076615323 -0.023194303 -0.055288462 -0.101348590 -0.101375961
-#&gt;  [91] -0.031726908  0.021604321 -0.188546078 -0.162512873 -0.015564989
-#&gt;  [96] -0.051703407 -0.137638749 -0.074562307 -0.054571370 -0.102238355
+#&gt; [1] -0.06368260  0.04381976 -0.01681864 -0.06633704 -0.02154652
 #&gt; 
 #&gt; $N_enrolled
-#&gt;   [1] 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200
-#&gt;  [19] 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200
-#&gt;  [37] 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200
-#&gt;  [55] 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200
-#&gt;  [73] 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200
-#&gt;  [91] 200 200 200 200 200 200 200 200 200 200
+#&gt; [1] 200 200 200 200 200
 #&gt; 
 #&gt; $N_control
-#&gt;   [1] 117  95 111 103 102 115 110 107 112  95 106  95  96 103 116 107 102 109
-#&gt;  [19] 112 108 106 105 108 111  85  98 112 101 112  88  99  95 131  93 116 110
-#&gt;  [37] 104 105 106  94 119  93  90 106  90 114 103 108 100 106 110  98 108 107
-#&gt;  [55] 102 105  95  93 110 101 108 115 112 106 119  87 106 101 111 109 111 110
-#&gt;  [73]  97 129 116 108 103 105  98 124 105 102 117  88 113  99  87  96 114 104
-#&gt;  [91] 102  99 101 101 109  98  97 117 113  99
+#&gt; [1] 113  82 103 116 102
 #&gt; 
 #&gt; $N_treatment
-#&gt;   [1]  83 105  89  97  98  85  90  93  88 105  94 105 104  97  84  93  98  91
-#&gt;  [19]  88  92  94  95  92  89 115 102  88  99  88 112 101 105  69 107  84  90
-#&gt;  [37]  96  95  94 106  81 107 110  94 110  86  97  92 100  94  90 102  92  93
-#&gt;  [55]  98  95 105 107  90  99  92  85  88  94  81 113  94  99  89  91  89  90
-#&gt;  [73] 103  71  84  92  97  95 102  76  95  98  83 112  87 101 113 104  86  96
-#&gt;  [91]  98 101  99  99  91 102 103  83  87 101
+#&gt; [1]  87 118  97  84  98
 #&gt; 
 #&gt; $early_stop
-#&gt;   [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-#&gt;  [38] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-#&gt;  [75] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+#&gt; [1] 0 0 0 0 0
 #&gt; 
 #&gt; $randomization_ratio
-#&gt;        [,1]      [,2]
-#&gt;   [1,]  0.5 0.3340837
-#&gt;   [2,]  0.5 0.5864060
-#&gt;   [3,]  0.5 0.4063098
-#&gt;   [4,]  0.5 0.4294684
-#&gt;   [5,]  0.5 0.4423077
-#&gt;   [6,]  0.5 0.3501717
-#&gt;   [7,]  0.5 0.4701365
-#&gt;   [8,]  0.5 0.4640981
-#&gt;   [9,]  0.5 0.3826257
-#&gt;  [10,]  0.5 0.5254237
-#&gt;  [11,]  0.5 0.5250000
-#&gt;  [12,]  0.5 0.4964029
-#&gt;  [13,]  0.5 0.4613670
-#&gt;  [14,]  0.5 0.4135940
-#&gt;  [15,]  0.5 0.3821815
-#&gt;  [16,]  0.5 0.3863636
-#&gt;  [17,]  0.5 0.4545455
-#&gt;  [18,]  0.5 0.4485190
-#&gt;  [19,]  0.5 0.3555556
-#&gt;  [20,]  0.5 0.4024390
-#&gt;  [21,]  0.5 0.4705088
-#&gt;  [22,]  0.5 0.4102564
-#&gt;  [23,]  0.5 0.4485190
-#&gt;  [24,]  0.5 0.5014327
-#&gt;  [25,]  0.5 0.5116279
-#&gt;  [26,]  0.5 0.5192308
-#&gt;  [27,]  0.5 0.3975659
-#&gt;  [28,]  0.5 0.4902767
-#&gt;  [29,]  0.5 0.4602273
-#&gt;  [30,]  0.5 0.5035026
-#&gt;  [31,]  0.5 0.5035026
-#&gt;  [32,]  0.5 0.4878049
-#&gt;  [33,]  0.5 0.3597561
-#&gt;  [34,]  0.5 0.4807692
-#&gt;  [35,]  0.5 0.3816794
-#&gt;  [36,]  0.5 0.4390244
-#&gt;  [37,]  0.5 0.5050505
-#&gt;  [38,]  0.5 0.5106383
-#&gt;  [39,]  0.5 0.4209651
-#&gt;  [40,]  0.5 0.4409509
-#&gt;  [41,]  0.5 0.4344828
-#&gt;  [42,]  0.5 0.5121339
-#&gt;  [43,]  0.5 0.5216495
-#&gt;  [44,]  0.5 0.4024803
-#&gt;  [45,]  0.5 0.5775937
-#&gt;  [46,]  0.5 0.4245484
-#&gt;  [47,]  0.5 0.5450049
-#&gt;  [48,]  0.5 0.4565217
-#&gt;  [49,]  0.5 0.5434783
-#&gt;  [50,]  0.5 0.3917728
-#&gt;  [51,]  0.5 0.4398690
-#&gt;  [52,]  0.5 0.4918734
-#&gt;  [53,]  0.5 0.3760000
-#&gt;  [54,]  0.5 0.4705088
-#&gt;  [55,]  0.5 0.5217391
-#&gt;  [56,]  0.5 0.4660714
-#&gt;  [57,]  0.5 0.3984375
-#&gt;  [58,]  0.5 0.4800557
-#&gt;  [59,]  0.5 0.3930443
-#&gt;  [60,]  0.5 0.4704074
-#&gt;  [61,]  0.5 0.5078864
-#&gt;  [62,]  0.5 0.4390244
-#&gt;  [63,]  0.5 0.4522092
-#&gt;  [64,]  0.5 0.4230171
-#&gt;  [65,]  0.5 0.3887734
-#&gt;  [66,]  0.5 0.4923903
-#&gt;  [67,]  0.5 0.4643377
-#&gt;  [68,]  0.5 0.3706294
-#&gt;  [69,]  0.5 0.5351494
-#&gt;  [70,]  0.5 0.4025424
-#&gt;  [71,]  0.5 0.3750000
-#&gt;  [72,]  0.5 0.4388545
-#&gt;  [73,]  0.5 0.4152824
-#&gt;  [74,]  0.5 0.3403566
-#&gt;  [75,]  0.5 0.4232684
-#&gt;  [76,]  0.5 0.4425494
-#&gt;  [77,]  0.5 0.4590985
-#&gt;  [78,]  0.5 0.3888889
-#&gt;  [79,]  0.5 0.4365256
-#&gt;  [80,]  0.5 0.3555166
-#&gt;  [81,]  0.5 0.4736842
-#&gt;  [82,]  0.5 0.4857929
-#&gt;  [83,]  0.5 0.3547826
-#&gt;  [84,]  0.5 0.5045872
-#&gt;  [85,]  0.5 0.3793774
-#&gt;  [86,]  0.5 0.5000000
-#&gt;  [87,]  0.5 0.5335968
-#&gt;  [88,]  0.5 0.4600000
-#&gt;  [89,]  0.5 0.3918318
-#&gt;  [90,]  0.5 0.5323571
-#&gt;  [91,]  0.5 0.5035971
-#&gt;  [92,]  0.5 0.5359019
-#&gt;  [93,]  0.5 0.4379562
-#&gt;  [94,]  0.5 0.4230769
-#&gt;  [95,]  0.5 0.4964974
-#&gt;  [96,]  0.5 0.4660804
-#&gt;  [97,]  0.5 0.3597056
-#&gt;  [98,]  0.5 0.4245182
-#&gt;  [99,]  0.5 0.4896907
-#&gt; [100,]  0.5 0.4646565
+#&gt;      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
+#&gt; [1,]  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [2,]  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [3,]  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [4,]  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [5,]  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5   0.5   0.5   0.5   0.5   0.5
+#&gt;      [,15] [,16] [,17] [,18] [,19] [,20] [,21] [,22] [,23] [,24] [,25] [,26]
+#&gt; [1,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [2,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [3,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [4,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [5,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt;      [,27] [,28] [,29] [,30] [,31] [,32] [,33] [,34] [,35] [,36] [,37] [,38]
+#&gt; [1,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [2,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [3,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [4,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [5,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt;      [,39] [,40] [,41] [,42] [,43] [,44] [,45] [,46] [,47] [,48] [,49] [,50]
+#&gt; [1,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [2,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [3,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [4,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [5,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt;      [,51] [,52] [,53] [,54] [,55] [,56] [,57] [,58] [,59] [,60] [,61] [,62]
+#&gt; [1,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [2,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [3,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [4,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [5,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt;      [,63] [,64] [,65] [,66] [,67] [,68] [,69] [,70] [,71] [,72] [,73] [,74]
+#&gt; [1,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [2,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [3,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [4,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [5,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt;      [,75] [,76] [,77] [,78] [,79] [,80] [,81] [,82] [,83] [,84] [,85] [,86]
+#&gt; [1,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [2,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [3,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [4,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [5,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt;      [,87] [,88] [,89] [,90] [,91] [,92] [,93] [,94] [,95] [,96] [,97] [,98]
+#&gt; [1,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [2,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [3,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [4,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [5,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt;      [,99] [,100]    [,101]    [,102]    [,103]    [,104]    [,105]    [,106]
+#&gt; [1,]   0.5    0.5 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135
+#&gt; [2,]   0.5    0.5 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824
+#&gt; [3,]   0.5    0.5 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462
+#&gt; [4,]   0.5    0.5 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824
+#&gt; [5,]   0.5    0.5 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538
+#&gt;         [,107]    [,108]    [,109]    [,110]    [,111]    [,112]    [,113]
+#&gt; [1,] 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135
+#&gt; [2,] 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824
+#&gt; [3,] 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462
+#&gt; [4,] 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824
+#&gt; [5,] 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538
+#&gt;         [,114]    [,115]    [,116]    [,117]    [,118]    [,119]    [,120]
+#&gt; [1,] 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135
+#&gt; [2,] 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824
+#&gt; [3,] 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462
+#&gt; [4,] 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824
+#&gt; [5,] 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538
+#&gt;         [,121]    [,122]    [,123]    [,124]    [,125]    [,126]    [,127]
+#&gt; [1,] 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135
+#&gt; [2,] 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824
+#&gt; [3,] 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462
+#&gt; [4,] 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824
+#&gt; [5,] 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538
+#&gt;         [,128]    [,129]    [,130]    [,131]    [,132]    [,133]    [,134]
+#&gt; [1,] 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135
+#&gt; [2,] 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824
+#&gt; [3,] 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462
+#&gt; [4,] 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824
+#&gt; [5,] 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538
+#&gt;         [,135]    [,136]    [,137]    [,138]    [,139]    [,140]    [,141]
+#&gt; [1,] 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135
+#&gt; [2,] 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824
+#&gt; [3,] 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462
+#&gt; [4,] 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824
+#&gt; [5,] 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538
+#&gt;         [,142]    [,143]    [,144]    [,145]    [,146]    [,147]    [,148]
+#&gt; [1,] 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135
+#&gt; [2,] 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824
+#&gt; [3,] 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462
+#&gt; [4,] 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824
+#&gt; [5,] 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538
+#&gt;         [,149]    [,150]    [,151]    [,152]    [,153]    [,154]    [,155]
+#&gt; [1,] 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135
+#&gt; [2,] 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824
+#&gt; [3,] 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462
+#&gt; [4,] 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824
+#&gt; [5,] 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538
+#&gt;         [,156]    [,157]    [,158]    [,159]    [,160]    [,161]    [,162]
+#&gt; [1,] 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135
+#&gt; [2,] 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824
+#&gt; [3,] 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462
+#&gt; [4,] 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824
+#&gt; [5,] 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538
+#&gt;         [,163]    [,164]    [,165]    [,166]    [,167]    [,168]    [,169]
+#&gt; [1,] 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135
+#&gt; [2,] 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824
+#&gt; [3,] 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462
+#&gt; [4,] 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824
+#&gt; [5,] 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538
+#&gt;         [,170]    [,171]    [,172]    [,173]    [,174]    [,175]    [,176]
+#&gt; [1,] 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135
+#&gt; [2,] 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824
+#&gt; [3,] 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462
+#&gt; [4,] 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824
+#&gt; [5,] 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538
+#&gt;         [,177]    [,178]    [,179]    [,180]    [,181]    [,182]    [,183]
+#&gt; [1,] 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135
+#&gt; [2,] 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824
+#&gt; [3,] 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462
+#&gt; [4,] 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824
+#&gt; [5,] 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538
+#&gt;         [,184]    [,185]    [,186]    [,187]    [,188]    [,189]    [,190]
+#&gt; [1,] 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135
+#&gt; [2,] 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824
+#&gt; [3,] 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462
+#&gt; [4,] 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824
+#&gt; [5,] 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538
+#&gt;         [,191]    [,192]    [,193]    [,194]    [,195]    [,196]    [,197]
+#&gt; [1,] 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135 0.4443135
+#&gt; [2,] 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824 0.5382824
+#&gt; [3,] 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462 0.5001462
+#&gt; [4,] 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824 0.4741824
+#&gt; [5,] 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538 0.4711538
+#&gt;         [,198]    [,199]    [,200]
+#&gt; [1,] 0.4443135 0.4443135 0.4443135
+#&gt; [2,] 0.5382824 0.5382824 0.5382824
+#&gt; [3,] 0.5001462 0.5001462 0.5001462
+#&gt; [4,] 0.4741824 0.4741824 0.4741824
+#&gt; [5,] 0.4711538 0.4711538 0.4711538
+#&gt; </div><div class='input'><span class='fu'>binomialfreq</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.40</span>, <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>200</span>,
+            <span class='kw'>block_number</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>simulation</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>drift</span> <span class='kw'>=</span> -<span class='fl'>0.15</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; $power
+#&gt; [1] 0.2
+#&gt; 
+#&gt; $prop_diff_estimate
+#&gt; [1] -1.112013e-01 -4.444448e-18 -1.645217e-01 -1.632781e-01 -1.983026e-01
+#&gt; 
+#&gt; $N_enrolled
+#&gt; [1] 200 200 200 200 200
+#&gt; 
+#&gt; $N_control
+#&gt; [1] 112 102 100 113 113
+#&gt; 
+#&gt; $N_treatment
+#&gt; [1]  88  98 100  87  87
+#&gt; 
+#&gt; $early_stop
+#&gt; [1] 0 0 0 0 0
+#&gt; 
+#&gt; $randomization_ratio
+#&gt;      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
+#&gt; [1,]  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [2,]  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [3,]  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [4,]  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [5,]  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5   0.5   0.5   0.5   0.5   0.5
+#&gt;      [,15] [,16] [,17] [,18] [,19] [,20] [,21] [,22] [,23] [,24] [,25] [,26]
+#&gt; [1,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [2,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [3,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [4,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [5,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt;      [,27] [,28] [,29] [,30] [,31] [,32] [,33] [,34] [,35] [,36] [,37] [,38]
+#&gt; [1,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [2,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [3,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [4,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [5,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt;      [,39] [,40] [,41] [,42] [,43] [,44] [,45] [,46] [,47] [,48] [,49] [,50]
+#&gt; [1,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [2,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [3,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [4,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [5,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt;      [,51] [,52] [,53] [,54] [,55] [,56] [,57] [,58] [,59] [,60] [,61] [,62]
+#&gt; [1,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [2,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [3,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [4,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [5,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt;      [,63] [,64] [,65] [,66] [,67] [,68] [,69] [,70] [,71] [,72] [,73] [,74]
+#&gt; [1,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [2,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [3,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [4,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [5,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt;      [,75] [,76] [,77] [,78] [,79] [,80] [,81] [,82] [,83] [,84] [,85] [,86]
+#&gt; [1,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [2,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [3,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [4,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [5,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt;      [,87] [,88] [,89] [,90] [,91] [,92] [,93] [,94] [,95] [,96] [,97] [,98]
+#&gt; [1,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [2,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [3,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [4,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt; [5,]   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5   0.5
+#&gt;      [,99] [,100]    [,101]    [,102]    [,103]    [,104]    [,105]    [,106]
+#&gt; [1,]   0.5    0.5 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318
+#&gt; [2,]   0.5    0.5 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308
+#&gt; [3,]   0.5    0.5 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000
+#&gt; [4,]   0.5    0.5 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779
+#&gt; [5,]   0.5    0.5 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211
+#&gt;         [,107]    [,108]    [,109]    [,110]    [,111]    [,112]    [,113]
+#&gt; [1,] 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318
+#&gt; [2,] 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308
+#&gt; [3,] 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000
+#&gt; [4,] 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779
+#&gt; [5,] 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211
+#&gt;         [,114]    [,115]    [,116]    [,117]    [,118]    [,119]    [,120]
+#&gt; [1,] 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318
+#&gt; [2,] 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308
+#&gt; [3,] 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000
+#&gt; [4,] 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779
+#&gt; [5,] 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211
+#&gt;         [,121]    [,122]    [,123]    [,124]    [,125]    [,126]    [,127]
+#&gt; [1,] 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318
+#&gt; [2,] 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308
+#&gt; [3,] 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000
+#&gt; [4,] 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779
+#&gt; [5,] 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211
+#&gt;         [,128]    [,129]    [,130]    [,131]    [,132]    [,133]    [,134]
+#&gt; [1,] 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318
+#&gt; [2,] 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308
+#&gt; [3,] 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000
+#&gt; [4,] 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779
+#&gt; [5,] 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211
+#&gt;         [,135]    [,136]    [,137]    [,138]    [,139]    [,140]    [,141]
+#&gt; [1,] 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318
+#&gt; [2,] 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308
+#&gt; [3,] 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000
+#&gt; [4,] 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779
+#&gt; [5,] 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211
+#&gt;         [,142]    [,143]    [,144]    [,145]    [,146]    [,147]    [,148]
+#&gt; [1,] 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318
+#&gt; [2,] 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308
+#&gt; [3,] 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000
+#&gt; [4,] 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779
+#&gt; [5,] 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211
+#&gt;         [,149]    [,150]    [,151]    [,152]    [,153]    [,154]    [,155]
+#&gt; [1,] 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318
+#&gt; [2,] 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308
+#&gt; [3,] 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000
+#&gt; [4,] 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779
+#&gt; [5,] 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211
+#&gt;         [,156]    [,157]    [,158]    [,159]    [,160]    [,161]    [,162]
+#&gt; [1,] 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318
+#&gt; [2,] 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308
+#&gt; [3,] 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000
+#&gt; [4,] 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779
+#&gt; [5,] 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211
+#&gt;         [,163]    [,164]    [,165]    [,166]    [,167]    [,168]    [,169]
+#&gt; [1,] 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318
+#&gt; [2,] 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308
+#&gt; [3,] 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000
+#&gt; [4,] 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779
+#&gt; [5,] 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211
+#&gt;         [,170]    [,171]    [,172]    [,173]    [,174]    [,175]    [,176]
+#&gt; [1,] 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318
+#&gt; [2,] 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308
+#&gt; [3,] 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000
+#&gt; [4,] 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779
+#&gt; [5,] 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211
+#&gt;         [,177]    [,178]    [,179]    [,180]    [,181]    [,182]    [,183]
+#&gt; [1,] 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318
+#&gt; [2,] 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308
+#&gt; [3,] 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000
+#&gt; [4,] 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779
+#&gt; [5,] 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211
+#&gt;         [,184]    [,185]    [,186]    [,187]    [,188]    [,189]    [,190]
+#&gt; [1,] 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318
+#&gt; [2,] 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308
+#&gt; [3,] 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000
+#&gt; [4,] 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779
+#&gt; [5,] 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211
+#&gt;         [,191]    [,192]    [,193]    [,194]    [,195]    [,196]    [,197]
+#&gt; [1,] 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318 0.4119318
+#&gt; [2,] 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308 0.5192308
+#&gt; [3,] 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000 0.3750000
+#&gt; [4,] 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779 0.4424779
+#&gt; [5,] 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211 0.3684211
+#&gt;         [,198]    [,199]    [,200]
+#&gt; [1,] 0.4119318 0.4119318 0.4119318
+#&gt; [2,] 0.5192308 0.5192308 0.5192308
+#&gt; [3,] 0.3750000 0.3750000 0.3750000
+#&gt; [4,] 0.4424779 0.4424779 0.4424779
+#&gt; [5,] 0.3684211 0.3684211 0.3684211
 #&gt; </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -621,7 +545,7 @@ group is 0.8.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

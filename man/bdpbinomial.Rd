@@ -5,11 +5,26 @@
 \alias{bdpbinomial,ANY-method}
 \title{Bayesian Discount Prior: Binomial counts}
 \usage{
-bdpbinomial(y_t = NULL, N_t = NULL, y0_t = NULL, N0_t = NULL,
-  y_c = NULL, N_c = NULL, y0_c = NULL, N0_c = NULL,
-  discount_function = "identity", alpha_max = 1, fix_alpha = FALSE,
-  a0 = 1, b0 = 1, number_mcmc = 10000, weibull_scale = 0.135,
-  weibull_shape = 3, method = "mc", compare = TRUE)
+bdpbinomial(
+  y_t = NULL,
+  N_t = NULL,
+  y0_t = NULL,
+  N0_t = NULL,
+  y_c = NULL,
+  N_c = NULL,
+  y0_c = NULL,
+  N0_c = NULL,
+  discount_function = "identity",
+  alpha_max = 1,
+  fix_alpha = FALSE,
+  a0 = 1,
+  b0 = 1,
+  number_mcmc = 10000,
+  weibull_scale = 0.135,
+  weibull_shape = 3,
+  method = "mc",
+  compare = TRUE
+)
 }
 \arguments{
 \item{y_t}{scalar. Number of events for the current treatment group.}

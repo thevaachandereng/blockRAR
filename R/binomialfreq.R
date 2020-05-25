@@ -254,23 +254,41 @@ binomialfreq <- function(
                                      levels=c(levels(data_total$treatment), "0"))
       }
 
-      # if one treatment is not present or one type of outcome is not present,
-      # set the test_statistics to 0.
-      if(all(data_total$outcome == 1) | all(data_total$outcome == 0) |
-         all(data_total$treatment == 1) | all(data_total$treatment == 0)){
-        test_stat <- 0
-      }
-      # else compute the test statistics
-      else{
-        test_stat <- sqrt(as.numeric(chisq.test(data_total$treatment,
-                                                data_total$outcome,
-                                                correct = correct)$statistic))
-      }
+      data_interim <- data_total %>%
+        mutate(time = time[1:i])
 
+
+      if(early_stop & (i >= min_patient_earlystop) & (i < N_total)){
+        if(any(table(data_interim$time) == 1)){
+          remove             <- as.numeric(which(table(data_interim$time) == 1))
+          data_interim       <- data_interim[!(data_interim$time == remove), ]
+          if(nrow(data_interim) != 0){
+            data_interim$time  <- droplevels(data_interim$time)
+          }
+        }
+
+        # if one treatment is not present or one type of outcome is not present,
+        # set the test_statistics to 0.
+        if(all(data_interim$outcome == 1) | all(data_interim$outcome == 0) |
+           all(data_interim$treatment == 1) | all(data_interim$treatment == 0) |
+           nrow(data_interim) == 0){
+          test_stat <- 0
+        }
+
+        # else compute the test statistics
+        else if(any(N_total / block_number < 2 | block_number == 1 | (length(unique(time)) == 1))){
+          test_stat <- sqrt(as.numeric(chisq.test(data_interim$treatment,
+                                                  data_interim$outcome,
+                                                  correct = correct)$statistic))
+        }
+        else{
+          p.val             <- mantelhaen.test(table(data_interim), alternative = alternative,
+                                               correct = correct)$p.val
+          test_stat         <- abs(qnorm(p.val))
+        }
 
       # if we allow early stopping and the
       # the test_statistics exceed the lan-demets bound, quit the loop
-      if(early_stop & (i >= min_patient_earlystop) & (i < N_total)){
         if(test_stat > bounds[i - min_patient_earlystop + 1]){
           index                                  <- i
           early_stopping[k]                      <- 1
@@ -342,7 +360,7 @@ binomialfreq <- function(
     N_control             = N_control,
     N_treatment           = N_treatment,
     early_stop            = early_stopping,
-    randomization_ratio   = randomization
+    prob_treatment        = randomization
     )
 
   return(output)

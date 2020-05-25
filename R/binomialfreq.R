@@ -46,7 +46,7 @@
 #'     matrix. The randomization ratio allocated for each block.}
 #' }
 #'
-#' @importFrom stats rbinom mantelhaen.test chisq.test
+#' @importFrom stats rbinom mantelhaen.test chisq.test qnorm
 #' @importFrom ldbounds bounds
 #' @importFrom dplyr mutate group_by summarize
 #' @importFrom tibble as.tibble
@@ -262,9 +262,6 @@ binomialfreq <- function(
         if(any(table(data_interim$time) == 1)){
           remove             <- as.numeric(which(table(data_interim$time) == 1))
           data_interim       <- data_interim[!(data_interim$time == remove), ]
-          if(nrow(data_interim) != 0){
-            data_interim$time  <- droplevels(data_interim$time)
-          }
         }
 
         # if one treatment is not present or one type of outcome is not present,
@@ -276,7 +273,7 @@ binomialfreq <- function(
         }
 
         # else compute the test statistics
-        else if(any(N_total / block_number < 2 | block_number == 1 | (length(unique(time)) == 1))){
+        else if(any(N_total / block_number < 2 | block_number == 1 | all(data_interim$time == 1))){
           test_stat <- sqrt(as.numeric(chisq.test(data_interim$treatment,
                                                   data_interim$outcome,
                                                   correct = correct)$statistic))
@@ -284,6 +281,9 @@ binomialfreq <- function(
         else{
           p.val             <- mantelhaen.test(table(data_interim), alternative = alternative,
                                                correct = correct)$p.val
+          if(is.nan(p.val) | p.val > 0.5){
+            p.val           <- 0.5
+          }
           test_stat         <- abs(qnorm(p.val))
         }
 

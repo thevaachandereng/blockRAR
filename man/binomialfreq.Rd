@@ -4,11 +4,21 @@
 \alias{binomialfreq}
 \title{Block Design for Response-Adaptive Randomization for Binomial Data}
 \usage{
-binomialfreq(p_control, p_treatment, N_total, block_number = 4,
-  drift = 0, simulation = 10000, conf_int = 0.95,
-  alternative = "greater", correct = FALSE, early_stop = FALSE,
-  size_equal_randomization = 20, min_patient_earlystop = 20,
-  max_prob = 0.8)
+binomialfreq(
+  p_control,
+  p_treatment,
+  N_total,
+  block_number = 4,
+  drift = 0,
+  simulation = 10000,
+  conf_int = 0.95,
+  alternative = "greater",
+  correct = FALSE,
+  early_stop = FALSE,
+  size_equal_randomization = 20,
+  min_patient_earlystop = 20,
+  max_prob = 0.8
+)
 }
 \arguments{
 \item{p_control}{scalar. Proportion of events under the control arm.}

@@ -259,7 +259,7 @@ binomialfreq <- function(
 
 
       if(early_stop & (i >= min_patient_earlystop) & (i < N_total)){
-        if(any(table(data_interim$time) == 1)){
+        if(any(table(data_interim$time) == 1 & N_total / block_number >= 2)){
           remove             <- as.numeric(which(table(data_interim$time) == 1))
           data_interim       <- data_interim[!(data_interim$time == remove), ]
         }

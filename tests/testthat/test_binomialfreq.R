@@ -14,13 +14,13 @@ test_that("the binomial frequentist RAR output is", {
                            simulation = 10)$power, 1)
   expect_equal(binomialfreq(p_control = 0.1, p_treatment = 0.8, N_total = 200,
                             block_number = 100, simulation = 10, early_stop = TRUE)$early_stop,
-                c(rep(1, 6), 0, 0, 1, 0))
+                c(rep(1, 6), 1, 1, 1, 1))
   expect_equal(binomialfreq(p_control = 0.3, p_treatment = 0.3, N_total = 100,
                             block_number = 3, simulation = 10,
                             alternative = "less")$power, 0)
   expect_equal(binomialfreq(p_control = 0.3, p_treatment = 0.3, N_total = 400,
                             block_number = 1, simulation = 10,
-                            alternative = "less")$power, 0)
+                            alternative = "less")$power, 0.1)
   expect_equal(binomialfreq(p_control = 0.1, p_treatment = 0.2, N_total = 100,
                             block_number = 50, simulation = 1)$N_enrolled, 100)
   expect_equal(binomialfreq(p_control = 0.1, p_treatment = 0.2, N_total = 1000,

@@ -46,7 +46,7 @@
 #'     matrix. The randomization ratio allocated for each block.}
 #' }
 #'
-#' @importFrom stats rbinom mantelhaen.test chisq.test qnorm
+#' @importFrom stats rbinom mantelhaen.test chisq.test qchisq
 #' @importFrom ldbounds bounds
 #' @importFrom dplyr mutate group_by summarize
 #' @importFrom tibble as.tibble

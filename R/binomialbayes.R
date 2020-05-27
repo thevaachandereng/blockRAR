@@ -46,8 +46,8 @@
 #' @export binomialbayes
 #'
 #' @examples
-#' binomialbayes(p_control = 0.20, p_treatment = 0.30, N_total = 100, simulation = 5)
-#' binomialbayes(p_control = 0.50, p_treatment = 0.30, N_total = 100, simulation = 5)
+#' binomialbayes(p_control = 0.20, p_treatment = 0.30, N_total = 100, simulation = 3)
+#' binomialbayes(p_control = 0.50, p_treatment = 0.30, N_total = 100, simulation = 3)
 #'
 
 binomialbayes <- function(
@@ -68,7 +68,7 @@ binomialbayes <- function(
   size_equal_randomization  = 20,
   min_patient_earlystop     = 20,
   max_prob                  = 0.8
-  ){
+){
 
   # stop if proportion of control is not between 0 and 1
   if((p_control <= 0 | p_control >= 1)){
@@ -214,29 +214,61 @@ binomialbayes <- function(
       # joining the dataset using rbind
       data_total <- rbind(data_total, data)
 
-      # accumulating information on the events
-      yt <- sum(data_total$outcome[data_total$treatment == 1])
-      Nt <- length(data_total$outcome[data_total$treatment == 1])
-      yc <- sum(data_total$outcome[data_total$treatment == 0])
-      Nc <- length(data_total$outcome[data_total$treatment == 0])
+      data_interim <- data_total %>%
+        mutate(time = time[1:i])
 
-      # performing interim analysis to allow for stopping early
-      est_interim <- bdpbinomial(y_t         = yt,
-                                 N_t         = Nt,
-                                 y_c         = yc,
-                                 N_c         = Nc,
-                                 a0          = a0,
-                                 b0          = b0,
-                                 number_mcmc = number_mcmc)
 
-      # calculating the mean posterior difference for treatment estimate
-      if(alternative == "greater"){
-        int_analysis <- mean(est_interim$posterior_treatment$posterior -
-                               est_interim$posterior_control$posterior > 0)
+      if(any(N_total / block_number < 2 | block_number == 1 | all(data_interim$time == 1))){
+        # accumulating information on the events
+        yt <- sum(data_interim$outcome[data_interim$treatment == 1])
+        Nt <- length(data_interim$outcome[data_interim$treatment == 1])
+        yc <- sum(data_interim$outcome[data_interim$treatment == 0])
+        Nc <- length(data_interim$outcome[data_interim$treatment == 0])
+
+        # performing interim analysis to allow for stopping early
+        est_interim <- bdpbinomial(y_t         = yt,
+                                   N_t         = Nt,
+                                   y_c         = yc,
+                                   N_c         = Nc,
+                                   a0          = a0,
+                                   b0          = b0,
+                                   number_mcmc = number_mcmc)
+
+        # calculating the mean posterior difference for treatment estimate
+        if(alternative == "greater"){
+          int_analysis <- mean(est_interim$posterior_treatment$posterior -
+                                 est_interim$posterior_control$posterior > 0)
+        }
+        else{
+          int_analysis <- mean(est_interim$posterior_treatment$posterior -
+                                 est_interim$posterior_control$posterior < 0)
+        }
       }
       else{
-        int_analysis <- mean(est_interim$posterior_treatment$posterior -
-                               est_interim$posterior_control$posterior < 0)
+        fit_int <- tryCatch(expr = bayesglm(formula = outcome ~ as.factor(treatment) + as.factor(time),
+                                            data    = data_interim,
+                                            family  = quasi(link = "identity", variance = "mu(1-mu)"),
+                                            start   = rep(0.1, 1 + length(levels(data_total$time)))),
+                            error   = function(data = data_interim){
+                              rbeta(number_mcmc,
+                                    sum(data$outcome[data$time == data$time[1] & data$treatment == 1]) + a0,
+                                    length(data$outcome[data$time == data$time[1] & data$treatment == 1]) + b0) -
+                                rbeta(number_mcmc,
+                                      sum(data$outcome[data$time == data$time[1] & data$treatment == 0]) + a0,
+                                      length(data$outcome[data$time == data$time[1] & data$treatment == 0])) + b0})
+        if(length(fit_int) == number_mcmc){
+          int_trt <- fit_int
+        }
+        else{
+          int_trt <- coef(sim(fit_int, n.sims = number_mcmc))[, 2]
+        }
+
+        if(alternative == "greater"){
+          int_analysis <- mean(int_trt > 0)
+        }
+        else{
+          int_analysis <- mean(int_trt < 0)
+        }
       }
 
       # check for early stopping for success
@@ -263,7 +295,7 @@ binomialbayes <- function(
 
     # mutate time factor for time column
     data_total <- data_total %>%
-      mutate(time = time)
+      mutate(time = as.factor(time))
 
     # setting data final same as data_total
     data_final <- data_total
@@ -305,62 +337,19 @@ binomialbayes <- function(
 
     # stratified analysis for factor time
     else{
+      # perform bayes generalized linear models with quasi family and identity link
+      fit0 <- bayesglm(formula = outcome ~ as.factor(treatment) + as.factor(time),
+                                       data    = data_total,
+                                       family  = quasi(link = "identity", variance = "mu(1-mu)"),
+                                       start   = rep(0.1, 1 + length(levels(data_total$time))))
 
-      for(i in levels(data_total$time)){
 
-        # selecting the treatment and control group
-        trt_grp <- data_total$outcome[data_total$treatment == 1 & data_total$time == i]
-        ctr_grp <- data_total$outcome[data_total$treatment == 0 & data_total$time == i]
-
-        # only if there is at least one person in the
-        # treatment group and one control group,  perform the analysis
-        if(length(trt_grp) == 0 | length(ctr_grp) == 0){
-          data_total <- data_total[-which(data_total$time == i), ]
-        }
+      # estimating the treatment effect
+      if(length(fit0) == number_mcmc){
+        post_trt <- fit0
       }
-
-      # drop levels for all the timepoints dropped due to missing data
-      data_total <- droplevels.data.frame(data_total)
-
-      ## if there is more than 1 factor level, fit time as a factor level
-      if(length(levels(data_total$time)) > 1){
-        # perform bayes generalized linear models with quasi family and identity link
-        fit0 <- tryCatch(expr = bayesglm(formula = outcome ~ as.factor(treatment) + as.factor(time),
-                                         data    = data_total,
-                                         family  = quasi(link = "identity", variance = "mu(1-mu)"),
-                                         start   = rep(0.1, 1 + length(levels(data_total$time)))),
-                         error   = function(data = data_total){
-                           rbeta(number_mcmc,
-                                 sum(data$outcome[data$time == data$time[1] & data$treatment == 1]) + a0,
-                                 length(data$outcome[data$time == data$time[1] & data$treatment == 1]) + b0) -
-                             rbeta(number_mcmc,
-                                   sum(data$outcome[data$time == data$time[1] & data$treatment == 0]) + a0,
-                                   length(data$outcome[data$time == data$time[1] & data$treatment == 0])) + b0})
-
-        # estimating the treatment effect
-        if(length(fit0) == number_mcmc){
-          post_trt <- fit0
-        }
-        else{
-          post_trt <- coef(sim(fit0, n.sims = number_mcmc))[, 2]
-        }
-      }
-
-      # else fit just the treatment effect model
-      else if (length(levels(data_total$time)) == 1){
-        # perform bayes generalized linear models with quasi family and identity link
-        fit0 <- bayesglm(formula = outcome ~ as.factor(treatment),
-                         data    = data_total,
-                         family  = quasi(link = "identity", variance = "mu(1-mu)"),
-                         start   = rep(0.1, 1 + length(levels(data_total$time))))
-        # estimating the treatment effect
-        post_trt <- coef(sim(fit0, n.sims = number_mcmc))[, 2]
-      }
-
-      # if all the columns are dropped, fit equal to 0
       else{
-        fit0 <- 0
-        post_trt <- 0
+        post_trt <- coef(sim(fit0, n.sims = number_mcmc))[, 2]
       }
 
       # computing mean posterior treatment effect
@@ -401,7 +390,7 @@ binomialbayes <- function(
     N_treatment           = N_treatment,
     early_success         = early_success,
     early_futilty         = early_futility,
-    randomization_ratio   = randomization
+    prob_trt              = randomization
   )
 
   # return output

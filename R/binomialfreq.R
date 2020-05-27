@@ -274,17 +274,14 @@ binomialfreq <- function(
 
         # else compute the test statistics
         else if(any(N_total / block_number < 2 | block_number == 1 | all(data_interim$time == 1))){
-          test_stat <- sqrt(as.numeric(chisq.test(data_interim$treatment,
+          test_stat         <- sqrt(as.numeric(chisq.test(data_interim$treatment,
                                                   data_interim$outcome,
                                                   correct = correct)$statistic))
         }
         else{
           p.val             <- mantelhaen.test(table(data_interim), alternative = alternative,
                                                correct = correct)$p.val
-          if(is.nan(p.val) | p.val > 0.5){
-            p.val           <- 0.5
-          }
-          test_stat         <- abs(qnorm(p.val))
+          test_stat         <- sqrt(qchisq(1 - p.val, df = 1))
         }
 
       # if we allow early stopping and the
@@ -313,6 +310,13 @@ binomialfreq <- function(
                              outcome   = data_total$outcome,
                              block     = data_total$time)
 
+
+    if(any(table(data_total$time) == 1 & N_total / block_number >= 2)){
+      remove          <- as.numeric(which(table(data_total$time) == 1))
+      data_total      <- data_total[!(data_total$time == remove), ]
+      data_total$time <- droplevels(data_total$time)
+    }
+
     # if number of block is 1 or if any block has only one patients, then use chisq.test
     if(all(data_total$time == 1) | N_total / block_number <  2){
       # if the prop is in the right direction, compute p-value
@@ -327,11 +331,6 @@ binomialfreq <- function(
     }
     # compute mantelhaen.test for number of block > 1.
     else{
-      if(any(table(data_total$time) == 1)){
-        remove          <- as.numeric(which(table(data_total$time) == 1))
-        data_total      <- data_total[!(data_total$time == remove), ]
-        data_total$time <- droplevels(data_total$time)
-      }
       p.val             <- mantelhaen.test(table(data_total), alternative = alternative,
                                            correct = correct)$p.val
     }

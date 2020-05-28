@@ -281,6 +281,9 @@ binomialfreq <- function(
         else{
           p.val             <- mantelhaen.test(table(data_interim), alternative = alternative,
                                                correct = correct)$p.val
+          if(is.nan(p.val)){
+            p.val           <- 1
+          }
           test_stat         <- sqrt(qchisq(1 - p.val, df = 1))
         }
 

@@ -279,8 +279,17 @@ binomialfreq <- function(
                                                   correct = correct)$statistic))
         }
         else{
-          p.val             <- mantelhaen.test(table(data_interim), alternative = alternative,
-                                               correct = correct)$p.val
+          p.val             <- tryCatch(expr = mantelhaen.test(table(data_interim), alternative = alternative,
+                                                               correct = correct)$p.val,
+                                        error   = function(data_interim =
+                                                             data_interim[data_interim$time == 1, ]){
+                                          as.numeric(chisq.test(data_interim$treatment,
+                                                                     data_interim$outcome,
+                                                                     correct = correct)$p.value)})
+
+
+
+
           if(is.nan(p.val)){
             p.val           <- 1
           }
@@ -334,8 +343,13 @@ binomialfreq <- function(
     }
     # compute mantelhaen.test for number of block > 1.
     else{
-      p.val             <- mantelhaen.test(table(data_total), alternative = alternative,
-                                           correct = correct)$p.val
+      p.val             <- tryCatch(expr = mantelhaen.test(table(data_total), alternative = alternative,
+                                                           correct = correct)$p.val,
+                                    error   = function(data_total =
+                                                         data_total[data_total$time == 1, ]){
+                                      as.numeric(chisq.test(data_total$treatment,
+                                                            data_total$outcome,
+                                                            correct = correct)$p.value)})
     }
 
     # compute the sample size for control, treatment and proportion for

@@ -83,7 +83,7 @@ Simulation for binomial counts for block design for
 }
 \examples{
 binomialfreq(p_control = 0.7, p_treatment = 0.65, N_total = 200,
-            block_number = 2, simulation = 5)
+            block_number = 2, simulation = 3)
 binomialfreq(p_control = 0.5, p_treatment = 0.40, N_total = 200,
-            block_number = 2, simulation = 5, drift = -0.15)
+            block_number = 2, simulation = 3, drift = -0.15)
 }

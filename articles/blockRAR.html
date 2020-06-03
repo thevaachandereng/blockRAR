@@ -163,7 +163,7 @@
 <p>Computing power, stratified difference in treatment proportion using the <strong>binomialfreq</strong> function.</p>
 <p>An example function execution with proportion of events in control is 0.25, proportion of events in treatment is 0.45, targeted sample size of 200, 5 number of blocks where randomization ratio is altered, no drift is applied, <span class="math inline">\(\alpha\)</span> of 0.05, alternative of “greater”, and early stopping not applied.</p>
 <pre><code>#&gt; $power
-#&gt; [1] 0.6
+#&gt; [1] 1
 #&gt; 
 #&gt; $prop_diff_estimate
 #&gt;  [1] 0.2215938 0.1865461 0.1596817 0.2176139 0.2986472 0.3803844 0.2536145
@@ -180,6 +180,10 @@
 #&gt; 
 #&gt; $early_stop
 #&gt;  [1] 0 0 0 0 0 0 0 0 0 0
+#&gt; 
+#&gt; $p_value
+#&gt;  [1] 8.040354e-04 6.415630e-03 1.182683e-02 9.164514e-04 1.192396e-05
+#&gt;  [6] 1.395806e-06 3.498643e-04 7.793282e-05 2.623583e-03 9.685088e-04
 #&gt; 
 #&gt; $prob_treatment
 #&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]

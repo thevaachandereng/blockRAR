@@ -148,6 +148,7 @@ binomialfreq <- function(
   power <- 0
 
   # assigning overall variables as NULL and drift for patient by patient
+  p_value              <- NULL
   N_control            <- NULL
   N_treatment          <- NULL
   sample_size          <- NULL
@@ -279,19 +280,19 @@ binomialfreq <- function(
                                                   correct = correct)$statistic))
         }
         else{
-          p.val             <- tryCatch(expr = mantelhaen.test(table(data_interim), alternative = alternative,
-                                                               correct = correct)$p.val,
+          p.val             <- tryCatch(expr = mantelhaen.test(table(data_interim),
+                                                               correct = correct)$p.val / 2,
                                         error   = function(data_interim =
                                                              data_interim[data_interim$time == 1, ]){
                                           as.numeric(chisq.test(data_interim$treatment,
                                                                      data_interim$outcome,
-                                                                     correct = correct)$p.value)})
+                                                                     correct = correct)$p.value / 2)})
 
 
 
 
-          if(is.nan(p.val)){
-            p.val           <- 1
+          if(is.nan(p.val) | p.val > 0.5){
+            p.val           <- 0.5
           }
           test_stat         <- sqrt(qchisq(1 - p.val, df = 1))
         }
@@ -343,17 +344,18 @@ binomialfreq <- function(
     }
     # compute mantelhaen.test for number of block > 1.
     else{
-      p.val             <- tryCatch(expr = mantelhaen.test(table(data_total), alternative = alternative,
-                                                           correct = correct)$p.val,
+      p.val             <- tryCatch(expr = mantelhaen.test(table(data_total),
+                                                           correct = correct)$p.val / 2,
                                     error   = function(data_total =
                                                          data_total[data_total$time == 1, ]){
                                       as.numeric(chisq.test(data_total$treatment,
                                                             data_total$outcome,
-                                                            correct = correct)$p.value)})
+                                                            correct = correct)$p.value / 2)})
     }
 
     # compute the sample size for control, treatment and proportion for
     # control and treatment estimate
+    p_value              <- c(p_value, p.val)
     N_control            <- c(N_control, sum(data_total$treatment == 0))
     N_treatment          <- c(N_treatment, sum(data_total$treatment == 1))
     sample_size          <- c(sample_size, nrow(data_total))
@@ -376,6 +378,7 @@ binomialfreq <- function(
     N_control             = N_control,
     N_treatment           = N_treatment,
     early_stop            = early_stopping,
+    p_value               = p_value,
     prob_treatment        = randomization
     )
 

@@ -248,7 +248,7 @@ binomialbayes <- function(
         fit_int <- tryCatch(expr = bayesglm(formula = outcome ~ as.factor(treatment) + as.factor(time),
                                             data    = data_interim,
                                             family  = quasi(link = "identity", variance = "mu(1-mu)"),
-                                            start   = rep(0.1, 1 + length(levels(data_total$time)))),
+                                            start   = rep(0.1, 1 + length(levels(data_interim$time)))),
                             error   = function(data = data_interim){
                               rbeta(number_mcmc,
                                     sum(data$outcome[data$time == data$time[1] & data$treatment == 1]) + a0,
@@ -338,10 +338,19 @@ binomialbayes <- function(
     # stratified analysis for factor time
     else{
       # perform bayes generalized linear models with quasi family and identity link
-      fit0 <- bayesglm(formula = outcome ~ as.factor(treatment) + as.factor(time),
+      fit0 <- tryCatch(expr = bayesglm(formula = outcome ~ as.factor(treatment) + as.factor(time),
                                        data    = data_total,
                                        family  = quasi(link = "identity", variance = "mu(1-mu)"),
-                                       start   = rep(0.1, 1 + length(levels(data_total$time))))
+                                       start   = rep(0.1, 1 + length(levels(data_total$time)))),
+                       error   = function(data = data_total){
+                         rbeta(number_mcmc,
+                               sum(data$outcome[data$time == data$time[1] & data$treatment == 1]) + a0,
+                               length(data$outcome[data$time == data$time[1] & data$treatment == 1]) + b0) -
+                           rbeta(number_mcmc,
+                                 sum(data$outcome[data$time == data$time[1] & data$treatment == 0]) + a0,
+                                 length(data$outcome[data$time == data$time[1] & data$treatment == 0])) + b0})
+
+
 
 
       # estimating the treatment effect

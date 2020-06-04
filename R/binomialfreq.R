@@ -281,7 +281,7 @@ binomialfreq <- function(
         }
         else{
           p.val             <- tryCatch(expr = mantelhaen.test(table(data_interim),
-                                                               correct = correct)$p.val / 2,
+                                                               correct = correct)$p.val,
                                         error   = function(data_interim =
                                                              data_interim[data_interim$time == 1, ]){
                                           as.numeric(chisq.test(data_interim$treatment,
@@ -345,7 +345,7 @@ binomialfreq <- function(
     # compute mantelhaen.test for number of block > 1.
     else{
       p.val             <- tryCatch(expr = mantelhaen.test(table(data_total),
-                                                           correct = correct)$p.val / 2,
+                                                           correct = correct)$p.val,
                                     error   = function(data_total =
                                                          data_total[data_total$time == 1, ]){
                                       as.numeric(chisq.test(data_total$treatment,

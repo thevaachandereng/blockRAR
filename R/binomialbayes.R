@@ -157,6 +157,11 @@ binomialbayes <- function(
           Nc <- 0
         }
 
+        yt <- sum(data_total$outcome[data_total$treatment == 1])
+        Nt <- length(data_total$outcome[data_total$treatment == 1])
+        yc <- sum(data_total$outcome[data_total$treatment == 0])
+        Nc <- length(data_total$outcome[data_total$treatment == 0])
+
         # estimating the interim value estimates
         est_interim <- bdpbinomial(y_t         = yt,
                                    N_t         = Nt,
